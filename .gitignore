@@ -1,9 +1,13 @@
+# Logs
+npm-debug.log*
+
 # dependencies
-node_modules
+node_modules/
 
 # build
 .next
 *.tsbuildinfo
+/apps/backend/dist/
 
 # misc
 .DS_Store
