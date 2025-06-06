@@ -11,15 +11,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: 16.15.1
+          node-version-file: .tool-versions
 
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 7.1.9
+      - uses: pnpm/action-setup@v4
 
       - uses: actions/cache@v3
         name: Setup pnpm and build cache
@@ -33,48 +31,10 @@ jobs:
             pnpm-store-
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Run ESLint
         run: pnpm lint
 
       - name: Run build
         run: pnpm build
-
-      - name: Analyze bundle
-        run: pnpm exec report
-
-      - name: Upload bundle
-        uses: actions/upload-artifact@v2
-        with:
-          name: bundle
-          path: .next/analyze/__bundle_analysis.json
-
-      - name: Download base branch bundle stats
-        if: success()
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          workflow: ci.yml
-          workflow_conclusion: completed
-          commit: ${{ github.event.before }}
-          path: .next/analyze/base
-
-      - name: Compare with base branch bundle
-        if: success()
-        run: ls -laR .next/analyze/base && pnpm exec compare
-
-      - name: Get comment body
-        if: success()
-        id: get-comment-body
-        run: |
-          body=$(cat .next/analyze/__bundle_analysis_comment.txt)
-          body="${body//'%'/'%25'}"
-          body="${body//$'\n'/'%0A'}"
-          body="${body//$'\r'/'%0D'}"
-          echo ::set-output name=body::$body
-
-      - name: Create comment
-        if: success()
-        uses: peter-evans/commit-comment@v2
-        with:
-          body: ${{ steps.get-comment-body.outputs.body }}
