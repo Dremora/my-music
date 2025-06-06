@@ -9,7 +9,6 @@
     "@graphql-codegen/typescript": "^2.5.1",
     "@graphql-codegen/typescript-operations": "^2.4.2",
     "@graphql-codegen/typescript-react-apollo": "^3.2.16",
-    "@milahu/patch-package": "^6.4.14",
     "@types/node": "22.9.0",
     "@types/react": "^18.0.12",
     "@types/react-dom": "18.0.5",
@@ -54,8 +53,7 @@
     "lint": "eslint src --ext js,ts,tsx",
     "lint:fix": "eslint src --ext js,ts,tsx --fix",
     "types:check:watch": "tsc --noEmit --watch",
-    "types:generate:graphql": "graphql-codegen --config codegen.yml",
-    "postinstall": "patch-package"
+    "types:generate:graphql": "graphql-codegen --config codegen.yml"
   },
   "engines": {
     "node": "22.x"
@@ -73,5 +71,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "framer-motion": "patches/framer-motion+6.3.11.patch"
+    }
   }
 }
