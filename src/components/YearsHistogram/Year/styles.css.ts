@@ -15,6 +15,7 @@ export const rootStyle = style({
 });
 
 export const barStyle = style({
-  borderRadius: "2px 2p x0 0",
+  borderTopLeftRadius: 2,
+  borderTopRightRadius: 2,
   height: "100%",
 });

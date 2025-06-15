@@ -21,12 +21,12 @@ function Layout({ children }: Props) {
       <div>
         <div className={sectionStyle}>
           <header className={headerStyle}>
-            <Link href="/" passHref>
+            {/* eslint-disable-next-line react/forbid-component-props */}
+            <Link className={homeLinkStyle} href="/">
               {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-              <a className={homeLinkStyle}>
-                <img alt="Logo" height={48} src="/logo.svg" />
-                <h1 className={h1Style}>My Music</h1>
-              </a>
+
+              <img alt="Logo" height={48} src="/logo.svg" />
+              <h1 className={h1Style}>My Music</h1>
             </Link>
             <Menu />
           </header>

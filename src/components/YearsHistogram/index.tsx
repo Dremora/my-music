@@ -1,8 +1,5 @@
-import {
-  FloatingPortal,
-  useFloating,
-} from "@floating-ui/react-dom-interactions";
-import { AnimatePresence, m } from "framer-motion";
+import { FloatingPortal, useFloating } from "@floating-ui/react";
+import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useMemo, useState } from "react";
 
 import Text from "components/Text";
@@ -33,9 +30,8 @@ function YearsHistogram({ data, onYearClick }: Props) {
   const [selectedYear, setSelectedYear] = useState<number>();
   const [isOpen, setIsOpen] = useState(false);
 
-  const { floating, reference, strategy, x, y } = useFloating({
+  const { isPositioned, refs, strategy, x, y } = useFloating({
     placement: "bottom",
-    // middleware: [offset(1)], // not doing so causes helicopter effect
   });
 
   const dataWithYear = useMemo(
@@ -67,20 +63,24 @@ function YearsHistogram({ data, onYearClick }: Props) {
     (year: number) => (e: MouseEvent) => {
       setSelectedYear(year);
 
-      if (e.currentTarget instanceof HTMLElement) {
-        reference(e.currentTarget);
-        setIsOpen(true);
+      if (e.target instanceof HTMLElement) {
+        refs.setReference(e.target);
+
+        requestAnimationFrame(() => {
+          setIsOpen(true);
+        });
       }
     },
-    [reference]
+    [refs]
   );
 
   const hideYear = useCallback(() => {
-    reference(null);
-    setIsOpen(false);
-  }, [reference]);
+    refs.setReference(null);
 
-  console.log({ x, isOpen });
+    requestAnimationFrame(() => {
+      setIsOpen(false);
+    });
+  }, [refs]);
 
   return (
     <>
@@ -100,30 +100,30 @@ function YearsHistogram({ data, onYearClick }: Props) {
 
       <FloatingPortal>
         <AnimatePresence>
-          {isOpen ? (
-            <m.div
-              animate={{ opacity: 1, left: x ?? 0 }}
+          {isOpen && isPositioned ? (
+            <motion.div
+              animate={{ opacity: 1, left: x }}
               exit={{ opacity: 0 }}
-              initial={{ opacity: 0, left: x ?? 0 }}
-              ref={floating}
+              initial={{ opacity: 0, left: x }}
+              ref={refs.setFloating}
               style={{
                 position: strategy,
-                top: y ?? 0,
+                top: y,
               }}
               transition={{ ease: "easeOut", duration: 0.1 }}
             >
               <Text color="grey" weight="bold">
                 {selectedYear}
               </Text>
-            </m.div>
+            </motion.div>
           ) : (
             <div
-              ref={floating}
+              ref={refs.setFloating}
               style={{
                 visibility: "hidden",
                 position: strategy,
-                left: x ?? 0,
-                top: y ?? 0,
+                left: x,
+                top: y,
               }}
             >
               <Text color="grey" weight="bold">

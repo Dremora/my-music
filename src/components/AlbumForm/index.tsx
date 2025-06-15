@@ -1,9 +1,9 @@
 import { ApolloError } from "@apollo/client";
-import { AnimatePresence, m } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useState } from "react";
 
 import Button from "components/Button";
-import FirstPlayedField from "components/FirstPlayedField";
+import { FirstPlayedField } from "components/FirstPlayedField";
 import FormField from "components/FormField";
 import Input from "components/Input";
 import Source from "components/Source";
@@ -188,11 +188,9 @@ function AlbumForm({
           value={album.comments ?? ""}
         />
       </FormField>
-      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-      {/* @ts-ignore https://github.com/framer/motion/pull/1573 */}
       <AnimatePresence>
         {album.sources.map((source, i) => (
-          <m.div
+          <motion.div
             animate={{ height: "auto" }}
             exit={{ height: 0 }}
             initial={{ height: isFirstRender ? "auto" : 0 }}
@@ -208,7 +206,7 @@ function AlbumForm({
               onUpdate={onSourceUpdate}
               source={source}
             />
-          </m.div>
+          </motion.div>
         ))}
       </AnimatePresence>
       <div className={buttonsStyle}>

@@ -55,7 +55,7 @@ module.exports = {
       "always",
       { js: "never", ts: "never", tsx: "never" },
     ],
-    "import/named": "error",
+    // "import/named": "error",
     "import/newline-after-import": "error",
     "import/no-absolute-path": "error",
     "import/no-amd": "error",

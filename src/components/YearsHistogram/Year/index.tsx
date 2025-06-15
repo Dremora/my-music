@@ -1,5 +1,5 @@
-import { m, transform } from "framer-motion";
-import { memo, useCallback } from "react";
+import { motion, transform } from "motion/react";
+import { memo, useCallback, useMemo } from "react";
 
 import { grey, lightGrey, lighterGrey } from "styles/colors.css";
 
@@ -22,8 +22,8 @@ function Year({
   onHoverStart,
   year,
 }: Props) {
-  const onHoverStartMemoized = useCallback(
-    (e: MouseEvent) => onHoverStart(year)(e),
+  const onHoverStartMemoized = useMemo(
+    () => onHoverStart(year),
     [onHoverStart, year]
   );
 
@@ -33,7 +33,7 @@ function Year({
   );
 
   return (
-    <m.div
+    <motion.div
       animate="animate"
       className={rootStyle}
       initial="initial"
@@ -49,7 +49,7 @@ function Year({
       }}
       whileHover="hover"
     >
-      <m.div
+      <motion.div
         className={barStyle}
         variants={{
           animate: {
@@ -68,7 +68,7 @@ function Year({
           },
         }}
       />
-    </m.div>
+    </motion.div>
   );
 }
 

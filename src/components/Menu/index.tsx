@@ -1,11 +1,12 @@
-import { autoUpdate, offset } from "@floating-ui/dom";
 import {
   FloatingPortal,
+  autoUpdate,
+  offset,
   useClick,
   useDismiss,
   useFloating,
   useInteractions,
-} from "@floating-ui/react-dom-interactions";
+} from "@floating-ui/react";
 import { useCallback, useState } from "react";
 
 import BurgerIcon from "components/BurgerIcon";
@@ -20,7 +21,7 @@ import {
 function Menu() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { context, floating, reference, strategy, x, y } = useFloating({
+  const { context, floatingStyles, refs } = useFloating({
     placement: "bottom-end",
     middleware: [offset(12)],
     whileElementsMounted: autoUpdate,
@@ -41,7 +42,7 @@ function Menu() {
         <button
           // eslint-disable-next-line react/jsx-props-no-spreading
           {...getReferenceProps({
-            ref: reference,
+            ref: refs.setReference,
           })}
           className={menuButtonStyle}
           type="button"
@@ -53,12 +54,8 @@ function Menu() {
             <div
               // eslint-disable-next-line react/jsx-props-no-spreading
               {...getFloatingProps({
-                ref: floating,
-                style: {
-                  position: strategy,
-                  top: y ?? 0,
-                  left: x ?? 0,
-                },
+                ref: refs.setFloating,
+                style: floatingStyles,
               })}
             >
               <MenuItems closeMenu={closeMenu} />

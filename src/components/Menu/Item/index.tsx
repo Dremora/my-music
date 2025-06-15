@@ -1,4 +1,4 @@
-import { AnimatePresence, m } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -20,24 +20,26 @@ function Item({ children, href, onClick }: Props) {
   const current = router.pathname.startsWith(href);
   return (
     <li className={listItemStyle}>
-      <Link href={href} passHref>
+      <Link
+        // eslint-disable-next-line react/forbid-component-props
+        className={anchorStyle}
+        href={href}
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...(onClick ? { onClick } : {})}
+      >
         {/* eslint-disable-next-line */}
-        <a className={anchorStyle} onClick={onClick}>
-          <Text color="grey" size="medium" weight="bold">
-            {children}
-          </Text>
-        </a>
+
+        <Text color="grey" size="medium" weight="bold">
+          {children}
+        </Text>
       </Link>
-      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-      {/* @ts-ignore https://github.com/framer/motion/pull/1573 */}
       <AnimatePresence>
         {current ? (
-          <m.div
+          <motion.div
             animate={{ width: "100%" }}
             className={barStyle}
             exit={{ width: 0 }}
             initial={{ width: isFirstRender ? "100%" : 0 }}
-            key="bar"
             transition={{ type: "tween", duration: 0.2 }}
           />
         ) : null}

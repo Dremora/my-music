@@ -49,9 +49,14 @@ function Album({ album }: Props) {
   );
 
   return isLoggedIn ? (
-    <Link as={`/albums/${album.id}`} href="/albums/[id]">
+    <Link
+      as={`/albums/${album.id}`}
+      // eslint-disable-next-line react/forbid-component-props
+      className={anchorStyle}
+      href="/albums/[id]"
+    >
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-      <a className={anchorStyle}>{contents}</a>
+      {contents}
     </Link>
   ) : (
     <div className={rootStyle}>{contents}</div>

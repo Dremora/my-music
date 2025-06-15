@@ -1,4 +1,4 @@
-import { AnimatePresence, m } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useState } from "react";
 
 import Input from "components/Input";
@@ -24,7 +24,7 @@ type Props = {
   value: FirstPlayedInput | null | undefined;
 };
 
-function FirstPlayedField({ disabled, onChange, value }: Props) {
+export function FirstPlayedField({ disabled, onChange, value }: Props) {
   const [firstPlayedMode, setFirstPlayedMode] = useState(() =>
     value === null || value === undefined
       ? "unknown"
@@ -133,21 +133,19 @@ function FirstPlayedField({ disabled, onChange, value }: Props) {
         </label>
       </div>
 
-      <m.div
+      <motion.div
         animate={{ height: firstPlayedMode === "unknown" ? 0 : "auto" }}
         initial={{ height: firstPlayedMode === "unknown" ? 0 : "auto" }}
-        transition={{ type: "tween" }}
+        transition={{ duration: 0.15 }}
       >
-        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-        {/* @ts-ignore https://github.com/framer/motion/pull/1573 */}
-        <AnimatePresence exitBeforeEnter>
+        <AnimatePresence mode="wait">
           {firstPlayedMode !== "unknown" && (
-            <m.div
+            <motion.div
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               initial={{ opacity: isFirstRender ? 1 : 0 }}
               key={firstPlayedMode}
-              transition={{ type: "tween", duration: 0.15 }}
+              transition={{ duration: 0.15 }}
             >
               {firstPlayedMode === "timestamp" && (
                 <div className={dateInputContainerStyle}>
@@ -190,12 +188,10 @@ function FirstPlayedField({ disabled, onChange, value }: Props) {
                   </div>
                 </div>
               )}
-            </m.div>
+            </motion.div>
           )}
         </AnimatePresence>
-      </m.div>
+      </motion.div>
     </div>
   );
 }
-
-export default FirstPlayedField;
