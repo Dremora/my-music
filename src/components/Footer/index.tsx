@@ -28,7 +28,7 @@ function Footer() {
       setWrongPassword(false);
       setPasswordInput(e.target.value);
     },
-    []
+    [],
   );
 
   const login = useCallback(async () => {
@@ -52,7 +52,7 @@ function Footer() {
       e.preventDefault();
       isLoggedIn ? onLoggedOut() : setShowingLogin(true);
     },
-    [isLoggedIn, onLoggedOut]
+    [isLoggedIn, onLoggedOut],
   );
 
   return (

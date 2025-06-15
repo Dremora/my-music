@@ -11,7 +11,7 @@ function AlbumsByYearSelector() {
     (year: number) => {
       void router.push("/years/[year]", `/years/${year}`);
     },
-    [router]
+    [router],
   );
 
   const { data, error, loading } = useAlbumPerYearCountQuery();

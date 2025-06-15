@@ -43,14 +43,14 @@ function Source({ disabled, index, onRemove, onUpdate, source }: Props) {
     (value: Location) => {
       onUpdate(index, { ...source, location: value });
     },
-    [index, onUpdate, source]
+    [index, onUpdate, source],
   );
 
   const onFormatChange = useCallback(
     (value: Format) => {
       onUpdate(index, { ...source, format: value });
     },
-    [index, onUpdate, source]
+    [index, onUpdate, source],
   );
 
   const onEditionChange = useCallback(
@@ -60,7 +60,7 @@ function Source({ disabled, index, onRemove, onUpdate, source }: Props) {
         edition: parseOptionalString(e.target.value),
       });
     },
-    [index, onUpdate, source]
+    [index, onUpdate, source],
   );
 
   const onCommentsChange = useCallback(
@@ -70,7 +70,7 @@ function Source({ disabled, index, onRemove, onUpdate, source }: Props) {
         comments: parseOptionalString(e.target.value),
       });
     },
-    [index, onUpdate, source]
+    [index, onUpdate, source],
   );
 
   const onMbidChange = useCallback(
@@ -80,7 +80,7 @@ function Source({ disabled, index, onRemove, onUpdate, source }: Props) {
         mbid: parseMbid(e.target.value),
       });
     },
-    [index, onUpdate, source]
+    [index, onUpdate, source],
   );
 
   const onTagIssuesChange = useCallback(
@@ -90,7 +90,7 @@ function Source({ disabled, index, onRemove, onUpdate, source }: Props) {
         tagIssues: parseOptionalString(e.target.value),
       });
     },
-    [index, onUpdate, source]
+    [index, onUpdate, source],
   );
 
   const onAccurateRipChange = useCallback(
@@ -100,7 +100,7 @@ function Source({ disabled, index, onRemove, onUpdate, source }: Props) {
         accurateRip: parseOptionalString(e.target.value),
       });
     },
-    [index, onUpdate, source]
+    [index, onUpdate, source],
   );
 
   const onCueIssuesChange = useCallback(
@@ -110,7 +110,7 @@ function Source({ disabled, index, onRemove, onUpdate, source }: Props) {
         cueIssues: parseOptionalString(e.target.value),
       });
     },
-    [index, onUpdate, source]
+    [index, onUpdate, source],
   );
 
   const onDownloadChange = useCallback(
@@ -120,7 +120,7 @@ function Source({ disabled, index, onRemove, onUpdate, source }: Props) {
         download: parseOptionalString(e.target.value),
       });
     },
-    [index, onUpdate, source]
+    [index, onUpdate, source],
   );
 
   const onDiscsChange = useCallback(
@@ -130,7 +130,7 @@ function Source({ disabled, index, onRemove, onUpdate, source }: Props) {
         discs: parseInteger(e.target.value),
       });
     },
-    [index, onUpdate, source]
+    [index, onUpdate, source],
   );
 
   return (

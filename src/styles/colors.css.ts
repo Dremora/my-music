@@ -43,6 +43,6 @@ export const colorVariant = styleVariants(
     allColorsArray.map((colorName) => [
       colorName,
       { color: allColors[colorName] },
-    ])
-  )
+    ]),
+  ),
 );

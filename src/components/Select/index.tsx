@@ -20,7 +20,7 @@ function Select<T extends string>({
       // eslint-disable-next-line no-type-assertion/no-type-assertion
       onChange(e.target.value as T);
     },
-    [onChange]
+    [onChange],
   );
 
   return (

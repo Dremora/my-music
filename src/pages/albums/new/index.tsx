@@ -36,7 +36,7 @@ function NewAlbumPage() {
         },
       });
     },
-    [submit]
+    [submit],
   );
 
   if (!isLoggedIn) {

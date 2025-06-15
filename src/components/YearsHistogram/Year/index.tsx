@@ -24,12 +24,12 @@ function Year({
 }: Props) {
   const onHoverStartMemoized = useMemo(
     () => onHoverStart(year),
-    [onHoverStart, year]
+    [onHoverStart, year],
   );
 
   const onClickWithYear = useCallback(
     () => onClick && onClick(year),
-    [onClick, year]
+    [onClick, year],
   );
 
   return (
@@ -56,14 +56,14 @@ function Year({
             backgroundColor: transform(
               count || 0,
               [0, maxCount],
-              [lightGrey, lighterGrey]
+              [lightGrey, lighterGrey],
             ),
           },
           hover: {
             backgroundColor: transform(
               count || 0,
               [0, maxCount],
-              [lighterGrey, grey]
+              [lighterGrey, grey],
             ),
           },
         }}

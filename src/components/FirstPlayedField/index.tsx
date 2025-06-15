@@ -29,8 +29,8 @@ export function FirstPlayedField({ disabled, onChange, value }: Props) {
     value === null || value === undefined
       ? "unknown"
       : "year" in value
-      ? "date"
-      : "timestamp"
+        ? "date"
+        : "timestamp",
   );
 
   const setMode = useCallback(
@@ -42,7 +42,7 @@ export function FirstPlayedField({ disabled, onChange, value }: Props) {
         onChange(
           value && value.year
             ? value
-            : { year: undefined, month: undefined, day: undefined }
+            : { year: undefined, month: undefined, day: undefined },
         );
       } else if (newMode === "timestamp") {
         onChange(value && value.timestamp ? value : { timestamp: undefined });
@@ -50,7 +50,7 @@ export function FirstPlayedField({ disabled, onChange, value }: Props) {
         onChange(null);
       }
     },
-    [onChange, value]
+    [onChange, value],
   );
 
   const isFirstRender = useIsFirstRender();
@@ -60,7 +60,7 @@ export function FirstPlayedField({ disabled, onChange, value }: Props) {
       const timestamp = parseInteger(e.target.value);
       onChange({ timestamp });
     },
-    [onChange]
+    [onChange],
   );
 
   const onYearChange = useCallback(
@@ -68,7 +68,7 @@ export function FirstPlayedField({ disabled, onChange, value }: Props) {
       const year = parseInteger(e.target.value);
       onChange({ year, month: value?.month, day: value?.day });
     },
-    [onChange, value?.day, value?.month]
+    [onChange, value?.day, value?.month],
   );
 
   const onMonthChange = useCallback(
@@ -76,7 +76,7 @@ export function FirstPlayedField({ disabled, onChange, value }: Props) {
       const month = parseInteger(e.target.value);
       onChange({ year: value?.year, month, day: value?.day });
     },
-    [onChange, value?.day, value?.year]
+    [onChange, value?.day, value?.year],
   );
 
   const onDayChange = useCallback(
@@ -84,7 +84,7 @@ export function FirstPlayedField({ disabled, onChange, value }: Props) {
       const day = parseInteger(e.target.value);
       onChange({ year: value?.year, month: value?.month, day });
     },
-    [onChange, value?.month, value?.year]
+    [onChange, value?.month, value?.year],
   );
 
   return (

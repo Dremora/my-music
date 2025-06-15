@@ -23,7 +23,6 @@ module.exports = {
     "eslint:recommended",
     "plugin:react/all",
     "plugin:react/jsx-runtime",
-    "plugin:prettier/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:jsx-a11y/strict",

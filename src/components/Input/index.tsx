@@ -5,7 +5,7 @@ interface Props {
   disabled?: boolean;
   multiline?: boolean;
   onChange?: (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
   placeholder?: string;
   type?: string;

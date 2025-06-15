@@ -36,12 +36,12 @@ function YearsHistogram({ data, onYearClick }: Props) {
 
   const dataWithYear = useMemo(
     () => data.filter(({ year }) => year !== 0),
-    [data]
+    [data],
   );
 
   const counts = useMemo<number[]>(
     () => dataWithYear.map(({ count }) => count),
-    [dataWithYear]
+    [dataWithYear],
   );
 
   const maxCount = useMemo(() => getMaxValue(counts), [counts]);
@@ -56,7 +56,7 @@ function YearsHistogram({ data, onYearClick }: Props) {
 
   const yearsWithoutGaps = useMemo(
     () => range(getMinValue(years), getMaxValue(years)),
-    [years]
+    [years],
   );
 
   const showYear = useCallback(
@@ -71,7 +71,7 @@ function YearsHistogram({ data, onYearClick }: Props) {
         });
       }
     },
-    [refs]
+    [refs],
   );
 
   const hideYear = useCallback(() => {

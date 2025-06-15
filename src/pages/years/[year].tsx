@@ -11,7 +11,7 @@ function YearsPage() {
   const year = parseInt(
     typeof router.query["year"] === "object"
       ? router.query["year"].join("")
-      : router.query["year"] || ""
+      : router.query["year"] || "",
   );
 
   const { data } = useFindAlbumsQuery({

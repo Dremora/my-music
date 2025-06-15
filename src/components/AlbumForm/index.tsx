@@ -86,7 +86,7 @@ function AlbumForm({
         })(),
       });
     },
-    [album, onSubmit]
+    [album, onSubmit],
   );
 
   const onSourceUpdate = useCallback(
@@ -95,7 +95,7 @@ function AlbumForm({
       sources[index] = source;
       setAlbum({ ...album, sources });
     },
-    [album]
+    [album],
   );
 
   const onSourceRemove = useCallback(
@@ -104,7 +104,7 @@ function AlbumForm({
       sources.splice(index, 1);
       setAlbum({ ...album, sources });
     },
-    [album]
+    [album],
   );
 
   const onSourceAdd = useCallback(() => {
@@ -118,35 +118,35 @@ function AlbumForm({
     (firstPlayed: FirstPlayedInput | null) => {
       setAlbum({ ...album, firstPlayed });
     },
-    [album]
+    [album],
   );
 
   const onTitleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setAlbum({ ...album, title: e.target.value });
     },
-    [album]
+    [album],
   );
 
   const onArtistChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setAlbum({ ...album, artist: e.target.value });
     },
-    [album]
+    [album],
   );
 
   const onYearChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setAlbum({ ...album, year: parseInteger(e.target.value) });
     },
-    [album]
+    [album],
   );
 
   const onCommentsChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setAlbum({ ...album, comments: parseOptionalString(e.target.value) });
     },
-    [album]
+    [album],
   );
 
   return (

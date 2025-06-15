@@ -83,7 +83,7 @@ export const Format = {
   WMA: "WMA",
 } as const;
 
-export type Format = typeof Format[keyof typeof Format];
+export type Format = (typeof Format)[keyof typeof Format];
 export const Location = {
   APPLE_MUSIC: "APPLE_MUSIC",
   FOOBAR2000: "FOOBAR2000",
@@ -91,7 +91,7 @@ export const Location = {
   SPOTIFY: "SPOTIFY",
 } as const;
 
-export type Location = typeof Location[keyof typeof Location];
+export type Location = (typeof Location)[keyof typeof Location];
 export type Mutation = {
   readonly __typename: "Mutation";
   readonly createAlbum: Album;
@@ -191,7 +191,7 @@ export const Type = {
   SINGLE: "SINGLE",
 } as const;
 
-export type Type = typeof Type[keyof typeof Type];
+export type Type = (typeof Type)[keyof typeof Type];
 export type CreateAlbumMutationVariables = Exact<{
   title: Scalars["String"];
   artist: Scalars["String"];
@@ -654,12 +654,12 @@ export function useCreateAlbumMutation(
   baseOptions?: Apollo.MutationHookOptions<
     CreateAlbumMutation,
     CreateAlbumMutationVariables
-  >
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useMutation<CreateAlbumMutation, CreateAlbumMutationVariables>(
     CreateAlbumDocument,
-    options
+    options,
   );
 }
 export type CreateAlbumMutationHookResult = ReturnType<
@@ -742,12 +742,12 @@ export function useLoginMutation(
   baseOptions?: Apollo.MutationHookOptions<
     LoginMutation,
     LoginMutationVariables
-  >
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useMutation<LoginMutation, LoginMutationVariables>(
     LoginDocument,
-    options
+    options,
   );
 }
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
@@ -1050,12 +1050,12 @@ export function useUpdateAlbumMutation(
   baseOptions?: Apollo.MutationHookOptions<
     UpdateAlbumMutation,
     UpdateAlbumMutationVariables
-  >
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useMutation<UpdateAlbumMutation, UpdateAlbumMutationVariables>(
     UpdateAlbumDocument,
-    options
+    options,
   );
 }
 export type UpdateAlbumMutationHookResult = ReturnType<
@@ -1113,7 +1113,7 @@ export function useAlbumPerFirstPlayedYearCountQuery(
   baseOptions?: Apollo.QueryHookOptions<
     AlbumPerFirstPlayedYearCountQuery,
     AlbumPerFirstPlayedYearCountQueryVariables
-  >
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<
@@ -1125,7 +1125,7 @@ export function useAlbumPerFirstPlayedYearCountLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     AlbumPerFirstPlayedYearCountQuery,
     AlbumPerFirstPlayedYearCountQueryVariables
-  >
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<
@@ -1189,7 +1189,7 @@ export function useAlbumPerYearCountQuery(
   baseOptions?: Apollo.QueryHookOptions<
     AlbumPerYearCountQuery,
     AlbumPerYearCountQueryVariables
-  >
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<
@@ -1201,7 +1201,7 @@ export function useAlbumPerYearCountLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     AlbumPerYearCountQuery,
     AlbumPerYearCountQueryVariables
-  >
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<
@@ -1343,24 +1343,24 @@ export function useFindAlbumsQuery(
   baseOptions: Apollo.QueryHookOptions<
     FindAlbumsQuery,
     FindAlbumsQueryVariables
-  >
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<FindAlbumsQuery, FindAlbumsQueryVariables>(
     FindAlbumsDocument,
-    options
+    options,
   );
 }
 export function useFindAlbumsLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     FindAlbumsQuery,
     FindAlbumsQueryVariables
-  >
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<FindAlbumsQuery, FindAlbumsQueryVariables>(
     FindAlbumsDocument,
-    options
+    options,
   );
 }
 export type FindAlbumsQueryHookResult = ReturnType<typeof useFindAlbumsQuery>;
@@ -1531,24 +1531,24 @@ export const GetAlbumDocument = {
  * });
  */
 export function useGetAlbumQuery(
-  baseOptions: Apollo.QueryHookOptions<GetAlbumQuery, GetAlbumQueryVariables>
+  baseOptions: Apollo.QueryHookOptions<GetAlbumQuery, GetAlbumQueryVariables>,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<GetAlbumQuery, GetAlbumQueryVariables>(
     GetAlbumDocument,
-    options
+    options,
   );
 }
 export function useGetAlbumLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     GetAlbumQuery,
     GetAlbumQueryVariables
-  >
+  >,
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<GetAlbumQuery, GetAlbumQueryVariables>(
     GetAlbumDocument,
-    options
+    options,
   );
 }
 export type GetAlbumQueryHookResult = ReturnType<typeof useGetAlbumQuery>;

@@ -30,7 +30,7 @@ function AlbumPage() {
         },
       });
     },
-    [idString, submit]
+    [idString, submit],
   );
 
   if (!isLoggedIn) {

@@ -4,7 +4,7 @@ interface Props {
   children: React.ReactNode;
   disabled?: boolean;
   onClick?: (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => void | Promise<void>;
   type?: "button" | "submit";
   palette?: "primary" | "secondary" | "link";

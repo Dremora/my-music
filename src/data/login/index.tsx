@@ -54,7 +54,7 @@ export function LoginProvider({ children }: Props) {
       isLoggedIn: !!token,
       token,
     }),
-    [token, onLoggedIn, onLoggedOut]
+    [token, onLoggedIn, onLoggedOut],
   );
 
   return (
