@@ -11,20 +11,26 @@ import Year from "./Year";
 const getMaxValue = (numbers: number[]): number =>
   numbers.length === 0
     ? 0
-    : numbers.reduce((acc, value) => Math.max(acc, value), -Infinity);
+    : numbers.reduce(
+        (accumulator, value) => Math.max(accumulator, value),
+        -Infinity,
+      );
 
 const getMinValue = (numbers: number[]): number =>
   numbers.length === 0
     ? 0
-    : numbers.reduce((acc, value) => Math.min(acc, value), Infinity);
+    : numbers.reduce(
+        (accumulator, value) => Math.min(accumulator, value),
+        Infinity,
+      );
 
 const range = (start: number, stop: number): number[] =>
-  Array.from({ length: stop - start + 1 }, (_, i) => start + i);
+  Array.from({ length: stop - start + 1 }, (_, index) => start + index);
 
-interface Props {
-  data: ReadonlyArray<AlbumPerYearCount>;
-  onYearClick?: (year: number) => void;
-}
+type Props = {
+  readonly data: readonly AlbumPerYearCount[];
+  readonly onYearClick?: (year: number) => void;
+};
 
 function YearsHistogram({ data, onYearClick }: Props) {
   const [selectedYear, setSelectedYear] = useState<number>();
@@ -47,8 +53,8 @@ function YearsHistogram({ data, onYearClick }: Props) {
   const maxCount = useMemo(() => getMaxValue(counts), [counts]);
 
   const yearMap = useMemo(() => {
-    const map: { [key: number]: number } = {};
-    dataWithYear.forEach(({ count, year }) => (map[year] = count));
+    const map: Record<number, number> = {};
+    for (const { count, year } of dataWithYear) map[year] = count;
     return map;
   }, [dataWithYear]);
 
@@ -87,7 +93,7 @@ function YearsHistogram({ data, onYearClick }: Props) {
       <div className={rootStyle}>
         {yearsWithoutGaps.map((year) => (
           <Year
-            count={yearMap[year] || 0}
+            count={yearMap[year] ?? 0}
             key={year}
             maxCount={maxCount}
             onClick={onYearClick}

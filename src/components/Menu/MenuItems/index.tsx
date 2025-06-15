@@ -4,9 +4,9 @@ import Item from "../Item";
 
 import { itemsStyle } from "./styles.css";
 
-interface Props {
-  closeMenu?: () => void;
-}
+type Props = {
+  readonly closeMenu?: () => void;
+};
 
 function MenuItems({ closeMenu }: Props) {
   const { isLoggedIn } = useLogin();

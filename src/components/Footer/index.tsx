@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { type ChangeEvent, type FormEvent, useCallback, useState } from "react";
 
 import Button from "components/Button";
 import Input from "components/Input";
@@ -24,7 +24,7 @@ function Footer() {
   }, []);
 
   const setPassword = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setWrongPassword(false);
       setPasswordInput(e.target.value);
     },
@@ -38,19 +38,23 @@ function Footer() {
 
     setPasswordInput("");
 
-    if (!result.data || !result.data.login) {
-      setWrongPassword(true);
-    } else {
+    if (result.data?.login === true) {
       setShowingLogin(false);
       setWrongPassword(false);
       onLoggedIn(passwordInput);
+    } else {
+      setWrongPassword(true);
     }
   }, [loginRequest, onLoggedIn, passwordInput]);
 
   const submit = useCallback(
-    (e: React.FormEvent<HTMLFormElement>) => {
+    (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      isLoggedIn ? onLoggedOut() : setShowingLogin(true);
+      if (isLoggedIn) {
+        onLoggedOut();
+      } else {
+        setShowingLogin(true);
+      }
     },
     [isLoggedIn, onLoggedOut],
   );

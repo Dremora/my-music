@@ -8,14 +8,14 @@ import { useFindAlbumsQuery } from "generated/graphql";
 function YearsPage() {
   const router = useRouter();
 
-  const year = parseInt(
+  const year = Number.parseInt(
     typeof router.query["year"] === "object"
       ? router.query["year"].join("")
-      : router.query["year"] || "",
+      : (router.query["year"] ?? ""),
   );
 
   const { data } = useFindAlbumsQuery({
-    skip: isNaN(year),
+    skip: Number.isNaN(year),
     variables: { filter: { year } },
   });
 

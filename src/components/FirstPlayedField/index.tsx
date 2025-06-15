@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "motion/react";
-import { useCallback, useState } from "react";
+import { type ChangeEvent, useCallback, useState } from "react";
 
 import Input from "components/Input";
 import Text from "components/Text";
@@ -19,9 +19,9 @@ import {
 } from "./styles.css";
 
 type Props = {
-  disabled: boolean;
-  onChange: (value: FirstPlayedInput | null) => void;
-  value: FirstPlayedInput | null | undefined;
+  readonly disabled: boolean;
+  readonly onChange: (value: FirstPlayedInput | null) => void;
+  readonly value: FirstPlayedInput | null | undefined;
 };
 
 export function FirstPlayedField({ disabled, onChange, value }: Props) {
@@ -34,18 +34,20 @@ export function FirstPlayedField({ disabled, onChange, value }: Props) {
   );
 
   const setMode = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const newMode = e.target.value;
       setFirstPlayedMode(newMode);
 
       if (newMode === "date") {
         onChange(
-          value && value.year
-            ? value
-            : { year: undefined, month: undefined, day: undefined },
+          value?.year === undefined
+            ? { year: undefined, month: undefined, day: undefined }
+            : value,
         );
       } else if (newMode === "timestamp") {
-        onChange(value && value.timestamp ? value : { timestamp: undefined });
+        onChange(
+          value?.timestamp === undefined ? { timestamp: undefined } : value,
+        );
       } else {
         onChange(null);
       }
@@ -56,7 +58,7 @@ export function FirstPlayedField({ disabled, onChange, value }: Props) {
   const isFirstRender = useIsFirstRender();
 
   const onTimestampChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const timestamp = parseInteger(e.target.value);
       onChange({ timestamp });
     },
@@ -64,7 +66,7 @@ export function FirstPlayedField({ disabled, onChange, value }: Props) {
   );
 
   const onYearChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const year = parseInteger(e.target.value);
       onChange({ year, month: value?.month, day: value?.day });
     },
@@ -72,7 +74,7 @@ export function FirstPlayedField({ disabled, onChange, value }: Props) {
   );
 
   const onMonthChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const month = parseInteger(e.target.value);
       onChange({ year: value?.year, month, day: value?.day });
     },
@@ -80,7 +82,7 @@ export function FirstPlayedField({ disabled, onChange, value }: Props) {
   );
 
   const onDayChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const day = parseInteger(e.target.value);
       onChange({ year: value?.year, month: value?.month, day });
     },

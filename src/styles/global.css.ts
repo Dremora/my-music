@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-unused-modules
 import { globalStyle } from "@vanilla-extract/css";
 
 import { white, whiteSmoke } from "./colors.css";

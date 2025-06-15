@@ -11,7 +11,7 @@ import {
 const createEmptyAlbum = (): CreateAlbumMutationVariables => ({
   title: "",
   artist: "",
-  firstPlayed: { timestamp: Math.floor(new Date().getTime() / 1000) },
+  firstPlayed: { timestamp: Math.floor(Date.now() / 1000) },
   sources: [],
 });
 
@@ -29,7 +29,7 @@ function NewAlbumPage() {
   });
 
   const handleSubmit = useCallback(
-    (values: Parameters<AlbumFormProps["onSubmit"]>[0]) => {
+    async (values: Parameters<AlbumFormProps["onSubmit"]>[0]) => {
       return submit({
         variables: {
           ...values,
@@ -45,7 +45,7 @@ function NewAlbumPage() {
 
   return (
     <AlbumForm
-      initialValues={data?.createAlbum ? data.createAlbum : emptyAlbum}
+      initialValues={data?.createAlbum ?? emptyAlbum}
       isNew={!data}
       isSubmitting={loading}
       onSubmit={handleSubmit}

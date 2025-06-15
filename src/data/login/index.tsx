@@ -1,6 +1,6 @@
 import {
-  ReactNode,
   createContext,
+  ReactNode,
   useCallback,
   useContext,
   useEffect,
@@ -8,27 +8,27 @@ import {
   useState,
 } from "react";
 
-interface LoginContextType {
+type LoginContextType = {
   isLoggedIn: boolean;
   onLoggedIn: (token: string) => void;
   onLoggedOut: () => void;
   token: string | null;
-}
+};
 
 const LoginContext = createContext<LoginContextType>({
   isLoggedIn: false,
   onLoggedIn: () => {
-    throw new Error();
+    throw new Error("LoginContext is not provided");
   },
   onLoggedOut: () => {
-    throw new Error();
+    throw new Error("LoginContext is not provided");
   },
   token: null,
 });
 
-interface Props {
-  children: ReactNode;
-}
+type Props = {
+  readonly children: ReactNode;
+};
 
 export function LoginProvider({ children }: Props) {
   const [token, setToken] = useState<string | null>(null);
@@ -51,7 +51,7 @@ export function LoginProvider({ children }: Props) {
     () => ({
       onLoggedOut,
       onLoggedIn,
-      isLoggedIn: !!token,
+      isLoggedIn: Boolean(token),
       token,
     }),
     [token, onLoggedIn, onLoggedOut],

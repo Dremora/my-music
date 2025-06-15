@@ -1,4 +1,4 @@
-import { memo, useCallback } from "react";
+import { type ChangeEvent, memo, useCallback } from "react";
 
 import Button from "components/Button";
 import FormField from "components/FormField";
@@ -28,16 +28,18 @@ const formats: { id: Format; label: string }[] = [
   { id: Format.MIXED, label: "Mixed" },
 ];
 
-interface Props {
-  disabled: boolean;
-  index: number;
-  onRemove: (index: number) => void;
-  onUpdate: (index: number, source: SourceInput) => void;
-  source: SourceInput;
-}
+type Props = {
+  readonly disabled: boolean;
+  readonly index: number;
+  readonly onRemove: (index: number) => void;
+  readonly onUpdate: (index: number, source: SourceInput) => void;
+  readonly source: SourceInput;
+};
 
 function Source({ disabled, index, onRemove, onUpdate, source }: Props) {
-  const remove = useCallback(() => onRemove(index), [index, onRemove]);
+  const remove = useCallback(() => {
+    onRemove(index);
+  }, [index, onRemove]);
 
   const onLocationChange = useCallback(
     (value: Location) => {
@@ -54,7 +56,7 @@ function Source({ disabled, index, onRemove, onUpdate, source }: Props) {
   );
 
   const onEditionChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       onUpdate(index, {
         ...source,
         edition: parseOptionalString(e.target.value),
@@ -64,7 +66,7 @@ function Source({ disabled, index, onRemove, onUpdate, source }: Props) {
   );
 
   const onCommentsChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       onUpdate(index, {
         ...source,
         comments: parseOptionalString(e.target.value),
@@ -74,7 +76,7 @@ function Source({ disabled, index, onRemove, onUpdate, source }: Props) {
   );
 
   const onMbidChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       onUpdate(index, {
         ...source,
         mbid: parseMbid(e.target.value),
@@ -84,7 +86,7 @@ function Source({ disabled, index, onRemove, onUpdate, source }: Props) {
   );
 
   const onTagIssuesChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       onUpdate(index, {
         ...source,
         tagIssues: parseOptionalString(e.target.value),
@@ -94,7 +96,7 @@ function Source({ disabled, index, onRemove, onUpdate, source }: Props) {
   );
 
   const onAccurateRipChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       onUpdate(index, {
         ...source,
         accurateRip: parseOptionalString(e.target.value),
@@ -104,7 +106,7 @@ function Source({ disabled, index, onRemove, onUpdate, source }: Props) {
   );
 
   const onCueIssuesChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       onUpdate(index, {
         ...source,
         cueIssues: parseOptionalString(e.target.value),
@@ -114,7 +116,7 @@ function Source({ disabled, index, onRemove, onUpdate, source }: Props) {
   );
 
   const onDownloadChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       onUpdate(index, {
         ...source,
         download: parseOptionalString(e.target.value),
@@ -124,7 +126,7 @@ function Source({ disabled, index, onRemove, onUpdate, source }: Props) {
   );
 
   const onDiscsChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       onUpdate(index, {
         ...source,
         discs: parseInteger(e.target.value),
@@ -168,7 +170,7 @@ function Source({ disabled, index, onRemove, onUpdate, source }: Props) {
         <Input
           disabled={disabled}
           onChange={onCommentsChange}
-          value={source.comments || ""}
+          value={source.comments ?? ""}
         />
       </FormField>
       {source.location !== "SPOTIFY" && (
@@ -176,7 +178,7 @@ function Source({ disabled, index, onRemove, onUpdate, source }: Props) {
           <Input
             disabled={disabled}
             onChange={onTagIssuesChange}
-            value={source.tagIssues || ""}
+            value={source.tagIssues ?? ""}
           />
         </FormField>
       )}

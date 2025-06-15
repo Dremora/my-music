@@ -1,16 +1,18 @@
+import type { MouseEvent, ReactNode } from "react";
+
 import { buttonStyle } from "./styles.css";
 
-interface Props {
-  children: React.ReactNode;
-  disabled?: boolean;
-  onClick?: (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+type Props = {
+  readonly children: ReactNode;
+  readonly disabled?: boolean;
+  readonly onClick?: (
+    event: MouseEvent<HTMLButtonElement>,
   ) => void | Promise<void>;
-  type?: "button" | "submit";
-  palette?: "primary" | "secondary" | "link";
-  size?: "medium" | "small";
-  full?: boolean;
-}
+  readonly type?: "button" | "submit";
+  readonly palette?: "primary" | "secondary" | "link";
+  readonly size?: "medium" | "small";
+  readonly full?: boolean;
+};
 
 function Button({
   children,
@@ -25,6 +27,7 @@ function Button({
     <button
       className={buttonStyle({ full, disabled, size, palette })}
       disabled={disabled}
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
       onClick={onClick}
       type={type === "submit" ? "submit" : "button"}
     >

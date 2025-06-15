@@ -2,7 +2,7 @@ import Album from "components/Album";
 import { FindAlbumsQuery } from "generated/graphql";
 
 type Props = {
-  albums: FindAlbumsQuery["albums"];
+  readonly albums: FindAlbumsQuery["albums"];
 };
 
 function AlbumList({ albums }: Props) {

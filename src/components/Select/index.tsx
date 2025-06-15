@@ -1,13 +1,13 @@
-import { useCallback } from "react";
+import { type ChangeEvent, type ReactNode, useCallback } from "react";
 
 import { selectStyle } from "./styles.css";
 
-interface Props<T extends string> {
-  children: React.ReactNode;
-  disabled?: boolean;
-  value: T | null;
-  onChange: (value: T) => void;
-}
+type Props<T extends string> = {
+  readonly children: ReactNode;
+  readonly disabled?: boolean;
+  readonly value: T | null;
+  readonly onChange: (value: T) => void;
+};
 
 function Select<T extends string>({
   children,
@@ -16,8 +16,8 @@ function Select<T extends string>({
   value,
 }: Props<T>) {
   const onChangeHtmlEvent = useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) => {
-      // eslint-disable-next-line no-type-assertion/no-type-assertion
+    (e: ChangeEvent<HTMLSelectElement>) => {
+      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, no-type-assertion/no-type-assertion
       onChange(e.target.value as T);
     },
     [onChange],
@@ -28,7 +28,7 @@ function Select<T extends string>({
       className={selectStyle}
       disabled={disabled}
       onChange={onChangeHtmlEvent}
-      value={value || ""}
+      value={value ?? ""}
     >
       {children}
     </select>

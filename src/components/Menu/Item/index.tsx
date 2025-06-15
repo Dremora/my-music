@@ -7,11 +7,11 @@ import useIsFirstRender from "data/useIsFirstRender";
 
 import { anchorStyle, barStyle, listItemStyle } from "./styles.css";
 
-interface Props {
-  href: string;
-  children: string;
-  onClick?: (() => void) | undefined;
-}
+type Props = {
+  readonly href: string;
+  readonly children: string;
+  readonly onClick?: (() => void) | undefined;
+};
 
 function Item({ children, href, onClick }: Props) {
   const router = useRouter();
@@ -21,14 +21,11 @@ function Item({ children, href, onClick }: Props) {
   return (
     <li className={listItemStyle}>
       <Link
-        // eslint-disable-next-line react/forbid-component-props
         className={anchorStyle}
         href={href}
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...(onClick ? { onClick } : {})}
       >
-        {/* eslint-disable-next-line */}
-
         <Text color="grey" size="medium" weight="bold">
           {children}
         </Text>

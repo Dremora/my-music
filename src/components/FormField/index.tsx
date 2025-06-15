@@ -1,11 +1,13 @@
+import type { ReactNode } from "react";
+
 import Text from "components/Text";
 
 import { containerStyle, contentsStyle, labelStyle } from "./styles.css";
 
-interface Props {
-  label: string;
-  children: React.ReactNode;
-}
+type Props = {
+  readonly label: string;
+  readonly children: ReactNode;
+};
 
 function FormField({ children, label }: Props) {
   return (

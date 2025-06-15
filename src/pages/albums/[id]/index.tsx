@@ -15,14 +15,14 @@ function AlbumPage() {
 
   const { data, error, loading } = useGetAlbumQuery({
     variables: { id: idString },
-    skip: !id,
+    skip: idString === "",
   });
 
   const [submit, { error: submitError, loading: isSubmitting }] =
     useUpdateAlbumMutation();
 
   const handleSubmit = useCallback(
-    (values: Parameters<AlbumFormProps["onSubmit"]>[0]) => {
+    async (values: Parameters<AlbumFormProps["onSubmit"]>[0]) => {
       return submit({
         variables: {
           id: idString,
@@ -49,7 +49,7 @@ function AlbumPage() {
 
   return (
     <AlbumForm
-      initialValues={data?.album}
+      initialValues={data.album}
       isSubmitting={isSubmitting}
       onSubmit={handleSubmit}
       submitError={submitError}

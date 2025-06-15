@@ -1,16 +1,18 @@
+import type { ChangeEvent } from "react";
+
 import { inputStyle } from "./styles.css";
 
-interface Props {
-  autoFocus?: boolean;
-  disabled?: boolean;
-  multiline?: boolean;
-  onChange?: (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+type Props = {
+  readonly autoFocus?: boolean;
+  readonly disabled?: boolean;
+  readonly multiline?: boolean;
+  readonly onChange?: (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
-  placeholder?: string;
-  type?: string;
-  value: string;
-}
+  readonly placeholder?: string;
+  readonly type?: string;
+  readonly value: string;
+};
 
 function Input({
   autoFocus,

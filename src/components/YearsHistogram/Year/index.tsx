@@ -1,18 +1,18 @@
 import { motion, transform } from "motion/react";
 import { memo, useCallback, useMemo } from "react";
 
-import { grey, lightGrey, lighterGrey } from "styles/colors.css";
+import { grey, lighterGrey, lightGrey } from "styles/colors.css";
 
 import { barStyle, rootStyle } from "./styles.css";
 
-interface Props {
-  year: number;
-  count: number;
-  maxCount: number;
-  onHoverStart: (year: number) => (e: MouseEvent) => void;
-  onHoverEnd: (e: MouseEvent) => void;
-  onClick?: ((year: number) => void) | undefined;
-}
+type Props = {
+  readonly year: number;
+  readonly count: number;
+  readonly maxCount: number;
+  readonly onHoverStart: (year: number) => (e: MouseEvent) => void;
+  readonly onHoverEnd: (e: MouseEvent) => void;
+  readonly onClick?: ((year: number) => void) | undefined;
+};
 
 function Year({
   count,
@@ -27,10 +27,7 @@ function Year({
     [onHoverStart, year],
   );
 
-  const onClickWithYear = useCallback(
-    () => onClick && onClick(year),
-    [onClick, year],
-  );
+  const onClickWithYear = useCallback(() => onClick?.(year), [onClick, year]);
 
   return (
     <motion.div

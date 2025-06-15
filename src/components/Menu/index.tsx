@@ -1,6 +1,6 @@
 import {
-  FloatingPortal,
   autoUpdate,
+  FloatingPortal,
   offset,
   useClick,
   useDismiss,
@@ -34,7 +34,9 @@ function Menu() {
     useClick(context),
   ]);
 
-  const closeMenu = useCallback(() => setIsOpen(false), []);
+  const closeMenu = useCallback(() => {
+    setIsOpen(false);
+  }, []);
 
   return (
     <>

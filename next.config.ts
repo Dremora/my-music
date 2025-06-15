@@ -3,13 +3,13 @@ import { createVanillaExtractPlugin } from "@vanilla-extract/next-plugin";
 const withVanillaExtract = createVanillaExtractPlugin();
 
 export default withVanillaExtract({
-  ignoreDuringBuilds: true,
   reactStrictMode: true,
+  // eslint-disable-next-line @typescript-eslint/require-await
   async rewrites() {
     return [
       {
         source: "/graphql",
-        destination: process.env.API_URL,
+        destination: process.env.API_URL ?? "",
       },
     ];
   },

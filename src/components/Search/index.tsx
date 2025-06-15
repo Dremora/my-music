@@ -1,15 +1,17 @@
-import { useCallback } from "react";
+import { type ChangeEvent, useCallback } from "react";
 
 import { imageStyle, inputStyle, rootStyle } from "./styles.css";
 
-interface Props {
-  value: string;
-  onChange: (value: string) => void;
-}
+type Props = {
+  readonly value: string;
+  readonly onChange: (value: string) => void;
+};
 
 function Search({ onChange, value }: Props) {
   const updateValue = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => onChange(e.target.value),
+    (e: ChangeEvent<HTMLInputElement>) => {
+      onChange(e.target.value);
+    },
     [onChange],
   );
 

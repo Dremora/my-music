@@ -14,9 +14,9 @@ import {
   rootStyle,
 } from "./styles.css";
 
-interface Props {
-  album: FindAlbumsQuery["albums"][number];
-}
+type Props = {
+  readonly album: FindAlbumsQuery["albums"][number];
+};
 
 function Album({ album }: Props) {
   const { isLoggedIn } = useLogin();
@@ -51,11 +51,9 @@ function Album({ album }: Props) {
   return isLoggedIn ? (
     <Link
       as={`/albums/${album.id}`}
-      // eslint-disable-next-line react/forbid-component-props
       className={anchorStyle}
       href="/albums/[id]"
     >
-      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
       {contents}
     </Link>
   ) : (

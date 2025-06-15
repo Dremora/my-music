@@ -35,7 +35,7 @@ export const allColors = {
 
 export type Color = keyof typeof allColors;
 
-// eslint-disable-next-line no-type-assertion/no-type-assertion
+// eslint-disable-next-line no-type-assertion/no-type-assertion, @typescript-eslint/consistent-type-assertions
 const allColorsArray = Object.keys(allColors) as Color[];
 
 export const colorVariant = styleVariants(

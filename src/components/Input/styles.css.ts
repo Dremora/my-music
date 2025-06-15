@@ -1,8 +1,8 @@
 import { style } from "@vanilla-extract/css";
 
 import {
-  darkPlatinum,
   darkerPlatinum,
+  darkPlatinum,
   platinum,
   white,
 } from "styles/colors.css";

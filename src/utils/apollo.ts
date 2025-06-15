@@ -1,4 +1,4 @@
-import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
+import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 
 import introspection from "possibleTypes";
@@ -8,18 +8,19 @@ const httpLink = createHttpLink({
 });
 
 const authLink = setContext(
-  (_, { headers }: { headers: Record<string, string> }) => {
+  (_, { headers }: Readonly<{ headers: Readonly<Record<string, string>> }>) => {
     const token = localStorage.getItem("token");
     return {
       headers: {
         ...headers,
-        authorization: token ? `Bearer ${token}` : "",
+        authorization: token === null ? "" : `Bearer ${token}`,
       },
     };
   },
 );
 
 const client = new ApolloClient({
+  // eslint-disable-next-line unicorn/prefer-spread
   link: authLink.concat(httpLink),
   cache: new InMemoryCache({ possibleTypes: introspection.possibleTypes }),
 });

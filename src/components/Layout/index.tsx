@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 
 import Footer from "components/Footer";
 import Menu from "components/Menu";
@@ -11,9 +12,9 @@ import {
   sectionStyle,
 } from "./styles.css";
 
-interface Props {
-  children: React.ReactNode;
-}
+type Props = {
+  readonly children: ReactNode;
+};
 
 function Layout({ children }: Props) {
   return (
@@ -21,10 +22,7 @@ function Layout({ children }: Props) {
       <div>
         <div className={sectionStyle}>
           <header className={headerStyle}>
-            {/* eslint-disable-next-line react/forbid-component-props */}
             <Link className={homeLinkStyle} href="/">
-              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-
               <img alt="Logo" height={48} src="/logo.svg" />
               <h1 className={h1Style}>My Music</h1>
             </Link>

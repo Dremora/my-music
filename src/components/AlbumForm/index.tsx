@@ -1,6 +1,6 @@
 import { ApolloError } from "@apollo/client";
 import { AnimatePresence, motion } from "motion/react";
-import { useCallback, useState } from "react";
+import { type ChangeEvent, type FormEvent, useCallback, useState } from "react";
 
 import Button from "components/Button";
 import { FirstPlayedField } from "components/FirstPlayedField";
@@ -21,15 +21,17 @@ import { formatInteger, parseInteger, parseOptionalString } from "utils";
 
 import { buttonsStyle, formStyle } from "./styles.css";
 
-export interface Props {
-  initialValues: CreateAlbumMutationVariables | GetAlbumQuery["album"];
-  isNew?: boolean;
-  isSubmitting: boolean;
-  onSubmit:
-    | ((data: CreateAlbumMutationVariables) => Promise<unknown>)
-    | ((data: Omit<UpdateAlbumMutationVariables, "id">) => Promise<unknown>);
-  submitError?: ApolloError | undefined;
-}
+export type Props = {
+  readonly initialValues: CreateAlbumMutationVariables | GetAlbumQuery["album"];
+  readonly isNew?: boolean;
+  readonly isSubmitting: boolean;
+  readonly onSubmit:
+    | ((data: Readonly<CreateAlbumMutationVariables>) => Promise<unknown>)
+    | ((
+        data: Readonly<Omit<UpdateAlbumMutationVariables, "id">>,
+      ) => Promise<unknown>);
+  readonly submitError?: ApolloError | undefined;
+};
 
 type AlbumSource = NewSourceInput | GetAlbumQuery["album"]["sources"][number];
 
@@ -47,7 +49,7 @@ type FormData = Omit<CreateAlbumMutationVariables, "sources"> & {
 
 function AlbumForm({
   initialValues,
-  isNew,
+  isNew = false,
   isSubmitting,
   onSubmit,
   submitError,
@@ -56,7 +58,7 @@ function AlbumForm({
   const [album, setAlbum] = useState<FormData>(initialValues);
 
   const submitForm = useCallback(
-    (e: React.FormEvent<HTMLFormElement>) => {
+    (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
       void onSubmit({
@@ -122,28 +124,28 @@ function AlbumForm({
   );
 
   const onTitleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setAlbum({ ...album, title: e.target.value });
     },
     [album],
   );
 
   const onArtistChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setAlbum({ ...album, artist: e.target.value });
     },
     [album],
   );
 
   const onYearChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setAlbum({ ...album, year: parseInteger(e.target.value) });
     },
     [album],
   );
 
   const onCommentsChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setAlbum({ ...album, comments: parseOptionalString(e.target.value) });
     },
     [album],
@@ -189,19 +191,19 @@ function AlbumForm({
         />
       </FormField>
       <AnimatePresence>
-        {album.sources.map((source, i) => (
+        {album.sources.map((source, index) => (
           <motion.div
             animate={{ height: "auto" }}
             exit={{ height: 0 }}
             initial={{ height: isFirstRender ? "auto" : 0 }}
             // eslint-disable-next-line react/no-array-index-key
-            key={i}
+            key={index}
             style={{ overflow: "hidden" }}
             transition={{ type: "tween" }}
           >
             <Source
               disabled={isSubmitting}
-              index={i}
+              index={index}
               onRemove={onSourceRemove}
               onUpdate={onSourceUpdate}
               source={source}
@@ -210,7 +212,6 @@ function AlbumForm({
         ))}
       </AnimatePresence>
       <div className={buttonsStyle}>
-        {/* eslint-disable-next-line react/jsx-no-bind */}
         <Button onClick={onSourceAdd} palette="link" size="small">
           Add source
         </Button>
