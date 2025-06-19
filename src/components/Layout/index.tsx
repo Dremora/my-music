@@ -1,8 +1,8 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-import Footer from "components/Footer";
-import Menu from "components/Menu";
+import { Footer } from "components/Footer";
+import { Menu } from "components/Menu";
 
 import {
   h1Style,
@@ -16,7 +16,7 @@ type Props = {
   readonly children: ReactNode;
 };
 
-function Layout({ children }: Props) {
+export function Layout({ children }: Props) {
   return (
     <div className={pageStyle}>
       <div>
@@ -37,5 +37,3 @@ function Layout({ children }: Props) {
     </div>
   );
 }
-
-export default Layout;

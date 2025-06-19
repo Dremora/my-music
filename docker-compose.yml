@@ -1,0 +1,9 @@
+services:
+  postgres:
+    image: postgres:17.5
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=my_music
+      - POSTGRES_PASSWORD=my_music
+      - POSTGRES_DB=my_music

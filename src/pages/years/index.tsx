@@ -1,4 +1,4 @@
-import AlbumsByYearSelector from "components/AlbumsByYearSelector";
+import { AlbumsByYearSelector } from "components/AlbumsByYearSelector";
 
 function YearsPage() {
   return <AlbumsByYearSelector />;

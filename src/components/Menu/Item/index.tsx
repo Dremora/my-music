@@ -2,8 +2,8 @@ import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import Text from "components/Text";
-import useIsFirstRender from "data/useIsFirstRender";
+import { Text } from "components/Text";
+import { useIsFirstRender } from "data/useIsFirstRender";
 
 import { anchorStyle, barStyle, listItemStyle } from "./styles.css";
 
@@ -13,7 +13,7 @@ type Props = {
   readonly onClick?: (() => void) | undefined;
 };
 
-function Item({ children, href, onClick }: Props) {
+export function Item({ children, href, onClick }: Props) {
   const router = useRouter();
   const isFirstRender = useIsFirstRender();
 
@@ -44,5 +44,3 @@ function Item({ children, href, onClick }: Props) {
     </li>
   );
 }
-
-export default Item;

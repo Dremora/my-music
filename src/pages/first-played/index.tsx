@@ -1,4 +1,4 @@
-import YearsHistogram from "components/YearsHistogram";
+import { YearsHistogram } from "components/YearsHistogram";
 import { useAlbumPerFirstPlayedYearCountQuery } from "generated/graphql";
 
 function FirstPlayedYearsPage() {

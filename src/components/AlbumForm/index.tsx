@@ -2,20 +2,20 @@ import { ApolloError } from "@apollo/client";
 import { AnimatePresence, motion } from "motion/react";
 import { type ChangeEvent, type FormEvent, useCallback, useState } from "react";
 
-import Button from "components/Button";
+import { Button } from "components/Button";
 import { FirstPlayedField } from "components/FirstPlayedField";
-import FormField from "components/FormField";
-import Input from "components/Input";
-import Source from "components/Source";
-import Text from "components/Text";
-import useIsFirstRender from "data/useIsFirstRender";
+import { FormField } from "components/FormField";
+import { Input } from "components/Input";
+import { Source } from "components/Source";
+import { Text } from "components/Text";
+import { useIsFirstRender } from "data/useIsFirstRender";
 import {
-  CreateAlbumMutationVariables,
-  FirstPlayedInput,
-  GetAlbumQuery,
+  type CreateAlbumMutationVariables,
+  type FirstPlayedInput,
+  type GetAlbumQuery,
   Location,
-  NewSourceInput,
-  UpdateAlbumMutationVariables,
+  type NewSourceInput,
+  type UpdateAlbumMutationVariables,
 } from "generated/graphql";
 import { formatInteger, parseInteger, parseOptionalString } from "utils";
 
@@ -47,7 +47,7 @@ type FormData = Omit<CreateAlbumMutationVariables, "sources"> & {
   })[];
 };
 
-function AlbumForm({
+export function AlbumForm({
   initialValues,
   isNew = false,
   isSubmitting,
@@ -225,5 +225,3 @@ function AlbumForm({
     </form>
   );
 }
-
-export default AlbumForm;

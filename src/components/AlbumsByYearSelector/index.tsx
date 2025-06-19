@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 
-import YearsHistogram from "components/YearsHistogram";
+import { YearsHistogram } from "components/YearsHistogram";
 import { useAlbumPerYearCountQuery } from "generated/graphql";
 
-function AlbumsByYearSelector() {
+export function AlbumsByYearSelector() {
   const router = useRouter();
 
   const navigateToYear = useCallback(
@@ -27,5 +27,3 @@ function AlbumsByYearSelector() {
     />
   );
 }
-
-export default AlbumsByYearSelector;

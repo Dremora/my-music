@@ -7,7 +7,7 @@ type Props = {
   readonly onChange: (value: string) => void;
 };
 
-function Search({ onChange, value }: Props) {
+export function Search({ onChange, value }: Props) {
   const updateValue = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       onChange(e.target.value);
@@ -33,5 +33,3 @@ function Search({ onChange, value }: Props) {
     </div>
   );
 }
-
-export default Search;

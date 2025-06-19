@@ -1,6 +1,6 @@
 import { useLogin } from "data/login";
 
-import Item from "../Item";
+import { Item } from "../Item";
 
 import { itemsStyle } from "./styles.css";
 
@@ -8,7 +8,7 @@ type Props = {
   readonly closeMenu?: () => void;
 };
 
-function MenuItems({ closeMenu }: Props) {
+export function MenuItems({ closeMenu }: Props) {
   const { isLoggedIn } = useLogin();
 
   return (
@@ -27,5 +27,3 @@ function MenuItems({ closeMenu }: Props) {
     </ul>
   );
 }
-
-export default MenuItems;

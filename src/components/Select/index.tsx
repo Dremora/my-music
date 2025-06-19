@@ -9,7 +9,7 @@ type Props<T extends string> = {
   readonly onChange: (value: T) => void;
 };
 
-function Select<T extends string>({
+export function Select<T extends string>({
   children,
   disabled,
   onChange,
@@ -34,5 +34,3 @@ function Select<T extends string>({
     </select>
   );
 }
-
-export default Select;

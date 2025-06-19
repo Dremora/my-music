@@ -14,7 +14,7 @@ type Props = {
   readonly value: string;
 };
 
-function Input({
+export function Input({
   autoFocus,
   disabled,
   multiline = false,
@@ -44,5 +44,3 @@ function Input({
     />
   );
 }
-
-export default Input;

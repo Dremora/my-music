@@ -1,10 +1,10 @@
 import { AnimatePresence, motion } from "motion/react";
 import { type ChangeEvent, useCallback, useState } from "react";
 
-import Input from "components/Input";
-import Text from "components/Text";
-import useIsFirstRender from "data/useIsFirstRender";
-import { FirstPlayedInput } from "generated/graphql";
+import { Input } from "components/Input";
+import { Text } from "components/Text";
+import { useIsFirstRender } from "data/useIsFirstRender";
+import type { FirstPlayedInput } from "generated/graphql";
 import { formatInteger, parseInteger } from "utils";
 
 import {

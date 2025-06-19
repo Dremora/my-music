@@ -9,16 +9,16 @@ import {
 } from "@floating-ui/react";
 import { useCallback, useState } from "react";
 
-import BurgerIcon from "components/BurgerIcon";
+import { BurgerIcon } from "components/BurgerIcon";
 
-import MenuItems from "./MenuItems";
+import { MenuItems } from "./MenuItems";
 import {
   largeScreenStyle,
   menuButtonStyle,
   smallScreenStyle,
 } from "./styles.css";
 
-function Menu() {
+export function Menu() {
   const [isOpen, setIsOpen] = useState(false);
 
   const { context, floatingStyles, refs } = useFloating({
@@ -72,5 +72,3 @@ function Menu() {
     </>
   );
 }
-
-export default Menu;

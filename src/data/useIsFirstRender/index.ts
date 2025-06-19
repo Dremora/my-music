@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-const useIsFirstRender = () => {
+export const useIsFirstRender = () => {
   const isFirstRender = useRef(true);
 
   useEffect(() => {
@@ -9,5 +9,3 @@ const useIsFirstRender = () => {
 
   return isFirstRender.current;
 };
-
-export default useIsFirstRender;

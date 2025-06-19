@@ -15,17 +15,16 @@ export const base = tseslint.config(
     ...importPluginConfigs.recommended,
     name: "eslint-plugin-import-x/recommended",
   },
+  unicorn.configs.recommended,
   {
     name: "my-music/base",
     plugins: {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       "sort-destructure-keys": sortDestructureKeys,
-      unicorn,
       stylistic,
     },
 
     rules: {
-      ...unicorn.configs.recommended.rules,
       eqeqeq: ["error", "always", { null: "ignore" }],
       // 'import/no-anonymous-default-export': 'error',
       // 'import/no-cycle': 'error',
@@ -63,25 +62,16 @@ export const base = tseslint.config(
       "unicorn/no-array-reduce": "off",
       "unicorn/no-null": "off",
       "unicorn/no-useless-undefined": ["error", { checkArguments: false }],
-      "unicorn/prevent-abbreviations": [
-        "error",
-        {
-          replacements: {
-            args: false,
-            e: false,
-            env: false,
-            fn: false,
-            params: false,
-            props: false,
-            ref: false,
-            var: false,
-            vars: false,
-            utils: false,
-          },
-        },
-      ],
+      "unicorn/prevent-abbreviations": "off",
       "unicorn/prefer-top-level-await": "off",
       "unicorn/text-encoding-identifier-case": "off", // very disputable, and probably should be utf-8 instead
+    },
+  },
+  {
+    name: "my-music/ban-default-export",
+    ignores: ["src/pages/**", "eslint.config.ts", "next.config.ts"],
+    rules: {
+      "import-x/no-default-export": "error",
     },
   },
 );

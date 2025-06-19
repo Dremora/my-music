@@ -1,6 +1,6 @@
 import { barStyle, containerStyle } from "./styles.css";
 
-function BurgerIcon() {
+export function BurgerIcon() {
   return (
     <div className={containerStyle}>
       <div className={barStyle} />
@@ -9,5 +9,3 @@ function BurgerIcon() {
     </div>
   );
 }
-
-export default BurgerIcon;

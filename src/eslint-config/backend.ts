@@ -4,7 +4,6 @@ import tseslint from "typescript-eslint";
 import { backendFiles } from "./config";
 
 export const backend = tseslint.config(
-  // @ts-expect-error misaligned types
   {
     ...eslintPluginNode.configs["flat/recommended-module"],
     files: backendFiles,

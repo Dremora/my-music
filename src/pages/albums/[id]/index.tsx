@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 
-import AlbumForm, { Props as AlbumFormProps } from "components/AlbumForm";
-import Text from "components/Text";
+import { AlbumForm, type Props as AlbumFormProps } from "components/AlbumForm";
+import { Text } from "components/Text";
 import { useLogin } from "data/login";
 import { useGetAlbumQuery, useUpdateAlbumMutation } from "generated/graphql";
 

@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 
-import AlbumList from "components/AlbumList";
-import AlbumsByYearSelector from "components/AlbumsByYearSelector";
+import { AlbumList } from "components/AlbumList";
+import { AlbumsByYearSelector } from "components/AlbumsByYearSelector";
 import { Spacer } from "components/Spacer";
 import { useFindAlbumsQuery } from "generated/graphql";
 

@@ -1,8 +1,8 @@
 import Link from "next/link";
 
-import Text from "components/Text";
+import { Text } from "components/Text";
 import { useLogin } from "data/login";
-import { FindAlbumsQuery } from "generated/graphql";
+import type { FindAlbumsQuery } from "generated/graphql";
 import { formatFirstPlayed } from "utils";
 
 import {
@@ -18,7 +18,7 @@ type Props = {
   readonly album: FindAlbumsQuery["albums"][number];
 };
 
-function Album({ album }: Props) {
+export function Album({ album }: Props) {
   const { isLoggedIn } = useLogin();
   const firstPlayedFormatted = formatFirstPlayed(album.firstPlayed);
 
@@ -60,5 +60,3 @@ function Album({ album }: Props) {
     <div className={rootStyle}>{contents}</div>
   );
 }
-
-export default Album;

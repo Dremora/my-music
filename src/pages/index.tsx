@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import AlbumList from "components/AlbumList";
-import Search from "components/Search";
+import { AlbumList } from "components/AlbumList";
+import { Search } from "components/Search";
 import { useFindAlbumsQuery } from "generated/graphql";
 
 function IndexPage() {

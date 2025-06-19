@@ -1,11 +1,11 @@
 import { type ChangeEvent, memo, useCallback } from "react";
 
-import Button from "components/Button";
-import FormField from "components/FormField";
-import Input from "components/Input";
-import Select from "components/Select";
-import Text from "components/Text";
-import { Format, Location, SourceInput } from "generated/graphql";
+import { Button } from "components/Button";
+import { FormField } from "components/FormField";
+import { Input } from "components/Input";
+import { Select } from "components/Select";
+import { Text } from "components/Text";
+import { Format, Location, type SourceInput } from "generated/graphql";
 import { formatInteger, parseInteger, parseOptionalString } from "utils";
 
 import { hrStyle, titleStyle } from "./styles.css";
@@ -36,7 +36,13 @@ type Props = {
   readonly source: SourceInput;
 };
 
-function Source({ disabled, index, onRemove, onUpdate, source }: Props) {
+export const Source = memo(function Source({
+  disabled,
+  index,
+  onRemove,
+  onUpdate,
+  source,
+}: Props) {
   const remove = useCallback(() => {
     onRemove(index);
   }, [index, onRemove]);
@@ -236,6 +242,4 @@ function Source({ disabled, index, onRemove, onUpdate, source }: Props) {
       )}
     </>
   );
-}
-
-export default memo(Source);
+});

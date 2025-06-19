@@ -4,7 +4,7 @@
 // This file is generated, do not change this manually.
 // To regenerate it, run `pnpm types:generate:graphql`
 //
-import { DocumentNode } from "graphql";
+import type { DocumentNode } from "graphql";
 import * as Apollo from "@apollo/client";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = T | null | undefined;

@@ -2,11 +2,11 @@ import { FloatingPortal, useFloating } from "@floating-ui/react";
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useMemo, useState } from "react";
 
-import Text from "components/Text";
-import { AlbumPerYearCount } from "generated/graphql";
+import { Text } from "components/Text";
+import type { AlbumPerYearCount } from "generated/graphql";
 
 import { rootStyle } from "./styles.css";
-import Year from "./Year";
+import { Year } from "./Year";
 
 const getMaxValue = (numbers: number[]): number =>
   numbers.length === 0
@@ -32,7 +32,7 @@ type Props = {
   readonly onYearClick?: (year: number) => void;
 };
 
-function YearsHistogram({ data, onYearClick }: Props) {
+export function YearsHistogram({ data, onYearClick }: Props) {
   const [selectedYear, setSelectedYear] = useState<number>();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -142,5 +142,3 @@ function YearsHistogram({ data, onYearClick }: Props) {
     </>
   );
 }
-
-export default YearsHistogram;

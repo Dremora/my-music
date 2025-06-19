@@ -19,10 +19,8 @@ const authLink = setContext(
   },
 );
 
-const client = new ApolloClient({
+export const client = new ApolloClient({
   // eslint-disable-next-line unicorn/prefer-spread
   link: authLink.concat(httpLink),
   cache: new InMemoryCache({ possibleTypes: introspection.possibleTypes }),
 });
-
-export default client;

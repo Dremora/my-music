@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import Text from "components/Text";
+import { Text } from "components/Text";
 
 import { containerStyle, contentsStyle, labelStyle } from "./styles.css";
 
@@ -9,7 +9,7 @@ type Props = {
   readonly children: ReactNode;
 };
 
-function FormField({ children, label }: Props) {
+export function FormField({ children, label }: Props) {
   return (
     <label className={containerStyle}>
       <div className={labelStyle}>
@@ -21,5 +21,3 @@ function FormField({ children, label }: Props) {
     </label>
   );
 }
-
-export default FormField;

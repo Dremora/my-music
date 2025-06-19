@@ -9,7 +9,6 @@ export default function Document() {
           href="https://fonts.googleapis.com/css?family=Lato:400,700&amp;subset=latin-ext"
           rel="stylesheet"
         />
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=ResizeObserver" />
       </Head>
       <body>
         <Main />

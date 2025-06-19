@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "album_sources" ALTER COLUMN "inserted_at" SET DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "albums" ALTER COLUMN "inserted_at" SET DEFAULT CURRENT_TIMESTAMP;

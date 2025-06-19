@@ -1,3 +1,5 @@
+// @ts-expect-error: missing types
+import { flatConfig } from "@next/eslint-plugin-next";
 import restrictedGlobals from "confusing-browser-globals";
 import jsxA11y from "eslint-plugin-jsx-a11y";
 import reactPlugin from "eslint-plugin-react";
@@ -14,7 +16,6 @@ export const frontend = tseslint.config(
     files: frontendFiles,
     ignores: backendFiles,
   },
-  // @ts-expect-error: misaligned types
   {
     ...reactPlugin.configs.flat.all,
     name: "eslint-plugin-react/flat.all",
@@ -24,6 +25,14 @@ export const frontend = tseslint.config(
   {
     ...reactPlugin.configs.flat["jsx-runtime"],
     name: "eslint-plugin-react/flat.jsx-runtime",
+    files: frontendFiles,
+    ignores: backendFiles,
+  },
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    ...flatConfig.coreWebVitals,
+    name: "next/flat.coreWebVitals",
     files: frontendFiles,
     ignores: backendFiles,
   },

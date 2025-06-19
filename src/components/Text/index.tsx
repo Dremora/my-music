@@ -13,8 +13,11 @@ type Props = {
   readonly weight?: "normal" | "bold";
 };
 
-function Text({ children, color, size = "base", weight = "normal" }: Props) {
+export function Text({
+  children,
+  color,
+  size = "base",
+  weight = "normal",
+}: Props) {
   return <span className={textStyle({ color, size, weight })}>{children}</span>;
 }
-
-export default Text;

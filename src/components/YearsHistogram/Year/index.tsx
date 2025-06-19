@@ -14,7 +14,7 @@ type Props = {
   readonly onClick?: ((year: number) => void) | undefined;
 };
 
-function Year({
+export const Year = memo(function Year({
   count,
   maxCount,
   onClick,
@@ -67,6 +67,4 @@ function Year({
       />
     </motion.div>
   );
-}
-
-export default memo(Year);
+});

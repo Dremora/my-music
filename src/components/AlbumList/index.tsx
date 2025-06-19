@@ -1,11 +1,11 @@
-import Album from "components/Album";
-import { FindAlbumsQuery } from "generated/graphql";
+import { Album } from "components/Album";
+import type { FindAlbumsQuery } from "generated/graphql";
 
 type Props = {
   readonly albums: FindAlbumsQuery["albums"];
 };
 
-function AlbumList({ albums }: Props) {
+export function AlbumList({ albums }: Props) {
   return (
     <div>
       {albums.map((album) => (
@@ -14,5 +14,3 @@ function AlbumList({ albums }: Props) {
     </div>
   );
 }
-
-export default AlbumList;

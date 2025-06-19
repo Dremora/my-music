@@ -14,7 +14,7 @@ type Props = {
   readonly full?: boolean;
 };
 
-function Button({
+export function Button({
   children,
   disabled = false,
   full = false,
@@ -35,5 +35,3 @@ function Button({
     </button>
   );
 }
-
-export default Button;
