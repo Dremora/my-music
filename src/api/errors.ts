@@ -20,13 +20,6 @@ export class NotFoundError extends Error {
   }
 }
 
-export class GitHubInstallationNotFoundError extends NotFoundError {
-  constructor() {
-    super("GitHub installation not found");
-    this.name = "GitHubInstallationNotFoundError";
-  }
-}
-
 export class UnauthorizedError extends Error {
   constructor(message: string) {
     super(message);
@@ -41,6 +34,9 @@ export class UnauthenticatedError extends Error {
   }
 }
 
+/**
+ * @public
+ */
 export function invariant<T>(
   value: T | null | undefined | false,
   error: Error,
