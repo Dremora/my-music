@@ -1,7 +1,8 @@
 import path from "node:path";
 
-import { ForbiddenError } from "apollo-server";
 import { fieldAuthorizePlugin, makeSchema } from "nexus";
+
+import { UnauthorizedError } from "api/errors";
 
 import * as types from "./types";
 
@@ -24,7 +25,7 @@ export const schema = makeSchema({
   plugins: [
     fieldAuthorizePlugin({
       formatError: () => {
-        return new ForbiddenError("Unauthorized to access the field");
+        return new UnauthorizedError("Unauthorized to access the field");
       },
     }),
   ],

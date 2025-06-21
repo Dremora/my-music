@@ -2,6 +2,7 @@ import { useCSRFPrevention } from "@graphql-yoga/plugin-csrf-prevention";
 import { useCookies } from "@whatwg-node/server-plugin-cookies";
 import { GraphQLError } from "graphql";
 import { createYoga, maskError } from "graphql-yoga";
+import { ZodError } from "zod";
 
 import { type Context, getContext } from "./context";
 import {
@@ -28,7 +29,8 @@ export const yoga = createYoga<Context>({
           error.originalError instanceof ValidationError ||
           error.originalError instanceof NotFoundError ||
           error.originalError instanceof UnauthorizedError ||
-          error.originalError instanceof UnauthenticatedError)
+          error.originalError instanceof UnauthenticatedError ||
+          error.originalError instanceof ZodError)
       ) {
         return error;
       }

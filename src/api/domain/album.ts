@@ -1,8 +1,9 @@
 /* eslint-disable functional/prefer-immutable-types */
 import { PrismaClient } from "@prisma/client";
-import { UserInputError } from "apollo-server";
 import { fromUnixTime } from "date-fns";
 import { z } from "zod";
+
+import { ValidationError } from "api/errors";
 
 import type { NexusGenArgTypes } from "../nexus-typegen";
 import { formats, locations } from "../schema/enums";
@@ -141,7 +142,7 @@ export const updateAlbum = async (
     .map((sourceId) => sourceId.toString());
 
   if (unknownSourceIDs.length > 0) {
-    throw new UserInputError(
+    throw new ValidationError(
       `Unknown source${unknownSourceIDs.length > 1 ? "s" : ""} for album ${
         parsedAlbum.id
       }: ${unknownSourceIDs.join(", ")}`,
