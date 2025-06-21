@@ -12,6 +12,7 @@ export const verifyAuthorizationHeader = (
   }
 
   const [type, token] = authorizationHeader.split(" ");
+
   if (type !== "Bearer" || typeof token !== "string") {
     return false;
   }

@@ -50,6 +50,7 @@ export function Footer() {
   const submit = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+
       if (isLoggedIn) {
         onLoggedOut();
       } else {

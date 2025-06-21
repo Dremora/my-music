@@ -10,6 +10,7 @@ const httpLink = createHttpLink({
 const authLink = setContext(
   (_, { headers }: Readonly<{ headers: Readonly<Record<string, string>> }>) => {
     const token = localStorage.getItem("token");
+
     return {
       headers: {
         ...headers,

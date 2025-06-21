@@ -69,6 +69,7 @@ export function AlbumForm({
         sources: album.sources.map((source) => {
           if ("__typename" in source) {
             const { __typename, ...rest } = source;
+
             return rest;
           } else {
             return source;
@@ -78,6 +79,7 @@ export function AlbumForm({
           if (album.firstPlayed) {
             if ("__typename" in album.firstPlayed) {
               const { __typename, ...rest } = album.firstPlayed;
+
               return rest;
             } else {
               return album.firstPlayed;

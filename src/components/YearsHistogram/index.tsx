@@ -55,6 +55,7 @@ export function YearsHistogram({ data, onYearClick }: Props) {
   const yearMap = useMemo(() => {
     const map: Record<number, number> = {};
     for (const { count, year } of dataWithYear) map[year] = count;
+
     return map;
   }, [dataWithYear]);
 

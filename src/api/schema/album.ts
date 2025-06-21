@@ -13,6 +13,7 @@ export const Album = objectType({
     t.string("artist");
     t.nullable.string("comments");
     t.nullable.int("year");
+
     t.nullable.field({
       name: "firstPlayed",
       type: "FirstPlayed",

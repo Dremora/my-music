@@ -18,6 +18,7 @@ export function Item({ children, href, onClick }: Props) {
   const isFirstRender = useIsFirstRender();
 
   const current = router.pathname.startsWith(href);
+
   return (
     <li className={listItemStyle}>
       <Link

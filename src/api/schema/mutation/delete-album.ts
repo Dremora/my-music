@@ -12,6 +12,7 @@ export const deleteAlbum = mutationField("deleteAlbum", {
       await context.prisma.album.delete({
         where: { id },
       });
+
       return true;
     } catch (error) {
       if (
@@ -20,6 +21,7 @@ export const deleteAlbum = mutationField("deleteAlbum", {
       ) {
         return false;
       }
+
       throw error;
     }
   },
