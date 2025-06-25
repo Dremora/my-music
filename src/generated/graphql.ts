@@ -34,16 +34,10 @@ export type Album = {
   readonly artist: Scalars["String"];
   readonly comments: Maybe<Scalars["String"]>;
   readonly firstPlayed: Maybe<FirstPlayed>;
-  readonly id: Scalars["UUID"];
+  readonly id: Scalars["ID"];
   readonly sources: ReadonlyArray<Source>;
   readonly title: Scalars["String"];
-  readonly type: Maybe<Type>;
   readonly year: Maybe<Scalars["Int"]>;
-};
-
-export type AlbumFilterInput = {
-  readonly query?: InputMaybe<Scalars["String"]>;
-  readonly year?: InputMaybe<Scalars["Int"]>;
 };
 
 export type AlbumPerYearCount = {
@@ -101,12 +95,7 @@ export type Mutation = {
 };
 
 export type MutationCreateAlbumArgs = {
-  artist: Scalars["String"];
-  comments?: InputMaybe<Scalars["String"]>;
-  firstPlayed?: InputMaybe<FirstPlayedInput>;
-  sources: ReadonlyArray<NewSourceInput>;
-  title: Scalars["String"];
-  year?: InputMaybe<Scalars["Int"]>;
+  input: MutationCreateAlbumInput;
 };
 
 export type MutationDeleteAlbumArgs = {
@@ -125,6 +114,15 @@ export type MutationUpdateAlbumArgs = {
   sources: ReadonlyArray<SourceInput>;
   title: Scalars["String"];
   year?: InputMaybe<Scalars["Int"]>;
+};
+
+export type MutationCreateAlbumInput = {
+  readonly artist: Scalars["String"];
+  readonly comments?: InputMaybe<Scalars["String"]>;
+  readonly firstPlayed?: InputMaybe<FirstPlayedInput>;
+  readonly sources: ReadonlyArray<NewSourceInput>;
+  readonly title: Scalars["String"];
+  readonly year?: InputMaybe<Scalars["Int"]>;
 };
 
 export type NewSourceInput = {
@@ -153,7 +151,12 @@ export type QueryAlbumArgs = {
 };
 
 export type QueryAlbumsArgs = {
-  filter: AlbumFilterInput;
+  input: QueryAlbumsInput;
+};
+
+export type QueryAlbumsInput = {
+  readonly query?: InputMaybe<Scalars["String"]>;
+  readonly year?: InputMaybe<Scalars["Int"]>;
 };
 
 export type Source = {
@@ -185,20 +188,8 @@ export type SourceInput = {
   readonly tagIssues?: InputMaybe<Scalars["String"]>;
 };
 
-export const Type = {
-  ALBUM: "ALBUM",
-  EP: "EP",
-  SINGLE: "SINGLE",
-} as const;
-
-export type Type = (typeof Type)[keyof typeof Type];
 export type CreateAlbumMutationVariables = Exact<{
-  title: Scalars["String"];
-  artist: Scalars["String"];
-  comments?: InputMaybe<Scalars["String"]>;
-  year?: InputMaybe<Scalars["Int"]>;
-  firstPlayed?: InputMaybe<FirstPlayedInput>;
-  sources: ReadonlyArray<NewSourceInput>;
+  input: MutationCreateAlbumInput;
 }>;
 
 export type CreateAlbumMutation = {
@@ -315,7 +306,7 @@ export type AlbumPerYearCountQuery = {
 };
 
 export type FindAlbumsQueryVariables = Exact<{
-  filter: AlbumFilterInput;
+  input: QueryAlbumsInput;
 }>;
 
 export type FindAlbumsQuery = {
@@ -389,71 +380,13 @@ export const CreateAlbumDocument = {
           kind: "VariableDefinition",
           variable: {
             kind: "Variable",
-            name: { kind: "Name", value: "title" },
+            name: { kind: "Name", value: "input" },
           },
           type: {
             kind: "NonNullType",
             type: {
               kind: "NamedType",
-              name: { kind: "Name", value: "String" },
-            },
-          },
-        },
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "artist" },
-          },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "NamedType",
-              name: { kind: "Name", value: "String" },
-            },
-          },
-        },
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "comments" },
-          },
-          type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
-        },
-        {
-          kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "year" } },
-          type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
-        },
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "firstPlayed" },
-          },
-          type: {
-            kind: "NamedType",
-            name: { kind: "Name", value: "FirstPlayedInput" },
-          },
-        },
-        {
-          kind: "VariableDefinition",
-          variable: {
-            kind: "Variable",
-            name: { kind: "Name", value: "sources" },
-          },
-          type: {
-            kind: "NonNullType",
-            type: {
-              kind: "ListType",
-              type: {
-                kind: "NonNullType",
-                type: {
-                  kind: "NamedType",
-                  name: { kind: "Name", value: "NewSourceInput" },
-                },
-              },
+              name: { kind: "Name", value: "MutationCreateAlbumInput" },
             },
           },
         },
@@ -467,50 +400,10 @@ export const CreateAlbumDocument = {
             arguments: [
               {
                 kind: "Argument",
-                name: { kind: "Name", value: "title" },
+                name: { kind: "Name", value: "input" },
                 value: {
                   kind: "Variable",
-                  name: { kind: "Name", value: "title" },
-                },
-              },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "artist" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "artist" },
-                },
-              },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "comments" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "comments" },
-                },
-              },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "year" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "year" },
-                },
-              },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "firstPlayed" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "firstPlayed" },
-                },
-              },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "sources" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "sources" },
+                  name: { kind: "Name", value: "input" },
                 },
               },
             ],
@@ -641,12 +534,7 @@ export type CreateAlbumMutationFn = Apollo.MutationFunction<
  * @example
  * const [createAlbumMutation, { data, loading, error }] = useCreateAlbumMutation({
  *   variables: {
- *      title: // value for 'title'
- *      artist: // value for 'artist'
- *      comments: // value for 'comments'
- *      year: // value for 'year'
- *      firstPlayed: // value for 'firstPlayed'
- *      sources: // value for 'sources'
+ *      input: // value for 'input'
  *   },
  * });
  */
@@ -1231,13 +1119,13 @@ export const FindAlbumsDocument = {
           kind: "VariableDefinition",
           variable: {
             kind: "Variable",
-            name: { kind: "Name", value: "filter" },
+            name: { kind: "Name", value: "input" },
           },
           type: {
             kind: "NonNullType",
             type: {
               kind: "NamedType",
-              name: { kind: "Name", value: "AlbumFilterInput" },
+              name: { kind: "Name", value: "QueryAlbumsInput" },
             },
           },
         },
@@ -1251,10 +1139,10 @@ export const FindAlbumsDocument = {
             arguments: [
               {
                 kind: "Argument",
-                name: { kind: "Name", value: "filter" },
+                name: { kind: "Name", value: "input" },
                 value: {
                   kind: "Variable",
-                  name: { kind: "Name", value: "filter" },
+                  name: { kind: "Name", value: "input" },
                 },
               },
             ],
@@ -1335,7 +1223,7 @@ export const FindAlbumsDocument = {
  * @example
  * const { data, loading, error } = useFindAlbumsQuery({
  *   variables: {
- *      filter: // value for 'filter'
+ *      input: // value for 'input'
  *   },
  * });
  */

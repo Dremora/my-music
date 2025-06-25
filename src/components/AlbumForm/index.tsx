@@ -22,11 +22,15 @@ import { formatInteger, parseInteger, parseOptionalString } from "utils";
 import { buttonsStyle, formStyle } from "./styles.css";
 
 export type Props = {
-  readonly initialValues: CreateAlbumMutationVariables | GetAlbumQuery["album"];
+  readonly initialValues:
+    | CreateAlbumMutationVariables["input"]
+    | GetAlbumQuery["album"];
   readonly isNew?: boolean;
   readonly isSubmitting: boolean;
   readonly onSubmit:
-    | ((data: Readonly<CreateAlbumMutationVariables>) => Promise<unknown>)
+    | ((
+        data: Readonly<CreateAlbumMutationVariables["input"]>,
+      ) => Promise<unknown>)
     | ((
         data: Readonly<Omit<UpdateAlbumMutationVariables, "id">>,
       ) => Promise<unknown>);
@@ -35,7 +39,7 @@ export type Props = {
 
 type AlbumSource = NewSourceInput | GetAlbumQuery["album"]["sources"][number];
 
-type FormData = Omit<CreateAlbumMutationVariables, "sources"> & {
+type FormData = Omit<CreateAlbumMutationVariables["input"], "sources"> & {
   firstPlayed?:
     | (FirstPlayedInput & {
         __typename?: string;

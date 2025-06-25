@@ -1,4 +1,4 @@
-export const ignoredFiles = ["**/.next", "**/dist", "src/api/nexus-typegen.ts"];
+export const ignoredFiles = ["**/.next", "**/dist"];
 export const scriptsFiles = [];
 export const frontendFiles = ["src/**"];
 export const backendFiles = [

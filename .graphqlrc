@@ -1,0 +1,4 @@
+schema:
+  - "schema.graphql"
+  - "relay-compiler-directives-v10.0.1.graphql"
+documents: "src/{queries,mutations}/**/*.{ts,gql}"

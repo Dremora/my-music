@@ -1,19 +1,5 @@
-mutation CreateAlbum(
-  $title: String!
-  $artist: String!
-  $comments: String
-  $year: Int
-  $firstPlayed: FirstPlayedInput
-  $sources: [NewSourceInput!]!
-) {
-  createAlbum(
-    title: $title
-    artist: $artist
-    comments: $comments
-    year: $year
-    firstPlayed: $firstPlayed
-    sources: $sources
-  ) {
+mutation CreateAlbum($input: MutationCreateAlbumInput!) {
+  createAlbum(input: $input) {
     id
     artist
     title

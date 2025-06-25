@@ -1,7 +1,7 @@
 // https://the-guild.dev/graphql/yoga-server/docs/integrations/integration-with-nextjs
 
 import { getContext } from "api/context";
-import { yoga } from "api/http";
+import { yoga } from "api/yoga";
 
 const { handleRequest } = yoga;
 

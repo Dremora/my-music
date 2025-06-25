@@ -1,5 +1,5 @@
-query FindAlbums($filter: AlbumFilterInput!) {
-  albums(filter: $filter) {
+query FindAlbums($input: QueryAlbumsInput!) {
+  albums(input: $input) {
     id
     artist
     title

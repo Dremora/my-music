@@ -1,6 +1,5 @@
-import { enumType } from "nexus";
+import { builder } from "./builder";
 
-// TODO sync with Prisma
 export const formats = [
   "APE",
   "FLAC",
@@ -18,12 +17,10 @@ export const locations = [
   "SPOTIFY",
 ] as const;
 
-export const format = enumType({
-  name: "Format",
-  members: formats,
+export const GraphQLFormat = builder.enumType("Format", {
+  values: formats,
 });
 
-export const location = enumType({
-  name: "Location",
-  members: locations,
+export const GraphQLLocation = builder.enumType("Location", {
+  values: locations,
 });

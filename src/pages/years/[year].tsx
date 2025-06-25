@@ -16,7 +16,7 @@ function YearsPage() {
 
   const { data } = useFindAlbumsQuery({
     skip: Number.isNaN(year),
-    variables: { filter: { year } },
+    variables: { input: { year } },
   });
 
   return (

@@ -9,7 +9,7 @@ function IndexPage() {
 
   const { data } = useFindAlbumsQuery({
     skip: !searchText,
-    variables: { filter: { query: searchText } },
+    variables: { input: { query: searchText } },
   });
 
   return (

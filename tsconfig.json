@@ -24,6 +24,7 @@
 
     // Emit
     "noEmit": true, // Enforced by Next.js
+    "outDir": "dist",
 
     // If not present, Next.js will set this to true
     "allowJs": false,

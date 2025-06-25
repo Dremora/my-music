@@ -1,11 +1,9 @@
-/* eslint-disable functional/prefer-immutable-types */
-import { PrismaClient } from "@prisma/client";
 import { fromUnixTime } from "date-fns";
 import { z } from "zod";
 
 import { ValidationError } from "api/errors";
+import { prisma } from "api/prisma";
 
-import type { NexusGenArgTypes } from "../nexus-typegen";
 import { formats, locations } from "../schema/enums";
 
 const trim = (str: string) => str.trim();
@@ -92,6 +90,30 @@ const newAlbumSchema = z.object({
   firstPlayed: firstPlayedSchema,
 });
 
+type FirstPlayed = {
+  day?: number | null | undefined;
+  month?: number | null | undefined;
+  year?: number | null | undefined;
+  timestamp?: number | null | undefined;
+};
+
+type NewSource = Readonly<{
+  accurateRip?: string | null;
+  comments?: string | null;
+  cueIssues?: string | null;
+  discs?: number | null;
+  download?: string | null;
+}>;
+
+type NewAlbum = Readonly<{
+  artist: string;
+  title: string;
+  comments?: string | null;
+  year?: number | null;
+  sources: NewSource[];
+  firstPlayed?: FirstPlayed | null;
+}>;
+
 const albumSchema = newAlbumSchema.extend({
   id: z
     .string()
@@ -100,10 +122,26 @@ const albumSchema = newAlbumSchema.extend({
   sources: z.array(sourceSchema),
 });
 
-export const createAlbum = async (
-  album: NexusGenArgTypes["Mutation"]["createAlbum"],
-  prisma: PrismaClient,
-) => {
+type UpdateAlbum = Readonly<{
+  id: string;
+  artist: string;
+  title: string;
+  comments?: string | null;
+  year?: number | null;
+  sources: SourceOrNewSource[];
+  firstPlayed?: FirstPlayed | null;
+}>;
+
+type SourceOrNewSource = Readonly<{
+  id?: string | null;
+  accurateRip?: string | null;
+  comments?: string | null;
+  cueIssues?: string | null;
+  discs?: number | null;
+  download?: string | null;
+}>;
+
+export const createAlbum = async (album: NewAlbum) => {
   const { firstPlayed, sources, ...parsedAlbum } = newAlbumSchema.parse(album);
 
   return prisma.album.create({
@@ -111,10 +149,7 @@ export const createAlbum = async (
   });
 };
 
-export const updateAlbum = async (
-  album: NexusGenArgTypes["Mutation"]["updateAlbum"],
-  prisma: PrismaClient,
-) => {
+export const updateAlbum = async (album: UpdateAlbum) => {
   const { firstPlayed, sources, ...parsedAlbum } = albumSchema.parse(album);
 
   const sourceIds = await prisma.source.findMany({

@@ -8,7 +8,7 @@ import {
   useCreateAlbumMutation,
 } from "generated/graphql";
 
-const createEmptyAlbum = (): CreateAlbumMutationVariables => ({
+const createEmptyAlbum = (): CreateAlbumMutationVariables["input"] => ({
   title: "",
   artist: "",
   firstPlayed: { timestamp: Math.floor(Date.now() / 1000) },
@@ -32,7 +32,7 @@ function NewAlbumPage() {
     async (values: Parameters<AlbumFormProps["onSubmit"]>[0]) => {
       return submit({
         variables: {
-          ...values,
+          input: values,
         },
       });
     },

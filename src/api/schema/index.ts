@@ -1,32 +1,27 @@
+import { writeFileSync } from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-import { fieldAuthorizePlugin, makeSchema } from "nexus";
+import { lexicographicSortSchema, printSchema } from "graphql";
 
-import { UnauthorizedError } from "api/errors";
+import { builder } from "./builder";
 
-import * as types from "./types";
+import "./enums";
+import "./mutations";
+import "./queries";
+import "./scalars";
+import "./types";
 
-const dirname = path.dirname(new URL(import.meta.url).pathname);
+export const schema = builder.toSchema();
 
-export const schema = makeSchema({
-  types,
-  contextType: {
-    module: path.join(dirname, "..", "context.ts"),
-    export: "Context",
-  },
-  nonNullDefaults: {
-    input: true,
-    output: true,
-  },
-  outputs: {
-    typegen: path.join(dirname, "..", "nexus-typegen.ts"),
-    schema: path.join(dirname, "..", "schema.graphql"),
-  },
-  plugins: [
-    fieldAuthorizePlugin({
-      formatError: () => {
-        return new UnauthorizedError("Unauthorized to access the field");
-      },
-    }),
-  ],
-});
+if (process.env["NODE_ENV"] === "development") {
+  const schemaAsString = printSchema(lexicographicSortSchema(schema));
+
+  writeFileSync(
+    path.join(
+      path.dirname(fileURLToPath(import.meta.url)),
+      "../../../schema.graphql",
+    ),
+    schemaAsString,
+  );
+}
