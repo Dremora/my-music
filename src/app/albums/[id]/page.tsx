@@ -1,17 +1,21 @@
-import { useRouter } from "next/router";
-import { useCallback } from "react";
+"use client";
 
-import { AlbumForm, type Props as AlbumFormProps } from "components/AlbumForm";
+import { use, useCallback } from "react";
+
+import { AlbumForm, type AlbumFormProps } from "components/AlbumForm";
 import { Text } from "components/Text";
 import { useLogin } from "data/login";
 import { useGetAlbumQuery, useUpdateAlbumMutation } from "generated/graphql";
 
-function AlbumPage() {
-  const router = useRouter();
-  const { id } = router.query;
+export default function AlbumPage({
+  params,
+}: {
+  readonly params: Promise<{ readonly id: string }>;
+}) {
+  const { id } = use(params);
   const { isLoggedIn } = useLogin();
 
-  const idString = (id ?? "").toString();
+  const idString = id;
 
   const { data, error, loading } = useGetAlbumQuery({
     variables: { id: idString },
@@ -56,5 +60,3 @@ function AlbumPage() {
     />
   );
 }
-
-export default AlbumPage;

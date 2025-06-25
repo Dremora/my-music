@@ -5,7 +5,7 @@ import { grey, lighterGrey, lightGrey } from "styles/colors.css";
 
 import { barStyle, rootStyle } from "./styles.css";
 
-type Props = {
+type YearProps = {
   readonly year: number;
   readonly count: number;
   readonly maxCount: number;
@@ -21,7 +21,7 @@ export const Year = memo(function Year({
   onHoverEnd,
   onHoverStart,
   year,
-}: Props) {
+}: YearProps) {
   const onHoverStartMemoized = useMemo(
     () => onHoverStart(year),
     [onHoverStart, year],

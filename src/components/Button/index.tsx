@@ -2,7 +2,7 @@ import type { MouseEvent, ReactNode } from "react";
 
 import { buttonStyle } from "./styles.css";
 
-type Props = {
+type ButtonProps = {
   readonly children: ReactNode;
   readonly disabled?: boolean;
   readonly onClick?: (
@@ -22,7 +22,7 @@ export function Button({
   palette = "primary",
   size = "medium",
   type = "button",
-}: Props) {
+}: ButtonProps) {
   return (
     <button
       className={buttonStyle({ full, disabled, size, palette })}

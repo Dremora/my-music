@@ -14,9 +14,15 @@ builder.queryField("albums", (t) =>
       year: t.input.int(),
     },
     async resolve(_, { input: { query, year } }) {
-      if (query == null) {
+      if (year != null) {
+        return prisma.album.findMany({
+          where: {
+            year,
+          },
+        });
+      } else if (query == null) {
         return [];
-      } else if (year == null) {
+      } else {
         const albums = await prisma.$queryRawTyped(getAlbumsByQuery(query));
 
         return albums.map(
@@ -38,12 +44,6 @@ builder.queryField("albums", (t) =>
             id: album.id,
           }),
         );
-      } else {
-        return prisma.album.findMany({
-          where: {
-            year,
-          },
-        });
       }
     },
   }),

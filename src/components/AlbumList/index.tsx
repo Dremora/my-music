@@ -1,11 +1,11 @@
 import { Album } from "components/Album";
 import type { FindAlbumsQuery } from "generated/graphql";
 
-type Props = {
+type AlbumListProps = {
   readonly albums: FindAlbumsQuery["albums"];
 };
 
-export function AlbumList({ albums }: Props) {
+export function AlbumList({ albums }: AlbumListProps) {
   return (
     <div>
       {albums.map((album) => (

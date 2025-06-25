@@ -69,7 +69,7 @@ export const base = tseslint.config(
   },
   {
     name: "my-music/ban-default-export",
-    ignores: ["src/pages/**", "eslint.config.ts", "next.config.ts"],
+    ignores: ["src/app/**", "eslint.config.ts", "next.config.ts"],
     rules: {
       "import-x/no-default-export": "error",
     },

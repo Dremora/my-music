@@ -1,23 +1,23 @@
 import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 
 import { Text } from "components/Text";
 import { useIsFirstRender } from "data/useIsFirstRender";
 
 import { anchorStyle, barStyle, listItemStyle } from "./styles.css";
 
-type Props = {
+type MenuItemProps = {
   readonly href: string;
   readonly children: string;
   readonly onClick?: (() => void) | undefined;
 };
 
-export function Item({ children, href, onClick }: Props) {
-  const router = useRouter();
+export function Item({ children, href, onClick }: MenuItemProps) {
+  const pathname = usePathname();
   const isFirstRender = useIsFirstRender();
 
-  const current = router.pathname.startsWith(href);
+  const current = pathname.startsWith(href);
 
   return (
     <li className={listItemStyle}>

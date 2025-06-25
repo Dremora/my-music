@@ -2,7 +2,7 @@ import type { ChangeEvent } from "react";
 
 import { inputStyle } from "./styles.css";
 
-type Props = {
+type InputProps = {
   readonly autoFocus?: boolean;
   readonly disabled?: boolean;
   readonly multiline?: boolean;
@@ -22,7 +22,7 @@ export function Input({
   placeholder,
   type = "text",
   value,
-}: Props) {
+}: InputProps) {
   return multiline ? (
     <textarea
       autoFocus={autoFocus}

@@ -27,12 +27,12 @@ const getMinValue = (numbers: number[]): number =>
 const range = (start: number, stop: number): number[] =>
   Array.from({ length: stop - start + 1 }, (_, index) => start + index);
 
-type Props = {
+type YearsHistogramProps = {
   readonly data: readonly AlbumPerYearCount[];
   readonly onYearClick?: (year: number) => void;
 };
 
-export function YearsHistogram({ data, onYearClick }: Props) {
+export function YearsHistogram({ data, onYearClick }: YearsHistogramProps) {
   const [selectedYear, setSelectedYear] = useState<number>();
   const [isOpen, setIsOpen] = useState(false);
 

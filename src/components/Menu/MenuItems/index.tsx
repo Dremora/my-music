@@ -4,11 +4,11 @@ import { Item } from "../Item";
 
 import { itemsStyle } from "./styles.css";
 
-type Props = {
+type MenuItemsProps = {
   readonly closeMenu?: () => void;
 };
 
-export function MenuItems({ closeMenu }: Props) {
+export function MenuItems({ closeMenu }: MenuItemsProps) {
   const { isLoggedIn } = useLogin();
 
   return (

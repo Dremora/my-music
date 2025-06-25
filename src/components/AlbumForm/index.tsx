@@ -21,7 +21,7 @@ import { formatInteger, parseInteger, parseOptionalString } from "utils";
 
 import { buttonsStyle, formStyle } from "./styles.css";
 
-export type Props = {
+export type AlbumFormProps = {
   readonly initialValues:
     | CreateAlbumMutationVariables["input"]
     | GetAlbumQuery["album"];
@@ -57,7 +57,7 @@ export function AlbumForm({
   isSubmitting,
   onSubmit,
   submitError,
-}: Props) {
+}: AlbumFormProps) {
   const isFirstRender = useIsFirstRender();
   const [album, setAlbum] = useState<FormData>(initialValues);
 

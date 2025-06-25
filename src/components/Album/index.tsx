@@ -14,11 +14,11 @@ import {
   rootStyle,
 } from "./styles.css";
 
-type Props = {
+type AlbumProps = {
   readonly album: FindAlbumsQuery["albums"][number];
 };
 
-export function Album({ album }: Props) {
+export function Album({ album }: AlbumProps) {
   const { isLoggedIn } = useLogin();
   const firstPlayedFormatted = formatFirstPlayed(album.firstPlayed);
 

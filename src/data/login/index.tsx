@@ -26,11 +26,11 @@ const LoginContext = createContext<LoginContextType>({
   token: null,
 });
 
-type Props = {
+type LoginProviderProps = {
   readonly children: ReactNode;
 };
 
-export function LoginProvider({ children }: Props) {
+export function LoginProvider({ children }: LoginProviderProps) {
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {

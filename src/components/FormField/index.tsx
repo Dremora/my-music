@@ -4,12 +4,12 @@ import { Text } from "components/Text";
 
 import { containerStyle, contentsStyle, labelStyle } from "./styles.css";
 
-type Props = {
+type FormFieldProps = {
   readonly label: string;
   readonly children: ReactNode;
 };
 
-export function FormField({ children, label }: Props) {
+export function FormField({ children, label }: FormFieldProps) {
   return (
     <label className={containerStyle}>
       <div className={labelStyle}>

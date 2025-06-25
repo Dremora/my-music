@@ -28,7 +28,7 @@ const formats: { id: Format; label: string }[] = [
   { id: Format.MIXED, label: "Mixed" },
 ];
 
-type Props = {
+type SourceProps = {
   readonly disabled: boolean;
   readonly index: number;
   readonly onRemove: (index: number) => void;
@@ -42,7 +42,7 @@ export const Source = memo(function Source({
   onRemove,
   onUpdate,
   source,
-}: Props) {
+}: SourceProps) {
   const remove = useCallback(() => {
     onRemove(index);
   }, [index, onRemove]);

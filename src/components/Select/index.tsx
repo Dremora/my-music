@@ -2,7 +2,7 @@ import { type ChangeEvent, type ReactNode, useCallback } from "react";
 
 import { selectStyle } from "./styles.css";
 
-type Props<T extends string> = {
+type SelectProps<T extends string> = {
   readonly children: ReactNode;
   readonly disabled?: boolean;
   readonly value: T | null;
@@ -14,7 +14,7 @@ export function Select<T extends string>({
   disabled,
   onChange,
   value,
-}: Props<T>) {
+}: SelectProps<T>) {
   const onChangeHtmlEvent = useCallback(
     (e: ChangeEvent<HTMLSelectElement>) => {
       // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, no-type-assertion/no-type-assertion

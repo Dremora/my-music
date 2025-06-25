@@ -1,6 +1,6 @@
 import { builder } from "../builder";
 
-export const GraphQLFirstPlayedTime = builder
+const GraphQLFirstPlayedTime = builder
   .objectRef<{
     timestamp: number;
   }>("FirstPlayedTime")
@@ -10,7 +10,7 @@ export const GraphQLFirstPlayedTime = builder
     }),
   });
 
-export const GraphQLFirstPlayedDate = builder
+const GraphQLFirstPlayedDate = builder
   .objectRef<{
     day: number | null;
     month: number | null;

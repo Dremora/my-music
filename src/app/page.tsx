@@ -1,10 +1,12 @@
+"use client";
+
 import { useState } from "react";
 
 import { AlbumList } from "components/AlbumList";
 import { Search } from "components/Search";
 import { useFindAlbumsQuery } from "generated/graphql";
 
-function IndexPage() {
+export default function IndexPage() {
   const [searchText, setSearchText] = useState("");
 
   const { data } = useFindAlbumsQuery({
@@ -19,5 +21,3 @@ function IndexPage() {
     </>
   );
 }
-
-export default IndexPage;

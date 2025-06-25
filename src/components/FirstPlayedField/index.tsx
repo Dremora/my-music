@@ -18,13 +18,17 @@ import {
   yearInputFieldStyle,
 } from "./styles.css";
 
-type Props = {
+type FirstPlayedFieldProps = {
   readonly disabled: boolean;
   readonly onChange: (value: FirstPlayedInput | null) => void;
   readonly value: FirstPlayedInput | null | undefined;
 };
 
-export function FirstPlayedField({ disabled, onChange, value }: Props) {
+export function FirstPlayedField({
+  disabled,
+  onChange,
+  value,
+}: FirstPlayedFieldProps) {
   const [firstPlayedMode, setFirstPlayedMode] = useState(() =>
     value === null || value === undefined
       ? "unknown"

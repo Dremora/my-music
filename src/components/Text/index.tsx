@@ -6,7 +6,7 @@ import { textStyle } from "./styles.css";
 
 type Color = keyof typeof colors;
 
-type Props = {
+type TextProps = {
   readonly children: ReactNode;
   readonly color: Color;
   readonly size?: "small" | "base" | "medium" | "large";
@@ -18,6 +18,6 @@ export function Text({
   color,
   size = "base",
   weight = "normal",
-}: Props) {
+}: TextProps) {
   return <span className={textStyle({ color, size, weight })}>{children}</span>;
 }

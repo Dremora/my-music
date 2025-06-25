@@ -5,7 +5,7 @@ import { GraphQLFormat, GraphQLLocation } from "../enums";
 import { GraphQLFirstPlayedInput } from "../inputs";
 import { GraphQLAlbum } from "../types";
 
-export const GraphQLNewSourceInput = builder.inputType("NewSourceInput", {
+const GraphQLNewSourceInput = builder.inputType("NewSourceInput", {
   fields: (t) => ({
     accurateRip: t.string(),
     comments: t.string(),

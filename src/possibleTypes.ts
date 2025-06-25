@@ -2,7 +2,7 @@
 //
 // NOTE:
 // This file is generated, do not change this manually.
-// To regenerate it, run `pnpm types:generate:graphql`
+// To regenerate it, run `pnpm generate:types:graphql`
 //
 
 export type PossibleTypesResultData = {

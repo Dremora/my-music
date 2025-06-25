@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 
 import { YearsHistogram } from "components/YearsHistogram";
@@ -9,7 +9,7 @@ export function AlbumsByYearSelector() {
 
   const navigateToYear = useCallback(
     (year: number) => {
-      void router.push("/years/[year]", `/years/${year}`);
+      router.push(`/years/${year}`);
     },
     [router],
   );
