@@ -6,12 +6,12 @@ import { grey, lighterGrey, lightGrey } from "styles/colors.css";
 import { barStyle, rootStyle } from "./styles.css";
 
 type YearProps = {
-  readonly year: number;
   readonly count: number;
   readonly maxCount: number;
-  readonly onHoverStart: (year: number) => (e: MouseEvent) => void;
-  readonly onHoverEnd: (e: MouseEvent) => void;
   readonly onClick?: ((year: number) => void) | undefined;
+  readonly onHoverEnd: (e: MouseEvent) => void;
+  readonly onHoverStart: (year: number) => (e: MouseEvent) => void;
+  readonly year: number;
 };
 
 export const Year = memo(function Year({

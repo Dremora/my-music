@@ -2,8 +2,8 @@ import { builder } from "../builder";
 
 export const GraphQLAlbumPerYearCount = builder
   .objectRef<{
-    year: number;
     count: number;
+    year: number;
   }>("AlbumPerYearCount")
   .implement({
     fields: (t) => ({

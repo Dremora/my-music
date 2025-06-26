@@ -27,7 +27,7 @@ builder.queryField("albumPerYearCount", (t) =>
           year: item.year,
           count: item._count.year,
         }))
-        .filter(function (item): item is { year: number; count: number } {
+        .filter(function (item): item is { count: number; year: number } {
           return item.year !== null;
         });
     },

@@ -93,9 +93,18 @@ const newAlbumSchema = z.object({
 type FirstPlayed = {
   day?: number | null | undefined;
   month?: number | null | undefined;
-  year?: number | null | undefined;
   timestamp?: number | null | undefined;
+  year?: number | null | undefined;
 };
+
+type NewAlbum = Readonly<{
+  artist: string;
+  comments?: string | null;
+  firstPlayed?: FirstPlayed | null;
+  sources: NewSource[];
+  title: string;
+  year?: number | null;
+}>;
 
 type NewSource = Readonly<{
   accurateRip?: string | null;
@@ -103,15 +112,6 @@ type NewSource = Readonly<{
   cueIssues?: string | null;
   discs?: number | null;
   download?: string | null;
-}>;
-
-type NewAlbum = Readonly<{
-  artist: string;
-  title: string;
-  comments?: string | null;
-  year?: number | null;
-  sources: NewSource[];
-  firstPlayed?: FirstPlayed | null;
 }>;
 
 const albumSchema = newAlbumSchema.extend({
@@ -122,23 +122,23 @@ const albumSchema = newAlbumSchema.extend({
   sources: z.array(sourceSchema),
 });
 
-type UpdateAlbum = Readonly<{
-  id: string;
-  artist: string;
-  title: string;
-  comments?: string | null;
-  year?: number | null;
-  sources: SourceOrNewSource[];
-  firstPlayed?: FirstPlayed | null;
-}>;
-
 type SourceOrNewSource = Readonly<{
-  id?: string | null;
   accurateRip?: string | null;
   comments?: string | null;
   cueIssues?: string | null;
   discs?: number | null;
   download?: string | null;
+  id?: string | null;
+}>;
+
+type UpdateAlbum = Readonly<{
+  artist: string;
+  comments?: string | null;
+  firstPlayed?: FirstPlayed | null;
+  id: string;
+  sources: SourceOrNewSource[];
+  title: string;
+  year?: number | null;
 }>;
 
 export const createAlbum = async (album: NewAlbum) => {

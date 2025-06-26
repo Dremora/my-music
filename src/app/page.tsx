@@ -29,26 +29,6 @@ type LoadingQueryProps = {
   readonly queryRef: PreloadedQuery<pageFindAlbumsBySearchQuery>;
 };
 
-function LoadingQuery({ onLoad, queryRef }: LoadingQueryProps) {
-  usePreloadedQuery(pageFindAlbumsBySearchQuery, queryRef);
-
-  useEffect(() => {
-    onLoad(queryRef);
-  }, [queryRef, onLoad]);
-
-  return null;
-}
-
-function AlbumListWrapper({
-  queryRef,
-}: {
-  readonly queryRef: PreloadedQuery<pageFindAlbumsBySearchQuery>;
-}) {
-  const data = usePreloadedQuery(pageFindAlbumsBySearchQuery, queryRef);
-
-  return <AlbumList albumsRef={data.albums} />;
-}
-
 export default function IndexPage() {
   const [searchText, setSearchText] = useState("");
 
@@ -117,4 +97,24 @@ export default function IndexPage() {
       )}
     </>
   );
+}
+
+function AlbumListWrapper({
+  queryRef,
+}: {
+  readonly queryRef: PreloadedQuery<pageFindAlbumsBySearchQuery>;
+}) {
+  const data = usePreloadedQuery(pageFindAlbumsBySearchQuery, queryRef);
+
+  return <AlbumList albumsRef={data.albums} />;
+}
+
+function LoadingQuery({ onLoad, queryRef }: LoadingQueryProps) {
+  usePreloadedQuery(pageFindAlbumsBySearchQuery, queryRef);
+
+  useEffect(() => {
+    onLoad(queryRef);
+  }, [queryRef, onLoad]);
+
+  return null;
 }

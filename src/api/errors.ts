@@ -6,17 +6,17 @@ export class BusinessRuleError extends Error {
   }
 }
 
-export class ValidationError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = "ValidationError";
-  }
-}
-
 export class NotFoundError extends Error {
   constructor(message: string) {
     super(message);
     this.name = "NotFoundError";
+  }
+}
+
+export class UnauthenticatedError extends Error {
+  constructor() {
+    super("User is not authenticated");
+    this.name = "UnauthenticatedError";
   }
 }
 
@@ -27,10 +27,10 @@ export class UnauthorizedError extends Error {
   }
 }
 
-export class UnauthenticatedError extends Error {
-  constructor() {
-    super("User is not authenticated");
-    this.name = "UnauthenticatedError";
+export class ValidationError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "ValidationError";
   }
 }
 

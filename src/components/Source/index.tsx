@@ -32,8 +32,6 @@ const formats: { id: Format; label: string }[] = [
 ];
 
 export type SourceData = {
-  readonly id?: string;
-  readonly location: Location;
   readonly accurateRip: string | null;
   readonly comments: string | null;
   readonly cueIssues: string | null;
@@ -41,6 +39,8 @@ export type SourceData = {
   readonly download: string | null;
   readonly edition: string | null;
   readonly format: Format | null;
+  readonly id?: string;
+  readonly location: Location;
   readonly mbid: string | null;
   readonly tagIssues: string | null;
 };

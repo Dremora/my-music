@@ -8,8 +8,8 @@ import { useIsFirstRender } from "data/useIsFirstRender";
 import { anchorStyle, barStyle, listItemStyle } from "./styles.css";
 
 type MenuItemProps = {
-  readonly href: string;
   readonly children: string;
+  readonly href: string;
   readonly onClick?: (() => void) | undefined;
 };
 

@@ -5,13 +5,13 @@ import { buttonStyle } from "./styles.css";
 type ButtonProps = {
   readonly children: ReactNode;
   readonly disabled?: boolean;
+  readonly full?: boolean;
   readonly onClick?: (
     event: MouseEvent<HTMLButtonElement>,
   ) => void | Promise<void>;
-  readonly type?: "button" | "submit";
   readonly palette?: "primary" | "secondary" | "link";
   readonly size?: "medium" | "small";
-  readonly full?: boolean;
+  readonly type?: "button" | "submit";
 };
 
 export function Button({

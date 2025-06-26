@@ -3,8 +3,8 @@ import { type ChangeEvent, useCallback } from "react";
 import { imageStyle, inputStyle, rootStyle } from "./styles.css";
 
 type SearchProps = {
-  readonly value: string;
   readonly onChange: (value: string) => void;
+  readonly value: string;
 };
 
 export function Search({ onChange, value }: SearchProps) {

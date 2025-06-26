@@ -5,8 +5,8 @@ import { selectStyle } from "./styles.css";
 type SelectProps<T extends string> = {
   readonly children: ReactNode;
   readonly disabled?: boolean;
-  readonly value: T | null;
   readonly onChange: (value: T) => void;
+  readonly value: T | null;
 };
 
 export function Select<T extends string>({
