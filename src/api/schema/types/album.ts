@@ -1,6 +1,6 @@
-import type { Album } from "@prisma/client";
 import { getUnixTime } from "date-fns";
 
+import type { Album } from "api/generated/prisma";
 import { prisma } from "api/prisma";
 
 import { builder } from "../builder";

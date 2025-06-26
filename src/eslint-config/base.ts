@@ -27,7 +27,6 @@ export const base = tseslint.config(
     rules: {
       eqeqeq: ["error", "always", { null: "ignore" }],
       "import-x/no-anonymous-default-export": "error",
-      "import-x/no-cycle": "error",
       "import-x/order": [
         "error",
         {

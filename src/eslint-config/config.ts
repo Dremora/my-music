@@ -1,4 +1,9 @@
-export const ignoredFiles = ["**/.next", "**/dist", "src/generated"];
+export const ignoredFiles = [
+  "**/.next",
+  "**/dist",
+  "src/generated",
+  "src/api/generated",
+];
 export const scriptsFiles = [];
 export const frontendFiles = ["src/**"];
 export const backendFiles = [

@@ -1,5 +1,4 @@
-import { getAlbumPerFirstPlayedYearCount } from "@prisma/client/sql";
-
+import { getAlbumPerFirstPlayedYearCount } from "api/generated/prisma/sql";
 import { prisma } from "api/prisma";
 
 import { builder } from "../builder";

@@ -1,6 +1,5 @@
-import type { Album } from "@prisma/client";
-import { getAlbumsByQuery } from "@prisma/client/sql";
-
+import type { Album } from "api/generated/prisma";
+import { getAlbumsByQuery } from "api/generated/prisma/sql";
 import { prisma } from "api/prisma";
 
 import { builder } from "../builder";

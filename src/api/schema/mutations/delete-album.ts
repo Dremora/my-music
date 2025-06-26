@@ -1,5 +1,4 @@
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-
+import { PrismaClientKnownRequestError } from "api/generated/prisma/runtime/client";
 import { prisma } from "api/prisma";
 
 import { builder } from "../builder";

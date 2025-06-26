@@ -1,4 +1,4 @@
-import type { Source } from "@prisma/client";
+import type { Source } from "api/generated/prisma";
 
 import { builder } from "../builder";
 import { GraphQLFormat, GraphQLLocation } from "../enums";
