@@ -1,16 +1,16 @@
 import { format } from "date-fns-tz";
 
+export type FirstPlayed = Date | Timestamp | null;
+
 type Date = {
-  year?: number | null;
-  month?: number | null;
   day?: number | null;
+  month?: number | null;
+  year?: number | null;
 };
 
 type Timestamp = {
   timestamp?: number | null;
 };
-
-export type FirstPlayed = Date | Timestamp | null;
 
 export function formatFirstPlayed(value: FirstPlayed): string {
   if (!value) {

@@ -26,10 +26,7 @@ export const base = tseslint.config(
 
     rules: {
       eqeqeq: ["error", "always", { null: "ignore" }],
-      // 'import/no-anonymous-default-export': 'error',
-      // 'import/no-cycle': 'error',
-      // 'import/no-extraneous-dependencies': 'error',
-      "unicorn/no-abusive-eslint-disable": "off",
+      "import-x/no-anonymous-default-export": "error",
       "import-x/order": [
         "error",
         {
@@ -46,11 +43,11 @@ export const base = tseslint.config(
         },
       ],
       "no-console": ["error", { allow: ["warn", "error", "info", "debug"] }],
-      "no-useless-constructor": "error",
-      "no-shadow": "error",
-      "prefer-object-spread": "error",
       "no-implicit-coercion": "error",
+      "no-shadow": "error",
+      "no-useless-constructor": "error",
       "object-shorthand": "error",
+      "prefer-object-spread": "error",
       "sort-destructure-keys/sort-destructure-keys": "error",
       "sort-imports": [
         "error",
@@ -59,6 +56,7 @@ export const base = tseslint.config(
           ignoreDeclarationSort: true,
         },
       ],
+      "unicorn/no-abusive-eslint-disable": "off",
       "unicorn/no-array-reduce": "off",
       "unicorn/no-negated-condition": "off",
       "unicorn/no-null": "off",

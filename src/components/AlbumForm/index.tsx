@@ -54,13 +54,13 @@ export const albumFormFragment = graphql`
 `;
 
 export type AlbumData = {
-  readonly id?: string;
   readonly artist: string;
-  readonly title: string;
   readonly comments: string | null;
-  readonly year: number | null;
   readonly firstPlayed: FirstPlayed | null;
+  readonly id?: string;
   readonly sources: readonly SourceData[];
+  readonly title: string;
+  readonly year: number | null;
 };
 
 export type AlbumFormProps = {

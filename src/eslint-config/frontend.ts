@@ -66,9 +66,9 @@ export const frontend = tseslint.config(
       globals: globals.browser,
     },
     rules: {
+      "jsx-a11y/control-has-associated-label": "error",
       "jsx-a11y/no-autofocus": "off",
       "no-restricted-globals": ["error", ...restrictedGlobals],
-      "jsx-a11y/control-has-associated-label": "error",
       "react-hooks/exhaustive-deps": "error",
       "react-hooks/rules-of-hooks": "error",
       "react/forbid-component-props": ["error", { forbid: [] }],
@@ -80,6 +80,7 @@ export const frontend = tseslint.config(
       "react/jsx-no-bind": "off", // annoying for now
       "react/jsx-no-leaked-render": "off",
       "react/jsx-no-literals": "off",
+      "react/jsx-sort-props": "off",
       "react/no-multi-comp": "off",
       "react/require-default-props": "off",
       "react/style-prop-object": "off", // we use style property for Text

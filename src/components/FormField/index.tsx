@@ -5,8 +5,8 @@ import { Text } from "components/Text";
 import { containerStyle, contentsStyle, labelStyle } from "./styles.css";
 
 type FormFieldProps = {
-  readonly label: string;
   readonly children: ReactNode;
+  readonly label: string;
 };
 
 export function FormField({ children, label }: FormFieldProps) {

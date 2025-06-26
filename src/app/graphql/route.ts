@@ -14,7 +14,7 @@ export async function GET(request: Request) {
   );
 }
 
-export async function POST(request: Request) {
+export async function OPTIONS(request: Request) {
   return handleRequest(
     request,
     getContext({
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
   );
 }
 
-export async function OPTIONS(request: Request) {
+export async function POST(request: Request) {
   return handleRequest(
     request,
     getContext({

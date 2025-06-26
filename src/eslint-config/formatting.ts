@@ -1,11 +1,22 @@
 import eslintPluginStylistic from "@stylistic/eslint-plugin";
 import eslintConfigPrettier from "eslint-config-prettier";
+import eslintPluginPerfectionist from "eslint-plugin-perfectionist";
 import tseslint from "typescript-eslint";
 
 export const formatting = tseslint.config(
   {
     ...eslintConfigPrettier,
     name: "my-music/formatting",
+  },
+  {
+    ...eslintPluginPerfectionist.configs["recommended-natural"],
+    name: "eslint-plugin-perfectionist/recommended-natural",
+    rules: {
+      ...eslintPluginPerfectionist.configs["recommended-natural"].rules,
+      "perfectionist/sort-imports": "off",
+      "perfectionist/sort-objects": "off",
+      "perfectionist/sort-union-types": "off",
+    },
   },
   {
     name: "my-music/stylistic",
@@ -15,17 +26,17 @@ export const formatting = tseslint.config(
     rules: {
       "@stylistic/padding-line-between-statements": [
         "error",
-        { blankLine: "always", prev: "*", next: "multiline-block-like" },
-        { blankLine: "always", prev: "*", next: "multiline-const" },
-        { blankLine: "always", prev: "*", next: "multiline-expression" },
-        { blankLine: "always", prev: "*", next: "multiline-let" },
-        { blankLine: "always", prev: "*", next: "return" },
-        { blankLine: "always", prev: "multiline-block-like", next: "*" },
-        { blankLine: "always", prev: "multiline-const", next: "*" },
-        { blankLine: "always", prev: "multiline-expression", next: "*" },
-        { blankLine: "always", prev: "multiline-let", next: "*" },
-        { blankLine: "always", prev: "import", next: "*" },
-        { blankLine: "any", prev: "import", next: "import" },
+        { blankLine: "always", next: "multiline-block-like", prev: "*" },
+        { blankLine: "always", next: "multiline-const", prev: "*" },
+        { blankLine: "always", next: "multiline-expression", prev: "*" },
+        { blankLine: "always", next: "multiline-let", prev: "*" },
+        { blankLine: "always", next: "return", prev: "*" },
+        { blankLine: "always", next: "*", prev: "multiline-block-like" },
+        { blankLine: "always", next: "*", prev: "multiline-const" },
+        { blankLine: "always", next: "*", prev: "multiline-expression" },
+        { blankLine: "always", next: "*", prev: "multiline-let" },
+        { blankLine: "always", next: "*", prev: "import" },
+        { blankLine: "any", next: "import", prev: "import" },
       ],
     },
   },

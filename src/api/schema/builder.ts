@@ -6,12 +6,12 @@ import type { Context } from "api/context";
 
 /* eslint-disable @typescript-eslint/naming-convention */
 export const builder = new SchemaBuilder<{
+  AuthScopes: {
+    loggedIn: boolean;
+    unauthenticated: boolean;
+  };
   Context: Context;
   DefaultFieldNullability: false;
-  AuthScopes: {
-    unauthenticated: boolean;
-    loggedIn: boolean;
-  };
   Scalars: {
     UUID: {
       Input: string;
