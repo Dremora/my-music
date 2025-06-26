@@ -5,12 +5,26 @@ import jsxA11y from "eslint-plugin-jsx-a11y";
 import reactPlugin from "eslint-plugin-react";
 // eslint-disable-next-line import-x/default
 import eslintPluginReactHooks from "eslint-plugin-react-hooks";
+// @ts-expect-error: missing types
+import relayPlugin from "eslint-plugin-relay";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
 import { backendFiles, frontendFiles } from "./config";
 
 export const frontend = tseslint.config(
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  {
+    name: "my-music/relay",
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    ...relayPlugin.configs["ts-strict"],
+    files: frontendFiles,
+    ignores: backendFiles,
+    plugins: {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      relay: relayPlugin,
+    },
+  },
   {
     ...jsxA11y.flatConfigs.strict,
     files: frontendFiles,

@@ -1,8 +1,9 @@
 import Link from "next/link";
+import { graphql, useFragment } from "react-relay";
 
 import { Text } from "components/Text";
 import { useLogin } from "data/login";
-import type { FindAlbumsQuery } from "generated/graphql";
+import type { AlbumFragment$key } from "generated/AlbumFragment.graphql";
 import { formatFirstPlayed } from "utils";
 
 import {
@@ -14,13 +15,37 @@ import {
   rootStyle,
 } from "./styles.css";
 
+const albumFragment = graphql`
+  fragment AlbumFragment on Album {
+    id
+    artist
+    title
+    year
+    firstPlayed {
+      ... on FirstPlayedTimestamp {
+        # eslint-disable-next-line relay/unused-fields
+        timestamp
+      }
+      ... on FirstPlayedDate {
+        year
+        # eslint-disable-next-line relay/unused-fields
+        month
+        # eslint-disable-next-line relay/unused-fields
+        day
+      }
+    }
+  }
+`;
+
 type AlbumProps = {
-  readonly album: FindAlbumsQuery["albums"][number];
+  readonly albumRef: AlbumFragment$key;
 };
 
-export function Album({ album }: AlbumProps) {
+export function Album({ albumRef }: AlbumProps) {
+  const album = useFragment(albumFragment, albumRef);
+
   const { isLoggedIn } = useLogin();
-  const firstPlayedFormatted = formatFirstPlayed(album.firstPlayed);
+  const firstPlayedFormatted = formatFirstPlayed(album.firstPlayed ?? null);
 
   const contents = (
     <>

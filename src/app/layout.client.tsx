@@ -1,22 +1,34 @@
 "use client";
 
-import { ApolloProvider } from "@apollo/client";
 import type { ReactNode } from "react";
+import { RelayEnvironmentProvider } from "react-relay";
 
 import { Layout } from "components/Layout";
 import { LoginProvider } from "data/login";
-import { client } from "utils/apollo";
+import { useIsFirstRenderForceRender } from "data/useIsFirstRender";
+import { environment } from "utils/relay";
 
 export default function LayoutClient({
   children,
 }: {
   readonly children: ReactNode;
 }) {
+  const isFirstRender = useIsFirstRenderForceRender();
+
+  if (isFirstRender) {
+    return null;
+  }
+
+  // eslint-disable-next-line unicorn/prefer-global-this
+  if (typeof window === "undefined") {
+    return null;
+  }
+
   return (
-    <ApolloProvider client={client}>
+    <RelayEnvironmentProvider environment={environment}>
       <LoginProvider>
         <Layout>{children}</Layout>
       </LoginProvider>
-    </ApolloProvider>
+    </RelayEnvironmentProvider>
   );
 }

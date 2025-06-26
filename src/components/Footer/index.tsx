@@ -1,17 +1,25 @@
 import { type ChangeEvent, type FormEvent, useCallback, useState } from "react";
+import { graphql, useMutation } from "react-relay";
 
 import { Button } from "components/Button";
 import { Input } from "components/Input";
 import { Text } from "components/Text";
 import { useLogin } from "data/login";
-import { useLoginMutation } from "generated/graphql";
+import type { FooterLoginMutation } from "generated/FooterLoginMutation.graphql";
 
 import { loginLinkStyle, rootStyle, spacerStyle } from "./styles.css";
+
+const footerLoginMutation = graphql`
+  mutation FooterLoginMutation($password: String!) {
+    login(password: $password)
+  }
+`;
 
 export function Footer() {
   const { isLoggedIn, onLoggedIn, onLoggedOut } = useLogin();
 
-  const [loginRequest, { loading }] = useLoginMutation();
+  const [loginRequest, isLoggingIn] =
+    useMutation<FooterLoginMutation>(footerLoginMutation);
 
   const [passwordInput, setPasswordInput] = useState("");
   const [showingLogin, setShowingLogin] = useState(false);
@@ -31,20 +39,21 @@ export function Footer() {
     [],
   );
 
-  const login = useCallback(async () => {
-    const result = await loginRequest({
+  const login = useCallback(() => {
+    loginRequest({
       variables: { password: passwordInput },
+      onCompleted: (data) => {
+        setPasswordInput("");
+
+        if (data.login) {
+          setShowingLogin(false);
+          setWrongPassword(false);
+          onLoggedIn(passwordInput);
+        } else {
+          setWrongPassword(true);
+        }
+      },
     });
-
-    setPasswordInput("");
-
-    if (result.data?.login === true) {
-      setShowingLogin(false);
-      setWrongPassword(false);
-      onLoggedIn(passwordInput);
-    } else {
-      setWrongPassword(true);
-    }
   }, [loginRequest, onLoggedIn, passwordInput]);
 
   const submit = useCallback(
@@ -66,7 +75,7 @@ export function Footer() {
         <>
           <Input
             autoFocus
-            disabled={loading}
+            disabled={isLoggingIn}
             onChange={setPassword}
             placeholder={
               wrongPassword
@@ -77,18 +86,21 @@ export function Footer() {
             value={passwordInput}
           />
           <div className={spacerStyle} />
-          <Button disabled={loading} onClick={cancelLogin}>
+          <Button disabled={isLoggingIn} onClick={cancelLogin}>
             Cancel
           </Button>
           <div className={spacerStyle} />
-          <Button disabled={loading || !passwordInput} onClick={login}>
+          <Button disabled={isLoggingIn || !passwordInput} onClick={login}>
             Login
           </Button>
         </>
       ) : (
-        <button className={loginLinkStyle({ disabled: loading })} type="submit">
+        <button
+          className={loginLinkStyle({ disabled: isLoggingIn })}
+          type="submit"
+        >
           <Text color="lighterGrey" size="small">
-            {loading ? "Loading…" : isLoggedIn ? "Log out" : "Login"}
+            {isLoggingIn ? "Loading…" : isLoggedIn ? "Log out" : "Login"}
           </Text>
         </button>
       )}

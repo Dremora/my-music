@@ -4,8 +4,7 @@ import { type ChangeEvent, useCallback, useState } from "react";
 import { Input } from "components/Input";
 import { Text } from "components/Text";
 import { useIsFirstRender } from "data/useIsFirstRender";
-import type { FirstPlayedInput } from "generated/graphql";
-import { formatInteger, parseInteger } from "utils";
+import { type FirstPlayed, formatInteger, parseInteger } from "utils";
 
 import {
   containerStyle,
@@ -20,8 +19,8 @@ import {
 
 type FirstPlayedFieldProps = {
   readonly disabled: boolean;
-  readonly onChange: (value: FirstPlayedInput | null) => void;
-  readonly value: FirstPlayedInput | null | undefined;
+  readonly onChange: (value: FirstPlayed | null) => void;
+  readonly value: FirstPlayed | null;
 };
 
 export function FirstPlayedField({
@@ -30,11 +29,7 @@ export function FirstPlayedField({
   value,
 }: FirstPlayedFieldProps) {
   const [firstPlayedMode, setFirstPlayedMode] = useState(() =>
-    value === null || value === undefined
-      ? "unknown"
-      : "year" in value
-        ? "date"
-        : "timestamp",
+    value == null ? "unknown" : "year" in value ? "date" : "timestamp",
   );
 
   const setMode = useCallback(
@@ -44,13 +39,15 @@ export function FirstPlayedField({
 
       if (newMode === "date") {
         onChange(
-          value?.year === undefined
+          value && (!("year" in value) || value.year === undefined)
             ? { year: undefined, month: undefined, day: undefined }
             : value,
         );
       } else if (newMode === "timestamp") {
         onChange(
-          value?.timestamp === undefined ? { timestamp: undefined } : value,
+          value && (!("timestamp" in value) || value.timestamp === undefined)
+            ? { timestamp: undefined }
+            : value,
         );
       } else {
         onChange(null);
@@ -64,7 +61,10 @@ export function FirstPlayedField({
   const onTimestampChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const timestamp = parseInteger(e.target.value);
-      onChange({ timestamp });
+
+      if (timestamp != null) {
+        onChange({ timestamp });
+      }
     },
     [onChange],
   );
@@ -72,25 +72,34 @@ export function FirstPlayedField({
   const onYearChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const year = parseInteger(e.target.value);
-      onChange({ year, month: value?.month, day: value?.day });
+      const month = value && "month" in value ? value.month : undefined;
+      const day = value && "day" in value ? value.day : undefined;
+
+      onChange({ year, month, day });
     },
-    [onChange, value?.day, value?.month],
+    [onChange, value],
   );
 
   const onMonthChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const month = parseInteger(e.target.value);
-      onChange({ year: value?.year, month, day: value?.day });
+      const year = value && "year" in value ? value.year : undefined;
+      const day = value && "day" in value ? value.day : undefined;
+
+      onChange({ year, month, day });
     },
-    [onChange, value?.day, value?.year],
+    [onChange, value],
   );
 
   const onDayChange = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const day = parseInteger(e.target.value);
-      onChange({ year: value?.year, month: value?.month, day });
+      const year = value && "year" in value ? value.year : undefined;
+      const month = value && "month" in value ? value.month : undefined;
+
+      onChange({ year, month, day });
     },
-    [onChange, value?.month, value?.year],
+    [onChange, value],
   );
 
   return (
@@ -158,7 +167,11 @@ export function FirstPlayedField({
                   <Input
                     disabled={disabled}
                     onChange={onTimestampChange}
-                    value={formatInteger(value?.timestamp ?? null)}
+                    value={formatInteger(
+                      value && "timestamp" in value
+                        ? (value.timestamp ?? null)
+                        : null,
+                    )}
                   />
                 </div>
               )}
@@ -171,7 +184,9 @@ export function FirstPlayedField({
                       onChange={onYearChange}
                       placeholder="YYYY"
                       type="number"
-                      value={formatInteger(value?.year ?? null)}
+                      value={formatInteger(
+                        value && "year" in value ? (value.year ?? null) : null,
+                      )}
                     />
                   </div>
                   <div className={monthDayFieldStyle}>
@@ -180,7 +195,11 @@ export function FirstPlayedField({
                       onChange={onMonthChange}
                       placeholder="MM"
                       type="number"
-                      value={formatInteger(value?.month ?? null)}
+                      value={formatInteger(
+                        value && "month" in value
+                          ? (value.month ?? null)
+                          : null,
+                      )}
                     />
                   </div>
                   <div className={monthDayFieldStyle}>
@@ -189,7 +208,9 @@ export function FirstPlayedField({
                       onChange={onDayChange}
                       placeholder="DD"
                       type="number"
-                      value={formatInteger(value?.day ?? null)}
+                      value={formatInteger(
+                        value && "day" in value ? (value.day ?? null) : null,
+                      )}
                     />
                   </div>
                 </div>

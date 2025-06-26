@@ -3,7 +3,6 @@ import {
   type ReactNode,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -31,11 +30,9 @@ type LoginProviderProps = {
 };
 
 export function LoginProvider({ children }: LoginProviderProps) {
-  const [token, setToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    setToken(localStorage.getItem("token"));
-  }, []);
+  const [token, setToken] = useState<string | null>(
+    localStorage.getItem("token"),
+  );
 
   const onLoggedIn = useCallback((newToken: string) => {
     localStorage.setItem("token", newToken);

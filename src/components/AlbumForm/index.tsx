@@ -1,54 +1,74 @@
-import { ApolloError } from "@apollo/client";
+/* eslint-disable relay/unused-fields */
 import { AnimatePresence, motion } from "motion/react";
 import { type ChangeEvent, type FormEvent, useCallback, useState } from "react";
+import { graphql } from "relay-runtime";
 
 import { Button } from "components/Button";
 import { FirstPlayedField } from "components/FirstPlayedField";
 import { FormField } from "components/FormField";
 import { Input } from "components/Input";
-import { Source } from "components/Source";
+import { Source, type SourceData } from "components/Source";
 import { Text } from "components/Text";
 import { useIsFirstRender } from "data/useIsFirstRender";
 import {
-  type CreateAlbumMutationVariables,
-  type FirstPlayedInput,
-  type GetAlbumQuery,
-  Location,
-  type NewSourceInput,
-  type UpdateAlbumMutationVariables,
-} from "generated/graphql";
-import { formatInteger, parseInteger, parseOptionalString } from "utils";
+  type FirstPlayed,
+  formatInteger,
+  parseInteger,
+  parseOptionalString,
+} from "utils";
 
 import { buttonsStyle, formStyle } from "./styles.css";
 
-export type AlbumFormProps = {
-  readonly initialValues:
-    | CreateAlbumMutationVariables["input"]
-    | GetAlbumQuery["album"];
-  readonly isNew?: boolean;
-  readonly isSubmitting: boolean;
-  readonly onSubmit:
-    | ((
-        data: Readonly<CreateAlbumMutationVariables["input"]>,
-      ) => Promise<unknown>)
-    | ((
-        data: Readonly<Omit<UpdateAlbumMutationVariables, "id">>,
-      ) => Promise<unknown>);
-  readonly submitError?: ApolloError | undefined;
+export const albumFormFragment = graphql`
+  fragment AlbumFormFragment on Album {
+    id
+    artist
+    title
+    comments
+    year
+    firstPlayed {
+      ... on FirstPlayedTimestamp {
+        timestamp
+      }
+      ... on FirstPlayedDate {
+        year
+        month
+        day
+      }
+    }
+    sources {
+      id
+      location
+      accurateRip
+      comments
+      cueIssues
+      discs
+      download
+      edition
+      format
+      location
+      mbid
+      tagIssues
+    }
+  }
+`;
+
+export type AlbumData = {
+  readonly id?: string;
+  readonly artist: string;
+  readonly title: string;
+  readonly comments: string | null;
+  readonly year: number | null;
+  readonly firstPlayed: FirstPlayed | null;
+  readonly sources: readonly SourceData[];
 };
 
-type AlbumSource = NewSourceInput | GetAlbumQuery["album"]["sources"][number];
-
-type FormData = Omit<CreateAlbumMutationVariables["input"], "sources"> & {
-  firstPlayed?:
-    | (FirstPlayedInput & {
-        __typename?: string;
-      })
-    | null
-    | undefined;
-  sources: readonly (NewSourceInput & {
-    readonly __typename?: string;
-  })[];
+export type AlbumFormProps = {
+  readonly initialValues: AlbumData;
+  readonly isNew?: boolean;
+  readonly isSubmitting: boolean;
+  readonly onSubmit: (data: Readonly<AlbumData>) => void;
+  readonly submitError: string | null;
 };
 
 export function AlbumForm({
@@ -59,46 +79,27 @@ export function AlbumForm({
   submitError,
 }: AlbumFormProps) {
   const isFirstRender = useIsFirstRender();
-  const [album, setAlbum] = useState<FormData>(initialValues);
+
+  const [album, setAlbum] = useState<AlbumData>(initialValues);
 
   const submitForm = useCallback(
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 
-      void onSubmit({
+      onSubmit({
         title: album.title,
         artist: album.artist,
         comments: album.comments,
         year: album.year,
-        sources: album.sources.map((source) => {
-          if ("__typename" in source) {
-            const { __typename, ...rest } = source;
-
-            return rest;
-          } else {
-            return source;
-          }
-        }),
-        firstPlayed: (() => {
-          if (album.firstPlayed) {
-            if ("__typename" in album.firstPlayed) {
-              const { __typename, ...rest } = album.firstPlayed;
-
-              return rest;
-            } else {
-              return album.firstPlayed;
-            }
-          } else {
-            return album.firstPlayed;
-          }
-        })(),
+        sources: album.sources,
+        firstPlayed: album.firstPlayed,
       });
     },
     [album, onSubmit],
   );
 
   const onSourceUpdate = useCallback(
-    (index: number, source: AlbumSource) => {
+    (index: number, source: SourceData) => {
       const sources = [...album.sources];
       sources[index] = source;
       setAlbum({ ...album, sources });
@@ -118,12 +119,27 @@ export function AlbumForm({
   const onSourceAdd = useCallback(() => {
     setAlbum({
       ...album,
-      sources: [...album.sources, { location: Location.APPLE_MUSIC }],
+      sources: [
+        ...album.sources,
+        {
+          location: "APPLE_MUSIC",
+          accurateRip: null,
+          comments: null,
+          cueIssues: null,
+          discs: null,
+          download: null,
+          edition: null,
+          format: null,
+          id: "",
+          mbid: null,
+          tagIssues: null,
+        },
+      ],
     });
   }, [album]);
 
   const onFirstPlayedChange = useCallback(
-    (firstPlayed: FirstPlayedInput | null) => {
+    (firstPlayed: FirstPlayed | null) => {
       setAlbum({ ...album, firstPlayed });
     },
     [album],
@@ -225,8 +241,8 @@ export function AlbumForm({
           Submit
         </Button>
       </div>
-      {submitError ? (
-        <Text color="vermilion">{submitError.message}</Text>
+      {submitError !== null ? (
+        <Text color="vermilion">{submitError}</Text>
       ) : null}
     </form>
   );

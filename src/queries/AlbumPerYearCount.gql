@@ -1,6 +1,0 @@
-query AlbumPerYearCount {
-  albumPerYearCount {
-    year
-    count
-  }
-}

@@ -1,14 +1,23 @@
 "use client";
 
-import { YearsHistogram } from "components/YearsHistogram";
-import { useAlbumPerFirstPlayedYearCountQuery } from "generated/graphql";
+import { graphql, useLazyLoadQuery } from "react-relay";
+
+import { YearsHistogram } from "components/YearsHistogram/years-histogram";
+import type { pageFirstPlayedYearsQuery } from "generated/pageFirstPlayedYearsQuery.graphql";
+
+const pageFirstPlayedYearsQuery = graphql`
+  query pageFirstPlayedYearsQuery {
+    albumPerFirstPlayedYearCount {
+      ...yearsHistogramFragment
+    }
+  }
+`;
 
 export default function FirstPlayedYearsPage() {
-  const { data, error, loading } = useAlbumPerFirstPlayedYearCountQuery();
+  const data = useLazyLoadQuery<pageFirstPlayedYearsQuery>(
+    pageFirstPlayedYearsQuery,
+    {},
+  );
 
-  if (loading || error || !data) {
-    return null;
-  }
-
-  return <YearsHistogram data={data.albumPerFirstPlayedYearCount} />;
+  return <YearsHistogram fragmentRef={data.albumPerFirstPlayedYearCount} />;
 }

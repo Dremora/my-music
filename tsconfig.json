@@ -54,6 +54,7 @@
     "eslint.config.ts",
     "next-env.d.ts",
     "next.config.ts",
+    "graphql.config.ts",
     "src",
     ".next/types/**/*.ts"
   ],

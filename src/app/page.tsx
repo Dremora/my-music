@@ -1,23 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
+import { graphql, useLazyLoadQuery } from "react-relay";
 
 import { AlbumList } from "components/AlbumList";
 import { Search } from "components/Search";
-import { useFindAlbumsQuery } from "generated/graphql";
+import type { pageFindAlbumsBySearchQuery } from "generated/pageFindAlbumsBySearchQuery.graphql";
+
+const pageFindAlbumsBySearchQuery = graphql`
+  query pageFindAlbumsBySearchQuery($input: QueryAlbumsInput!) {
+    albums(input: $input) {
+      ...AlbumListFragment
+    }
+  }
+`;
 
 export default function IndexPage() {
   const [searchText, setSearchText] = useState("");
 
-  const { data } = useFindAlbumsQuery({
-    skip: !searchText,
-    variables: { input: { query: searchText } },
-  });
+  const data = useLazyLoadQuery<pageFindAlbumsBySearchQuery>(
+    pageFindAlbumsBySearchQuery,
+    {
+      input: { query: searchText },
+    },
+  );
 
   return (
-    <>
+    <Suspense>
       <Search onChange={setSearchText} value={searchText} />
-      {data ? <AlbumList albums={data.albums} /> : null}
-    </>
+      <AlbumList albumsRef={data.albums} />
+    </Suspense>
   );
 }

@@ -25,20 +25,20 @@ builder.mutationField("updateAlbum", (t) =>
     .withAuth({
       loggedIn: true,
     })
-    .field({
+    .fieldWithInput({
       type: GraphQLAlbum,
-      args: {
-        artist: t.arg({ type: "String", required: true }),
-        title: t.arg({ type: "String", required: true }),
-        comments: t.arg({ type: "String" }),
-        id: t.arg({ type: "UUID", required: true }),
-        year: t.arg({ type: "Int" }),
-        sources: t.arg({ type: [GraphQLSourceInput], required: true }),
-        firstPlayed: t.arg({ type: GraphQLFirstPlayedInput }),
+      input: {
+        artist: t.input.string({ required: true }),
+        title: t.input.string({ required: true }),
+        comments: t.input.string(),
+        id: t.input.string({ required: true }),
+        year: t.input.int(),
+        sources: t.input.field({ type: [GraphQLSourceInput], required: true }),
+        firstPlayed: t.input.field({ type: GraphQLFirstPlayedInput }),
       },
       async resolve(
         _,
-        { artist, comments, firstPlayed, id, sources, title, year },
+        { input: { artist, comments, firstPlayed, id, sources, title, year } },
       ) {
         return updateAlbum({
           artist,

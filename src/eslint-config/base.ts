@@ -60,16 +60,22 @@ export const base = tseslint.config(
         },
       ],
       "unicorn/no-array-reduce": "off",
+      "unicorn/no-negated-condition": "off",
       "unicorn/no-null": "off",
       "unicorn/no-useless-undefined": ["error", { checkArguments: false }],
-      "unicorn/prevent-abbreviations": "off",
       "unicorn/prefer-top-level-await": "off",
+      "unicorn/prevent-abbreviations": "off",
       "unicorn/text-encoding-identifier-case": "off", // very disputable, and probably should be utf-8 instead
     },
   },
   {
     name: "my-music/ban-default-export",
-    ignores: ["src/app/**", "eslint.config.ts", "next.config.ts"],
+    ignores: [
+      "src/app/**",
+      "eslint.config.ts",
+      "next.config.ts",
+      "graphql.config.ts",
+    ],
     rules: {
       "import-x/no-default-export": "error",
     },

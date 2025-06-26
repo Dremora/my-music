@@ -1,6 +1,0 @@
-query AlbumPerFirstPlayedYearCount {
-  albumPerFirstPlayedYearCount {
-    year
-    count
-  }
-}

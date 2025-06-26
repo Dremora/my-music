@@ -1,9 +1,9 @@
 import { builder } from "../builder";
 
-const GraphQLFirstPlayedTime = builder
+const GraphQLFirstPlayedTimestamp = builder
   .objectRef<{
     timestamp: number;
-  }>("FirstPlayedTime")
+  }>("FirstPlayedTimestamp")
   .implement({
     fields: (t) => ({
       timestamp: t.exposeInt("timestamp"),
@@ -25,10 +25,10 @@ const GraphQLFirstPlayedDate = builder
   });
 
 export const GraphQLFirstPlayed = builder.unionType("FirstPlayed", {
-  types: () => [GraphQLFirstPlayedDate, GraphQLFirstPlayedTime],
+  types: () => [GraphQLFirstPlayedDate, GraphQLFirstPlayedTimestamp],
   resolveType(value) {
     return "timestamp" in value
-      ? GraphQLFirstPlayedTime
+      ? GraphQLFirstPlayedTimestamp
       : GraphQLFirstPlayedDate;
   },
 });

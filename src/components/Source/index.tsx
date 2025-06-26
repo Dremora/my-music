@@ -5,35 +5,52 @@ import { FormField } from "components/FormField";
 import { Input } from "components/Input";
 import { Select } from "components/Select";
 import { Text } from "components/Text";
-import { Format, Location, type SourceInput } from "generated/graphql";
+import {
+  type Format,
+  type Location,
+} from "generated/AlbumFormFragment.graphql";
 import { formatInteger, parseInteger, parseOptionalString } from "utils";
 
 import { hrStyle, titleStyle } from "./styles.css";
 import { parseMbid } from "./utils";
 
 const locations: { id: Location; label: string }[] = [
-  { id: Location.APPLE_MUSIC, label: "Apple Music" },
-  { id: Location.GOOGLE_MUSIC, label: "Google Music" },
-  { id: Location.SPOTIFY, label: "Spotify" },
-  { id: Location.FOOBAR2000, label: "foobar2000" },
+  { id: "APPLE_MUSIC", label: "Apple Music" },
+  { id: "GOOGLE_MUSIC", label: "Google Music" },
+  { id: "SPOTIFY", label: "Spotify" },
+  { id: "FOOBAR2000", label: "foobar2000" },
 ];
 
 const formats: { id: Format; label: string }[] = [
-  { id: Format.MP3, label: "Lossy (MP3)" },
-  { id: Format.MPC, label: "Lossy (MPC)" },
-  { id: Format.WMA, label: "Lossy (WMA)" },
-  { id: Format.TAK, label: "Lossless (TAK)" },
-  { id: Format.APE, label: "Lossless (APE)" },
-  { id: Format.FLAC, label: "Lossless (FLAC)" },
-  { id: Format.MIXED, label: "Mixed" },
+  { id: "MP3", label: "Lossy (MP3)" },
+  { id: "MPC", label: "Lossy (MPC)" },
+  { id: "WMA", label: "Lossy (WMA)" },
+  { id: "TAK", label: "Lossless (TAK)" },
+  { id: "APE", label: "Lossless (APE)" },
+  { id: "FLAC", label: "Lossless (FLAC)" },
+  { id: "MIXED", label: "Mixed" },
 ];
+
+export type SourceData = {
+  readonly id?: string;
+  readonly location: Location;
+  readonly accurateRip: string | null;
+  readonly comments: string | null;
+  readonly cueIssues: string | null;
+  readonly discs: number | null;
+  readonly download: string | null;
+  readonly edition: string | null;
+  readonly format: Format | null;
+  readonly mbid: string | null;
+  readonly tagIssues: string | null;
+};
 
 type SourceProps = {
   readonly disabled: boolean;
   readonly index: number;
   readonly onRemove: (index: number) => void;
-  readonly onUpdate: (index: number, source: SourceInput) => void;
-  readonly source: SourceInput;
+  readonly onUpdate: (index: number, source: Readonly<SourceData>) => void;
+  readonly source: SourceData;
 };
 
 export const Source = memo(function Source({

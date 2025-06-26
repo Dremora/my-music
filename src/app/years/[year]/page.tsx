@@ -1,9 +1,18 @@
 "use client";
 
 import { use } from "react";
+import { graphql, useLazyLoadQuery } from "react-relay";
 
 import { AlbumList } from "components/AlbumList";
-import { useFindAlbumsQuery } from "generated/graphql";
+import type { pageFindAlbumsByYearQuery } from "generated/pageFindAlbumsByYearQuery.graphql";
+
+const pageFindAlbumsByYearQuery = graphql`
+  query pageFindAlbumsByYearQuery($input: QueryAlbumsInput!) {
+    albums(input: $input) {
+      ...AlbumListFragment
+    }
+  }
+`;
 
 export default function YearPage({
   params,
@@ -16,9 +25,12 @@ export default function YearPage({
     throw new TypeError("Invalid year");
   }
 
-  const { data } = useFindAlbumsQuery({
-    variables: { input: { year } },
-  });
+  const data = useLazyLoadQuery<pageFindAlbumsByYearQuery>(
+    pageFindAlbumsByYearQuery,
+    {
+      input: { year },
+    },
+  );
 
-  return data ? <AlbumList albums={data.albums} /> : null;
+  return <AlbumList albumsRef={data.albums} />;
 }

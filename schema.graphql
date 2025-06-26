@@ -13,7 +13,7 @@ type AlbumPerYearCount {
   year: Int!
 }
 
-union FirstPlayed = FirstPlayedDate | FirstPlayedTime
+union FirstPlayed = FirstPlayedDate | FirstPlayedTimestamp
 
 type FirstPlayedDate {
   day: Int
@@ -28,7 +28,7 @@ input FirstPlayedInput {
   year: Int
 }
 
-type FirstPlayedTime {
+type FirstPlayedTimestamp {
   timestamp: Int!
 }
 
@@ -53,7 +53,7 @@ type Mutation {
   createAlbum(input: MutationCreateAlbumInput!): Album!
   deleteAlbum(id: UUID!): Boolean!
   login(password: String!): Boolean!
-  updateAlbum(artist: String!, comments: String, firstPlayed: FirstPlayedInput, id: UUID!, sources: [SourceInput!]!, title: String!, year: Int): Album!
+  updateAlbum(input: MutationUpdateAlbumInput!): Album!
 }
 
 input MutationCreateAlbumInput {
@@ -61,6 +61,16 @@ input MutationCreateAlbumInput {
   comments: String
   firstPlayed: FirstPlayedInput
   sources: [NewSourceInput!]!
+  title: String!
+  year: Int
+}
+
+input MutationUpdateAlbumInput {
+  artist: String!
+  comments: String
+  firstPlayed: FirstPlayedInput
+  id: String!
+  sources: [SourceInput!]!
   title: String!
   year: Int
 }

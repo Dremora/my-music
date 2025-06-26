@@ -1,0 +1,11 @@
+{
+  "src": "./src",
+  "language": "typescript",
+  "schema": "schema.graphql",
+  "artifactDirectory": "./src/generated",
+  "noFutureProofEnums": true,
+  "typescriptExcludeUndefinedFromNullableUnion": true,
+  "customScalarTypes": {
+    "UUID": "string"
+  }
+}

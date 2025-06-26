@@ -1,3 +1,0 @@
-mutation Login($password: String!) {
-  login(password: $password)
-}

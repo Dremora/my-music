@@ -1,38 +1,54 @@
 import { FloatingPortal, useFloating } from "@floating-ui/react";
 import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useMemo, useState } from "react";
+import { useFragment } from "react-relay";
+import { graphql } from "relay-runtime";
 
 import { Text } from "components/Text";
-import type { AlbumPerYearCount } from "generated/graphql";
+import type { yearsHistogramFragment$key } from "generated/yearsHistogramFragment.graphql";
 
 import { rootStyle } from "./styles.css";
 import { Year } from "./Year";
 
-const getMaxValue = (numbers: number[]): number =>
-  numbers.length === 0
+function getMaxValue(numbers: number[]): number {
+  return numbers.length === 0
     ? 0
     : numbers.reduce(
         (accumulator, value) => Math.max(accumulator, value),
         -Infinity,
       );
+}
 
-const getMinValue = (numbers: number[]): number =>
-  numbers.length === 0
+function getMinValue(numbers: number[]): number {
+  return numbers.length === 0
     ? 0
     : numbers.reduce(
         (accumulator, value) => Math.min(accumulator, value),
         Infinity,
       );
+}
 
-const range = (start: number, stop: number): number[] =>
-  Array.from({ length: stop - start + 1 }, (_, index) => start + index);
+function range(start: number, stop: number): number[] {
+  return Array.from({ length: stop - start + 1 }, (_, index) => start + index);
+}
+
+const yearsHistogramFragment = graphql`
+  fragment yearsHistogramFragment on AlbumPerYearCount @relay(plural: true) {
+    year
+    count
+  }
+`;
 
 type YearsHistogramProps = {
-  readonly data: readonly AlbumPerYearCount[];
+  readonly fragmentRef: yearsHistogramFragment$key;
   readonly onYearClick?: (year: number) => void;
 };
 
-export function YearsHistogram({ data, onYearClick }: YearsHistogramProps) {
+export function YearsHistogram({
+  fragmentRef,
+  onYearClick,
+}: YearsHistogramProps) {
+  const data = useFragment(yearsHistogramFragment, fragmentRef);
   const [selectedYear, setSelectedYear] = useState<number>();
   const [isOpen, setIsOpen] = useState(false);
 
