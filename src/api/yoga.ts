@@ -17,10 +17,13 @@ import { schema } from "./schema";
 export const yoga = createYoga<Context>({
   cors: false,
   schema,
-  context: ({ request }) =>
-    getContext({
+  context: async ({ request }) => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    return getContext({
       authorizationHeader: request.headers.get("authorization") ?? "",
-    }),
+    });
+  },
   maskedErrors: {
     maskError(error, message, isDevelopment) {
       if (
