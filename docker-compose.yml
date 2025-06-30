@@ -7,3 +7,8 @@ services:
       - POSTGRES_USER=my_music
       - POSTGRES_PASSWORD=my_music
       - POSTGRES_DB=my_music
+    volumes:
+      - my_music_data:/var/lib/postgresql/data
+
+volumes:
+  my_music_data:
