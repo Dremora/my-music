@@ -47,6 +47,14 @@ builder.queryField("albums", (t) =>
           where: {
             year,
           },
+          orderBy: [
+            {
+              artist: "asc",
+            },
+            {
+              title: "asc",
+            },
+          ],
         });
       } else if (query == null) {
         return [];
