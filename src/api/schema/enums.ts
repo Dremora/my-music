@@ -23,6 +23,7 @@ export const albumTypes = [
   "EP",
   "COMPILATION",
   "LIVE",
+  "SOUNDTRACK",
 ] as const;
 
 export const GraphQLFormat = builder.enumType("Format", {

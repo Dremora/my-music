@@ -114,6 +114,10 @@ function AlbumType({ type }: { readonly type: AlbumType }) {
       case "SINGLE": {
         return "Single";
       }
+
+      case "SOUNDTRACK": {
+        return "Soundtrack";
+      }
     }
   })();
 

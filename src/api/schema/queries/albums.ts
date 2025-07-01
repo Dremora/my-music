@@ -27,6 +27,10 @@ function mapAlbumType(type: $DbEnums.album_type): AlbumType {
     case "single": {
       return "SINGLE";
     }
+
+    case "soundtrack": {
+      return "SOUNDTRACK";
+    }
   }
 }
 

@@ -31,6 +31,7 @@ enum AlbumType {
   EP          @map("ep")
   COMPILATION @map("compilation")
   LIVE        @map("live")
+  SOUNDTRACK  @map("soundtrack")
 
   @@map("album_type")
 }

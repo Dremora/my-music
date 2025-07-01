@@ -20,6 +20,7 @@ enum AlbumType {
   EP
   LIVE
   SINGLE
+  SOUNDTRACK
 }
 
 union FirstPlayed = FirstPlayedDate | FirstPlayedTimestamp
