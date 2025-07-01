@@ -105,6 +105,7 @@ type Query {
   albumPerFirstPlayedYearCount: [AlbumPerYearCount!]!
   albumPerYearCount: [AlbumPerYearCount!]!
   albums(input: QueryAlbumsInput!): [Album!]!
+  albumsByFirstPlayedYear(year: Int!): [Album!]!
 }
 
 input QueryAlbumsInput {

@@ -1,38 +1,11 @@
-import type { Album, AlbumType } from "@prisma/client";
-import { type $DbEnums, getAlbumsByQuery } from "@prisma/client/sql";
+import type { Album } from "@prisma/client";
+import { getAlbumsByQuery } from "@prisma/client/sql";
 
 import { prisma } from "api/prisma";
 
 import { builder } from "../builder";
 import { GraphQLAlbum } from "../types";
-
-function mapAlbumType(type: $DbEnums.album_type): AlbumType {
-  switch (type) {
-    case "album": {
-      return "ALBUM";
-    }
-
-    case "compilation": {
-      return "COMPILATION";
-    }
-
-    case "ep": {
-      return "EP";
-    }
-
-    case "live": {
-      return "LIVE";
-    }
-
-    case "single": {
-      return "SINGLE";
-    }
-
-    case "soundtrack": {
-      return "SOUNDTRACK";
-    }
-  }
-}
+import { mapAlbumType } from "../utils";
 
 builder.queryField("albums", (t) =>
   t.fieldWithInput({
