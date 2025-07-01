@@ -8,6 +8,7 @@ export const textStyle = recipe({
   variants: {
     color: colorVariant,
     size: {
+      xSmall: size.xSmall,
       small: size.small,
       base: size.base,
       medium: size.medium,
@@ -19,6 +20,11 @@ export const textStyle = recipe({
       },
       bold: {
         fontWeight: 700,
+      },
+    },
+    caps: {
+      true: {
+        textTransform: "uppercase",
       },
     },
   },

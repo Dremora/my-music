@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { platinum } from "styles/colors.css";
+import { grey, platinum } from "styles/colors.css";
 
 export const anchorStyle = style({
   textDecoration: "none",
@@ -61,6 +61,14 @@ export const column2Style = style({
   },
 });
 
+export const albumTitleStyle = style({
+  display: "flex",
+  flexDirection: "row",
+  flexWrap: "wrap",
+  gap: 8,
+  alignItems: "center",
+});
+
 export const column3Style = style({
   display: "flex",
   flexDirection: "column",
@@ -81,4 +89,11 @@ export const firstPlayedStyle = style({
   whiteSpace: "nowrap",
   textOverflow: "ellipsis",
   overflow: "hidden",
+});
+
+export const albumTypeStyle = style({
+  backgroundColor: grey,
+  borderRadius: "4px",
+  padding: "2px 4px",
+  display: "flex",
 });

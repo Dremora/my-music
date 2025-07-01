@@ -7,6 +7,14 @@ const base = style({
 });
 
 export const size = styleVariants({
+  xSmall: [
+    base,
+    {
+      fontSize: "10px",
+      lineHeight: "12px",
+      fontWeight: 400,
+    },
+  ],
   small: [
     base,
     {

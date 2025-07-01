@@ -3,10 +3,13 @@ import { graphql, useFragment } from "react-relay";
 
 import { Text } from "components/Text";
 import { useLogin } from "data/login";
+import type { AlbumType } from "generated/AlbumFormFragment.graphql";
 import type { AlbumFragment$key } from "generated/AlbumFragment.graphql";
 import { formatFirstPlayed } from "utils";
 
 import {
+  albumTitleStyle,
+  albumTypeStyle,
   anchorStyle,
   column1Style,
   column2Style,
@@ -21,6 +24,7 @@ const albumFragment = graphql`
     artist
     title
     year
+    type
     firstPlayed {
       ... on FirstPlayedTimestamp {
         # eslint-disable-next-line relay/unused-fields
@@ -55,10 +59,12 @@ export function Album({ albumRef }: AlbumProps) {
         </Text>
       </div>
       <div className={column2Style}>
-        <Text color="grey" size="large" weight="bold">
-          {album.title}
-        </Text>
-
+        <div className={albumTitleStyle}>
+          <Text color="grey" size="large" weight="bold">
+            {album.title}
+          </Text>
+          {album.type && <AlbumType type={album.type} />}
+        </div>
         <Text color="grey">{album.artist}</Text>
       </div>
       <div className={column3Style}>
@@ -83,5 +89,31 @@ export function Album({ albumRef }: AlbumProps) {
     </Link>
   ) : (
     <div className={rootStyle}>{contents}</div>
+  );
+}
+
+function AlbumType({ type }: { readonly type: AlbumType }) {
+  const typeText = (() => {
+    switch (type) {
+      case "ALBUM": {
+        return "Album";
+      }
+
+      case "EP": {
+        return "EP";
+      }
+
+      case "SINGLE": {
+        return "Single";
+      }
+    }
+  })();
+
+  return (
+    <div className={albumTypeStyle}>
+      <Text caps color="white" size="xSmall" weight="bold">
+        {typeText}
+      </Text>
+    </div>
   );
 }
