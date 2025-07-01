@@ -106,11 +106,11 @@ type Query {
   albumPerYearCount: [AlbumPerYearCount!]!
   albums(input: QueryAlbumsInput!): [Album!]!
   albumsByFirstPlayedYear(year: Int!): [Album!]!
+  albumsByYear(year: Int!): [Album!]!
 }
 
 input QueryAlbumsInput {
-  query: String
-  year: Int
+  query: String!
 }
 
 type Source {

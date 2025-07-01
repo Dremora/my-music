@@ -7,8 +7,8 @@ import { AlbumList } from "components/AlbumList";
 import type { pageFindAlbumsByYearQuery } from "generated/pageFindAlbumsByYearQuery.graphql";
 
 const pageFindAlbumsByYearQuery = graphql`
-  query pageFindAlbumsByYearQuery($input: QueryAlbumsInput!) {
-    albums(input: $input) {
+  query pageFindAlbumsByYearQuery($year: Int!) {
+    albumsByYear(year: $year) {
       ...AlbumListFragment
     }
   }
@@ -28,9 +28,9 @@ export default function YearPage({
   const data = useLazyLoadQuery<pageFindAlbumsByYearQuery>(
     pageFindAlbumsByYearQuery,
     {
-      input: { year },
+      year,
     },
   );
 
-  return <AlbumList albumsRef={data.albums} />;
+  return <AlbumList albumsRef={data.albumsByYear} />;
 }

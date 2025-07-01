@@ -11,50 +11,31 @@ builder.queryField("albums", (t) =>
   t.fieldWithInput({
     type: [GraphQLAlbum],
     input: {
-      query: t.input.string(),
-      year: t.input.int(),
+      query: t.input.string({ required: true }),
     },
-    async resolve(_, { input: { query, year } }) {
-      if (year != null) {
-        return prisma.album.findMany({
-          where: {
-            year,
-          },
-          orderBy: [
-            {
-              artist: "asc",
-            },
-            {
-              title: "asc",
-            },
-          ],
-        });
-      } else if (query == null) {
-        return [];
-      } else {
-        const albums = await prisma.$queryRawTyped(getAlbumsByQuery(query));
+    async resolve(_, { input: { query } }) {
+      const albums = await prisma.$queryRawTyped(getAlbumsByQuery(query));
 
-        return albums.map(
-          ({
-            first_played_date,
-            first_played_timestamp,
-            inserted_at,
-            updated_at,
-            ...album
-          }): Album => ({
-            firstPlayedDate: first_played_date ?? [],
-            firstPlayedTimestamp: first_played_timestamp,
-            createdAt: inserted_at,
-            updatedAt: updated_at,
-            artist: album.artist,
-            comments: album.comments,
-            title: album.title,
-            year: album.year,
-            id: album.id,
-            type: album.type ? mapAlbumType(album.type) : null,
-          }),
-        );
-      }
+      return albums.map(
+        ({
+          first_played_date,
+          first_played_timestamp,
+          inserted_at,
+          updated_at,
+          ...album
+        }): Album => ({
+          firstPlayedDate: first_played_date ?? [],
+          firstPlayedTimestamp: first_played_timestamp,
+          createdAt: inserted_at,
+          updatedAt: updated_at,
+          artist: album.artist,
+          comments: album.comments,
+          title: album.title,
+          year: album.year,
+          id: album.id,
+          type: album.type ? mapAlbumType(album.type) : null,
+        }),
+      );
     },
   }),
 );
