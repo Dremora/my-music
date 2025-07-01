@@ -16,7 +16,9 @@ type AlbumPerYearCount {
 
 enum AlbumType {
   ALBUM
+  COMPILATION
   EP
+  LIVE
   SINGLE
 }
 

@@ -25,6 +25,8 @@ const types: { id: AlbumType; label: string }[] = [
   { id: "ALBUM", label: "Album" },
   { id: "EP", label: "EP" },
   { id: "SINGLE", label: "Single" },
+  { id: "COMPILATION", label: "Compilation" },
+  { id: "LIVE", label: "Live album" },
 ];
 
 export const albumFormFragment = graphql`

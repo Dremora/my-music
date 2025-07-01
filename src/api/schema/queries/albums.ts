@@ -12,8 +12,16 @@ function mapAlbumType(type: $DbEnums.album_type): AlbumType {
       return "ALBUM";
     }
 
+    case "compilation": {
+      return "COMPILATION";
+    }
+
     case "ep": {
       return "EP";
+    }
+
+    case "live": {
+      return "LIVE";
     }
 
     case "single": {

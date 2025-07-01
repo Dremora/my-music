@@ -26,9 +26,11 @@ model Album {
 }
 
 enum AlbumType {
-  ALBUM  @map("album")
-  SINGLE @map("single")
-  EP     @map("ep")
+  ALBUM       @map("album")
+  SINGLE      @map("single")
+  EP          @map("ep")
+  COMPILATION @map("compilation")
+  LIVE        @map("live")
 
   @@map("album_type")
 }

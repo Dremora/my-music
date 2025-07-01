@@ -99,8 +99,16 @@ function AlbumType({ type }: { readonly type: AlbumType }) {
         return "Album";
       }
 
+      case "COMPILATION": {
+        return "Compilation";
+      }
+
       case "EP": {
         return "EP";
+      }
+
+      case "LIVE": {
+        return "Live";
       }
 
       case "SINGLE": {
