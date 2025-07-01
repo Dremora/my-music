@@ -17,10 +17,16 @@ export const locations = [
   "SPOTIFY",
 ] as const;
 
+export const albumTypes = ["ALBUM", "SINGLE", "EP"] as const;
+
 export const GraphQLFormat = builder.enumType("Format", {
   values: formats,
 });
 
 export const GraphQLLocation = builder.enumType("Location", {
   values: locations,
+});
+
+export const GraphQLAlbumType = builder.enumType("AlbumType", {
+  values: albumTypes,
 });

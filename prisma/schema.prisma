@@ -10,18 +10,27 @@ datasource db {
 }
 
 model Album {
-  id                   String    @id @default(uuid()) @db.Uuid
-  artist               String    @db.VarChar(255)
-  comments             String?   @db.VarChar(255)
-  firstPlayedTimestamp DateTime? @map("first_played_timestamp") @db.Timestamp(6)
-  firstPlayedDate      Int[]     @map("first_played_date")
-  title                String    @db.VarChar(255)
+  id                   String     @id @default(uuid()) @db.Uuid
+  artist               String     @db.VarChar(255)
+  comments             String?    @db.VarChar(255)
+  firstPlayedTimestamp DateTime?  @map("first_played_timestamp") @db.Timestamp(6)
+  firstPlayedDate      Int[]      @map("first_played_date")
+  title                String     @db.VarChar(255)
   year                 Int?
-  createdAt            DateTime  @default(now()) @map("inserted_at") @db.Timestamp(6)
-  updatedAt            DateTime  @updatedAt @map("updated_at") @db.Timestamp(6)
+  type                 AlbumType?
+  createdAt            DateTime   @default(now()) @map("inserted_at") @db.Timestamp(6)
+  updatedAt            DateTime   @updatedAt @map("updated_at") @db.Timestamp(6)
   sources              Source[]
 
   @@map("albums")
+}
+
+enum AlbumType {
+  ALBUM  @map("album")
+  SINGLE @map("single")
+  EP     @map("ep")
+
+  @@map("album_type")
 }
 
 model Source {
@@ -43,13 +52,6 @@ model Source {
 
   @@index([albumId], map: "album_sources_album_id_index")
   @@map("album_sources")
-}
-
-model SchemaMigration {
-  version     BigInt    @id
-  inserted_at DateTime? @db.Timestamp(6)
-
-  @@map("schema_migrations")
 }
 
 enum Location {

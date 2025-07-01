@@ -1,10 +1,26 @@
-import type { Album } from "@prisma/client";
-import { getAlbumsByQuery } from "@prisma/client/sql";
+import type { Album, AlbumType } from "@prisma/client";
+import { type $DbEnums, getAlbumsByQuery } from "@prisma/client/sql";
 
 import { prisma } from "api/prisma";
 
 import { builder } from "../builder";
 import { GraphQLAlbum } from "../types";
+
+function mapAlbumType(type: $DbEnums.album_type): AlbumType {
+  switch (type) {
+    case "album": {
+      return "ALBUM";
+    }
+
+    case "ep": {
+      return "EP";
+    }
+
+    case "single": {
+      return "SINGLE";
+    }
+  }
+}
 
 builder.queryField("albums", (t) =>
   t.fieldWithInput({
@@ -42,6 +58,7 @@ builder.queryField("albums", (t) =>
             title: album.title,
             year: album.year,
             id: album.id,
+            type: album.type ? mapAlbumType(album.type) : null,
           }),
         );
       }

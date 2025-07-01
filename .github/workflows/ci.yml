@@ -36,10 +36,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Migrate typegen database
+        run: pnpm db:migrate
+        env:
+          DIRECT_DATABASE_URL: ${{ secrets.DIRECT_DATABASE_URL }}
+
       - name: Generate Prisma types
         run: pnpm prisma:generate
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
           DIRECT_DATABASE_URL: ${{ secrets.DIRECT_DATABASE_URL }}
 
       - name: Generate Relay types

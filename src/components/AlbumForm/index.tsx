@@ -7,9 +7,11 @@ import { Button } from "components/Button";
 import { FirstPlayedField } from "components/FirstPlayedField";
 import { FormField } from "components/FormField";
 import { Input } from "components/Input";
+import { Select } from "components/Select";
 import { Source, type SourceData } from "components/Source";
 import { Text } from "components/Text";
 import { useIsFirstRender } from "data/useIsFirstRender";
+import type { AlbumType } from "generated/AlbumFormFragment.graphql";
 import {
   type FirstPlayed,
   formatInteger,
@@ -19,6 +21,12 @@ import {
 
 import { buttonsStyle, formStyle } from "./styles.css";
 
+const types: { id: AlbumType; label: string }[] = [
+  { id: "ALBUM", label: "Album" },
+  { id: "EP", label: "EP" },
+  { id: "SINGLE", label: "Single" },
+];
+
 export const albumFormFragment = graphql`
   fragment AlbumFormFragment on Album {
     id
@@ -26,6 +34,7 @@ export const albumFormFragment = graphql`
     title
     comments
     year
+    type
     firstPlayed {
       ... on FirstPlayedTimestamp {
         timestamp
@@ -60,6 +69,7 @@ export type AlbumData = {
   readonly id?: string;
   readonly sources: readonly SourceData[];
   readonly title: string;
+  readonly type: AlbumType | null;
   readonly year: number | null;
 };
 
@@ -91,6 +101,7 @@ export function AlbumForm({
         artist: album.artist,
         comments: album.comments,
         year: album.year,
+        type: album.type,
         sources: album.sources,
         firstPlayed: album.firstPlayed,
       });
@@ -173,6 +184,13 @@ export function AlbumForm({
     [album],
   );
 
+  const onTypeChange = useCallback(
+    (type: AlbumType) => {
+      setAlbum({ ...album, type });
+    },
+    [album],
+  );
+
   return (
     <form className={formStyle} onSubmit={submitForm}>
       <Text color="grey" size="large" weight="bold">
@@ -198,6 +216,20 @@ export function AlbumForm({
           onChange={onYearChange}
           value={formatInteger(album.year ?? null)}
         />
+      </FormField>
+      <FormField label="Type">
+        <Select<AlbumType>
+          allowEmpty
+          disabled={isSubmitting}
+          onChange={onTypeChange}
+          value={album.type}
+        >
+          {types.map((type) => (
+            <option key={type.id} value={type.id}>
+              {type.label}
+            </option>
+          ))}
+        </Select>
       </FormField>
       <FirstPlayedField
         disabled={isSubmitting}

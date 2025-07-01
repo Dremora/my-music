@@ -1,10 +1,11 @@
+import type { AlbumType } from "@prisma/client";
 import { fromUnixTime } from "date-fns";
 import { z } from "zod";
 
 import { ValidationError } from "api/errors";
 import { prisma } from "api/prisma";
 
-import { formats, locations } from "../schema/enums";
+import { albumTypes, formats, locations } from "../schema/enums";
 
 const trim = (str: string) => str.trim();
 
@@ -86,6 +87,7 @@ const newAlbumSchema = z.object({
   title: z.string().min(1).max(255).transform(trim),
   comments: z.nullable(z.optional(z.string().max(255).transform(trim))),
   year: z.nullable(z.optional(z.number().int().min(1900).max(2100))),
+  type: z.enum(albumTypes),
   sources: z.array(newSourceSchema),
   firstPlayed: firstPlayedSchema,
 });
@@ -99,10 +101,11 @@ type FirstPlayed = {
 
 type NewAlbum = Readonly<{
   artist: string;
-  comments?: string | null;
-  firstPlayed?: FirstPlayed | null;
+  comments: string | null;
+  firstPlayed: FirstPlayed | null;
   sources: NewSource[];
   title: string;
+  type: AlbumType | null;
   year?: number | null;
 }>;
 
@@ -133,11 +136,12 @@ type SourceOrNewSource = Readonly<{
 
 type UpdateAlbum = Readonly<{
   artist: string;
-  comments?: string | null;
-  firstPlayed?: FirstPlayed | null;
+  comments: string | null;
+  firstPlayed: FirstPlayed | null;
   id: string;
   sources: SourceOrNewSource[];
   title: string;
+  type: AlbumType | null;
   year?: number | null;
 }>;
 

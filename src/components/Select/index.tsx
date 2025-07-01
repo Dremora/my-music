@@ -3,6 +3,7 @@ import { type ChangeEvent, type ReactNode, useCallback } from "react";
 import { selectStyle } from "./styles.css";
 
 type SelectProps<T extends string> = {
+  readonly allowEmpty?: boolean;
   readonly children: ReactNode;
   readonly disabled?: boolean;
   readonly onChange: (value: T) => void;
@@ -10,6 +11,7 @@ type SelectProps<T extends string> = {
 };
 
 export function Select<T extends string>({
+  allowEmpty = false,
   children,
   disabled,
   onChange,
@@ -30,6 +32,11 @@ export function Select<T extends string>({
       onChange={onChangeHtmlEvent}
       value={value ?? ""}
     >
+      {allowEmpty && (
+        <option disabled hidden value="">
+          {" "}
+        </option>
+      )}
       {children}
     </select>
   );

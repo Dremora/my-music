@@ -1,7 +1,7 @@
 import { createAlbum } from "api/domain/album";
 
 import { builder } from "../builder";
-import { GraphQLFormat, GraphQLLocation } from "../enums";
+import { GraphQLAlbumType, GraphQLFormat, GraphQLLocation } from "../enums";
 import { GraphQLFirstPlayedInput } from "../inputs";
 import { GraphQLAlbum } from "../types";
 
@@ -32,6 +32,7 @@ builder.mutationField("createAlbum", (t) =>
         title: t.input.string({ required: true }),
         comments: t.input.string(),
         year: t.input.int(),
+        type: t.input.field({ type: GraphQLAlbumType, required: true }),
         sources: t.input.field({
           type: [GraphQLNewSourceInput],
           required: true,
@@ -40,14 +41,17 @@ builder.mutationField("createAlbum", (t) =>
       },
       async resolve(
         _,
-        { input: { artist, comments, firstPlayed, sources, title, year } },
+        {
+          input: { artist, comments, firstPlayed, sources, title, type, year },
+        },
       ) {
         return createAlbum({
           artist,
-          firstPlayed,
+          firstPlayed: firstPlayed ?? null,
           title,
-          comments,
+          comments: comments ?? null,
           year,
+          type,
           sources,
         });
       },

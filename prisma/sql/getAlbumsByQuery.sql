@@ -5,6 +5,7 @@ select id,
   first_played_date,
   title,
   year,
+  type,
   inserted_at,
   updated_at
 from albums

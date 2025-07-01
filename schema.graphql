@@ -5,12 +5,19 @@ type Album {
   id: ID!
   sources: [Source!]!
   title: String!
+  type: AlbumType
   year: Int
 }
 
 type AlbumPerYearCount {
   count: Int!
   year: Int!
+}
+
+enum AlbumType {
+  ALBUM
+  EP
+  SINGLE
 }
 
 union FirstPlayed = FirstPlayedDate | FirstPlayedTimestamp
@@ -62,6 +69,7 @@ input MutationCreateAlbumInput {
   firstPlayed: FirstPlayedInput
   sources: [NewSourceInput!]!
   title: String!
+  type: AlbumType!
   year: Int
 }
 
@@ -72,6 +80,7 @@ input MutationUpdateAlbumInput {
   id: String!
   sources: [SourceInput!]!
   title: String!
+  type: AlbumType!
   year: Int
 }
 

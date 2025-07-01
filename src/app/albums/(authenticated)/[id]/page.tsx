@@ -51,11 +51,20 @@ export default function AlbumPage({
     (values: Parameters<AlbumFormProps["onSubmit"]>[0]) => {
       setSubmitError(null);
 
+      const type = values.type;
+
+      if (!type) {
+        setSubmitError("Type is required");
+
+        return;
+      }
+
       commit({
         variables: {
           input: {
             id,
             ...values,
+            type,
           },
         },
         onError: (error) => {

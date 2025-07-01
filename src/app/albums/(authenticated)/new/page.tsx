@@ -14,6 +14,7 @@ import type { pageCreateAlbumMutation } from "generated/pageCreateAlbumMutation.
 const createEmptyAlbum = (): AlbumData => ({
   title: "",
   artist: "",
+  type: null,
   firstPlayed: { timestamp: Math.floor(Date.now() / 1000) },
   comments: null,
   year: null,
@@ -45,9 +46,20 @@ export default function NewAlbumPage() {
     (values: Parameters<AlbumFormProps["onSubmit"]>[0]) => {
       setSubmitError(null);
 
+      const type = values.type;
+
+      if (!type) {
+        setSubmitError("Type is required");
+
+        return;
+      }
+
       commit({
         variables: {
-          input: values,
+          input: {
+            ...values,
+            type,
+          },
         },
         onError: (error) => {
           setSubmitError(error.message);

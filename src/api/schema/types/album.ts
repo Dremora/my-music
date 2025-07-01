@@ -4,6 +4,7 @@ import { getUnixTime } from "date-fns";
 import { prisma } from "api/prisma";
 
 import { builder } from "../builder";
+import { GraphQLAlbumType } from "../enums";
 
 import { GraphQLFirstPlayed } from "./first-played";
 import { GraphQLSource } from "./source";
@@ -13,6 +14,11 @@ export const GraphQLAlbum = builder.objectRef<Album>("Album").implement({
     id: t.exposeID("id"),
     title: t.exposeString("title"),
     artist: t.exposeString("artist"),
+    type: t.field({
+      type: GraphQLAlbumType,
+      nullable: true,
+      resolve: (parent) => parent.type,
+    }),
     comments: t.exposeString("comments", { nullable: true }),
     year: t.exposeInt("year", { nullable: true }),
     firstPlayed: t.field({

@@ -1,6 +1,6 @@
 import { updateAlbum } from "../../domain/album";
 import { builder } from "../builder";
-import { GraphQLFormat, GraphQLLocation } from "../enums";
+import { GraphQLAlbumType, GraphQLFormat, GraphQLLocation } from "../enums";
 import { GraphQLFirstPlayedInput } from "../inputs";
 import { GraphQLAlbum } from "../types";
 
@@ -33,20 +33,33 @@ builder.mutationField("updateAlbum", (t) =>
         comments: t.input.string(),
         id: t.input.string({ required: true }),
         year: t.input.int(),
+        type: t.input.field({ type: GraphQLAlbumType, required: true }),
         sources: t.input.field({ type: [GraphQLSourceInput], required: true }),
         firstPlayed: t.input.field({ type: GraphQLFirstPlayedInput }),
       },
       async resolve(
         _,
-        { input: { artist, comments, firstPlayed, id, sources, title, year } },
+        {
+          input: {
+            artist,
+            comments,
+            firstPlayed,
+            id,
+            sources,
+            title,
+            type,
+            year,
+          },
+        },
       ) {
         return updateAlbum({
           artist,
           id,
-          firstPlayed,
+          firstPlayed: firstPlayed ?? null,
           title,
-          comments,
+          comments: comments ?? null,
           year,
+          type,
           sources,
         });
       },
