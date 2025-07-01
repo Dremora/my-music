@@ -1,6 +1,14 @@
 "use client";
 
-import { Suspense, useCallback, useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import {
+  Suspense,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   graphql,
   loadQuery,
@@ -11,6 +19,7 @@ import {
 import { AlbumList } from "components/AlbumList";
 import { Search } from "components/Search";
 import { Text } from "components/Text";
+import { useIsFirstRender } from "data/useIsFirstRender";
 import type { pageFindAlbumsBySearchQuery } from "generated/pageFindAlbumsBySearchQuery.graphql";
 import { environment } from "utils/relay";
 
@@ -30,7 +39,12 @@ type LoadingQueryProps = {
 };
 
 export default function IndexPage() {
-  const [searchText, setSearchText] = useState("");
+  const searchParams = useSearchParams();
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  const { push, replace } = useRouter();
+  const currentSearchQuery = decodeURIComponent(searchParams.get("q") ?? "");
+  const [searchText, setSearchText] = useState(currentSearchQuery);
+  const isInitialRender = useIsFirstRender();
 
   const [queryLoading, setQueryLoading] =
     useState<PreloadedQuery<pageFindAlbumsBySearchQuery> | null>(null);
@@ -38,10 +52,10 @@ export default function IndexPage() {
   const [queryRendering, setQueryRendering] =
     useState<PreloadedQuery<pageFindAlbumsBySearchQuery> | null>(null);
 
-  const handleSearch = useCallback(
-    (newSearchText: string) => {
-      setSearchText(newSearchText);
+  const isTypingTimeout = useRef<NodeJS.Timeout | null>(null);
 
+  const runQuery = useCallback(
+    (newSearchText: string) => {
       const query = newSearchText
         ? loadQuery<pageFindAlbumsBySearchQuery>(
             environment,
@@ -64,6 +78,42 @@ export default function IndexPage() {
     },
     [queryLoading, queryRendering],
   );
+
+  const handleSearch = useCallback(
+    (newSearchText: string) => {
+      setSearchText(newSearchText);
+
+      if (currentSearchQuery !== newSearchText) {
+        const newUrl = newSearchText
+          ? `/?q=${encodeURIComponent(newSearchText)}`
+          : "/";
+
+        if (isTypingTimeout.current) {
+          replace(newUrl);
+
+          clearTimeout(isTypingTimeout.current);
+          isTypingTimeout.current = null;
+        } else {
+          push(newUrl);
+        }
+
+        isTypingTimeout.current = setTimeout(() => {
+          isTypingTimeout.current = null;
+        }, 1000);
+      }
+
+      runQuery(newSearchText);
+    },
+    [currentSearchQuery, push, replace, runQuery],
+  );
+
+  useLayoutEffect(() => {
+    if (!isInitialRender) {
+      return;
+    }
+
+    handleSearch(searchText);
+  }, [handleSearch, isInitialRender, searchText]);
 
   const handleQueryLoad = useCallback(() => {
     if (queryRendering) {
