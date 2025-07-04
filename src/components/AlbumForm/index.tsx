@@ -144,7 +144,6 @@ export function AlbumForm({
           download: null,
           edition: null,
           format: null,
-          id: "",
           mbid: null,
           tagIssues: null,
         },
