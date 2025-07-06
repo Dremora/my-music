@@ -215,7 +215,9 @@ export function AlbumForm({
       <FormField label="Year">
         <Input
           disabled={isSubmitting}
+          inputmode="numeric"
           onChange={onYearChange}
+          pattern="[0-9]*"
           value={formatInteger(album.year ?? null)}
         />
       </FormField>

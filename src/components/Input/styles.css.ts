@@ -22,14 +22,6 @@ export const inputStyle = style([
     transition: "all 0.2s",
     background: white,
 
-    // TODO don't use type=number https://technology.blog.gov.uk/2020/02/24/why-the-gov-uk-design-system-team-changed-the-input-type-for-numbers/
-    selectors: {
-      '&[type="number"]::-webkit-inner-spin-button': {
-        WebkitAppearance: "none",
-        margin: 0,
-      },
-    },
-
     ":focus": {
       outline: "none",
       borderColor: darkerPlatinum,

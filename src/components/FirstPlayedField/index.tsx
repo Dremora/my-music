@@ -181,9 +181,10 @@ export function FirstPlayedField({
                   <div className={yearInputFieldStyle}>
                     <Input
                       disabled={disabled}
+                      inputmode="numeric"
                       onChange={onYearChange}
+                      pattern="[0-9]*"
                       placeholder="YYYY"
-                      type="number"
                       value={formatInteger(
                         value && "year" in value ? (value.year ?? null) : null,
                       )}
@@ -192,9 +193,10 @@ export function FirstPlayedField({
                   <div className={monthDayFieldStyle}>
                     <Input
                       disabled={disabled}
+                      inputmode="numeric"
                       onChange={onMonthChange}
+                      pattern="[0-9]*"
                       placeholder="MM"
-                      type="number"
                       value={formatInteger(
                         value && "month" in value
                           ? (value.month ?? null)
@@ -205,9 +207,10 @@ export function FirstPlayedField({
                   <div className={monthDayFieldStyle}>
                     <Input
                       disabled={disabled}
+                      inputmode="numeric"
                       onChange={onDayChange}
+                      pattern="[0-9]*"
                       placeholder="DD"
-                      type="number"
                       value={formatInteger(
                         value && "day" in value ? (value.day ?? null) : null,
                       )}
