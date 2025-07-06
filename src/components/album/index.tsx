@@ -49,7 +49,7 @@ export function Album({ albumRef }: AlbumProps) {
   const album = useFragment(albumFragment, albumRef);
 
   const { isLoggedIn } = useLogin();
-  const firstPlayedFormatted = formatFirstPlayed(album.firstPlayed ?? null);
+  const firstPlayedFormatted = formatFirstPlayed(album.firstPlayed);
 
   const contents = (
     <>
