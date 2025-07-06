@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 import { type ReactNode, useCallback } from "react";
 import { graphql, useLazyLoadQuery } from "react-relay";
 
-import { Spacer } from "components/Spacer";
-import { YearsHistogram } from "components/YearsHistogram/years-histogram";
+import { Spacer } from "components/spacer";
+import { YearsHistogram } from "components/years-histogram/years-histogram";
 import type { layoutFirstPlayedYearsQuery } from "generated/layoutFirstPlayedYearsQuery.graphql";
 
 const layoutFirstPlayedYearsQuery = graphql`

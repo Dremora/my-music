@@ -1,6 +1,6 @@
 import { useLogin } from "data/login";
 
-import { Item } from "../Item";
+import { Item } from "../item";
 
 import { itemsStyle } from "./styles.css";
 

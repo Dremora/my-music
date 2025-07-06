@@ -12,15 +12,15 @@ import {
   AlbumForm,
   albumFormFragment,
   type AlbumFormProps,
-} from "components/AlbumForm";
-import type { AlbumFormFragment$key } from "generated/AlbumFormFragment.graphql";
+} from "components/album-form";
+import type { albumFormFragment$key } from "generated/albumFormFragment.graphql";
 import type { pageGetAlbumQuery } from "generated/pageGetAlbumQuery.graphql";
 import type { pageUpdateAlbumMutation } from "generated/pageUpdateAlbumMutation.graphql";
 
 const updateAlbumMutation = graphql`
   mutation pageUpdateAlbumMutation($input: MutationUpdateAlbumInput!) {
     updateAlbum(input: $input) {
-      ...AlbumFormFragment
+      ...albumFormFragment
     }
   }
 `;
@@ -28,7 +28,7 @@ const updateAlbumMutation = graphql`
 const getAlbumQuery = graphql`
   query pageGetAlbumQuery($id: UUID!) {
     album(id: $id) {
-      ...AlbumFormFragment
+      ...albumFormFragment
     }
   }
 `;
@@ -75,7 +75,7 @@ export default function AlbumPage({
     [commit, id],
   );
 
-  const key: AlbumFormFragment$key = data.album;
+  const key: albumFormFragment$key = data.album;
   const fragment = useFragment(albumFormFragment, key);
 
   return (

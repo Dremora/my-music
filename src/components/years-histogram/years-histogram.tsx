@@ -4,11 +4,11 @@ import { useCallback, useMemo, useState } from "react";
 import { useFragment } from "react-relay";
 import { graphql } from "relay-runtime";
 
-import { Text } from "components/Text";
+import { Text } from "components/text";
 import type { yearsHistogramFragment$key } from "generated/yearsHistogramFragment.graphql";
 
 import { rootStyle } from "./styles.css";
-import { Year } from "./Year";
+import { Year } from "./year";
 
 function getMaxValue(numbers: number[]): number {
   return numbers.length === 0

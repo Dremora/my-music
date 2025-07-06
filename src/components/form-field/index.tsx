@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import { Text } from "components/Text";
+import { Text } from "components/text";
 
 import { containerStyle, contentsStyle, labelStyle } from "./styles.css";
 

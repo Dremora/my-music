@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { graphql, useFragment } from "react-relay";
 
-import { Text } from "components/Text";
+import { Text } from "components/text";
 import { useLogin } from "data/login";
-import type { AlbumType } from "generated/AlbumFormFragment.graphql";
-import type { AlbumFragment$key } from "generated/AlbumFragment.graphql";
+import type { AlbumType } from "generated/albumFormFragment.graphql";
+import type { albumFragment$key } from "generated/albumFragment.graphql";
 import { formatFirstPlayed } from "utils";
 
 import {
@@ -19,7 +19,7 @@ import {
 } from "./styles.css";
 
 const albumFragment = graphql`
-  fragment AlbumFragment on Album {
+  fragment albumFragment on Album {
     id
     artist
     title
@@ -42,7 +42,7 @@ const albumFragment = graphql`
 `;
 
 type AlbumProps = {
-  readonly albumRef: AlbumFragment$key;
+  readonly albumRef: albumFragment$key;
 };
 
 export function Album({ albumRef }: AlbumProps) {

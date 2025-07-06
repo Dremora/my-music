@@ -2,11 +2,11 @@ import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 import { graphql, useLazyLoadQuery } from "react-relay";
 
-import { YearsHistogram } from "components/YearsHistogram/years-histogram";
-import type { AlbumsByYearSelectorQuery } from "generated/AlbumsByYearSelectorQuery.graphql";
+import { YearsHistogram } from "components/years-histogram/years-histogram";
+import type { albumsByYearSelectorQuery } from "generated/albumsByYearSelectorQuery.graphql";
 
-export const albumsByYearSelectorQuery = graphql`
-  query AlbumsByYearSelectorQuery {
+const albumsByYearSelectorQuery = graphql`
+  query albumsByYearSelectorQuery {
     albumPerYearCount {
       ...yearsHistogramFragment
     }
@@ -23,7 +23,7 @@ export function AlbumsByYearSelector() {
     [router],
   );
 
-  const data = useLazyLoadQuery<AlbumsByYearSelectorQuery>(
+  const data = useLazyLoadQuery<albumsByYearSelectorQuery>(
     albumsByYearSelectorQuery,
     {},
   );

@@ -2,8 +2,8 @@
 
 import type { ReactNode } from "react";
 
-import { AlbumsByYearSelector } from "components/AlbumsByYearSelector";
-import { Spacer } from "components/Spacer";
+import { AlbumsByYearSelector } from "components/albums-by-year-selector";
+import { Spacer } from "components/spacer";
 
 export default function YearsLayout({
   children,

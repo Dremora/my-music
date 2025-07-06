@@ -1,8 +1,8 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-import { Footer } from "components/Footer";
-import { Menu } from "components/Menu";
+import { Footer } from "components/footer";
+import { Menu } from "components/menu";
 
 import {
   h1Style,

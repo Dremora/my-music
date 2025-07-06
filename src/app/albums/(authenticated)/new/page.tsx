@@ -8,7 +8,7 @@ import {
   type AlbumData,
   AlbumForm,
   type AlbumFormProps,
-} from "components/AlbumForm";
+} from "components/album-form";
 import type { pageCreateAlbumMutation } from "generated/pageCreateAlbumMutation.graphql";
 
 const createEmptyAlbum = (): AlbumData => ({
@@ -25,7 +25,7 @@ const pageCreateAlbumMutation = graphql`
   mutation pageCreateAlbumMutation($input: MutationCreateAlbumInput!) {
     createAlbum(input: $input) {
       id
-      ...AlbumFormFragment
+      ...albumFormFragment
     }
   }
 `;

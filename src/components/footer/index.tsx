@@ -1,16 +1,16 @@
 import { type ChangeEvent, type FormEvent, useCallback, useState } from "react";
 import { graphql, useMutation } from "react-relay";
 
-import { Button } from "components/Button";
-import { Input } from "components/Input";
-import { Text } from "components/Text";
+import { Button } from "components/button";
+import { Input } from "components/input";
+import { Text } from "components/text";
 import { useLogin } from "data/login";
-import type { FooterLoginMutation } from "generated/FooterLoginMutation.graphql";
+import type { footerLoginMutation } from "generated/footerLoginMutation.graphql";
 
 import { loginLinkStyle, rootStyle, spacerStyle } from "./styles.css";
 
 const footerLoginMutation = graphql`
-  mutation FooterLoginMutation($password: String!) {
+  mutation footerLoginMutation($password: String!) {
     login(password: $password)
   }
 `;
@@ -19,7 +19,7 @@ export function Footer() {
   const { isLoggedIn, onLoggedIn, onLoggedOut } = useLogin();
 
   const [loginRequest, isLoggingIn] =
-    useMutation<FooterLoginMutation>(footerLoginMutation);
+    useMutation<footerLoginMutation>(footerLoginMutation);
 
   const [passwordInput, setPasswordInput] = useState("");
   const [showingLogin, setShowingLogin] = useState(false);

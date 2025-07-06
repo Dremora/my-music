@@ -9,9 +9,9 @@ import {
 } from "@floating-ui/react";
 import { useCallback, useState } from "react";
 
-import { BurgerIcon } from "components/BurgerIcon";
+import { BurgerIcon } from "components/burger-icon";
 
-import { MenuItems } from "./MenuItems";
+import { MenuItems } from "./menu-items";
 import {
   largeScreenStyle,
   menuButtonStyle,

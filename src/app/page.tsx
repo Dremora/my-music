@@ -16,17 +16,17 @@ import {
   usePreloadedQuery,
 } from "react-relay/hooks";
 
-import { AlbumList } from "components/AlbumList";
-import { Search } from "components/Search";
-import { Text } from "components/Text";
-import { useIsFirstRender } from "data/useIsFirstRender";
+import { AlbumList } from "components/album-list";
+import { Search } from "components/search";
+import { Text } from "components/text";
+import { useIsFirstRender } from "data/use-is-first-render";
 import type { pageFindAlbumsBySearchQuery } from "generated/pageFindAlbumsBySearchQuery.graphql";
 import { environment } from "utils/relay";
 
 const pageFindAlbumsBySearchQuery = graphql`
   query pageFindAlbumsBySearchQuery($input: QueryAlbumsInput!) {
     albums(input: $input) {
-      ...AlbumListFragment
+      ...albumListFragment
     }
   }
 `;

@@ -3,15 +3,15 @@ import { AnimatePresence, motion } from "motion/react";
 import { type ChangeEvent, type FormEvent, useCallback, useState } from "react";
 import { graphql } from "relay-runtime";
 
-import { Button } from "components/Button";
-import { FirstPlayedField } from "components/FirstPlayedField";
-import { FormField } from "components/FormField";
-import { Input } from "components/Input";
-import { Select } from "components/Select";
-import { Source, type SourceData } from "components/Source";
-import { Text } from "components/Text";
-import { useIsFirstRender } from "data/useIsFirstRender";
-import type { AlbumType } from "generated/AlbumFormFragment.graphql";
+import { Button } from "components/button";
+import { FirstPlayedField } from "components/first-played-field";
+import { FormField } from "components/form-field";
+import { Input } from "components/input";
+import { Select } from "components/select";
+import { Source, type SourceData } from "components/source";
+import { Text } from "components/text";
+import { useIsFirstRender } from "data/use-is-first-render";
+import type { AlbumType } from "generated/albumFormFragment.graphql";
 import {
   type FirstPlayed,
   formatInteger,
@@ -31,7 +31,7 @@ const types: { id: AlbumType; label: string }[] = [
 ];
 
 export const albumFormFragment = graphql`
-  fragment AlbumFormFragment on Album {
+  fragment albumFormFragment on Album {
     id
     artist
     title

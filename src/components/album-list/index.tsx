@@ -1,18 +1,18 @@
 import { graphql, useFragment } from "react-relay";
 
-import { Album } from "components/Album";
-import { Text } from "components/Text";
-import type { AlbumListFragment$key } from "generated/AlbumListFragment.graphql";
+import { Album } from "components/album";
+import { Text } from "components/text";
+import type { albumListFragment$key } from "generated/albumListFragment.graphql";
 
 const albumListFragment = graphql`
-  fragment AlbumListFragment on Album @relay(plural: true) {
+  fragment albumListFragment on Album @relay(plural: true) {
     id
-    ...AlbumFragment
+    ...albumFragment
   }
 `;
 
 type AlbumListProps = {
-  readonly albumsRef: AlbumListFragment$key;
+  readonly albumsRef: albumListFragment$key;
 };
 
 export function AlbumList({ albumsRef }: AlbumListProps) {

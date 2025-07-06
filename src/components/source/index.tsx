@@ -1,14 +1,14 @@
 import { type ChangeEvent, memo, useCallback } from "react";
 
-import { Button } from "components/Button";
-import { FormField } from "components/FormField";
-import { Input } from "components/Input";
-import { Select } from "components/Select";
-import { Text } from "components/Text";
+import { Button } from "components/button";
+import { FormField } from "components/form-field";
+import { Input } from "components/input";
+import { Select } from "components/select";
+import { Text } from "components/text";
 import {
   type Format,
   type Location,
-} from "generated/AlbumFormFragment.graphql";
+} from "generated/albumFormFragment.graphql";
 import { formatInteger, parseInteger, parseOptionalString } from "utils";
 
 import { hrStyle, titleStyle } from "./styles.css";

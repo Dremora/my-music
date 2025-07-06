@@ -1,9 +1,9 @@
 import { AnimatePresence, motion } from "motion/react";
 import { type ChangeEvent, useCallback, useState } from "react";
 
-import { Input } from "components/Input";
-import { Text } from "components/Text";
-import { useIsFirstRender } from "data/useIsFirstRender";
+import { Input } from "components/input";
+import { Text } from "components/text";
+import { useIsFirstRender } from "data/use-is-first-render";
 import { type FirstPlayed, formatInteger, parseInteger } from "utils";
 
 import {

@@ -2,8 +2,8 @@ import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { Text } from "components/Text";
-import { useIsFirstRender } from "data/useIsFirstRender";
+import { Text } from "components/text";
+import { useIsFirstRender } from "data/use-is-first-render";
 
 import { anchorStyle, barStyle, listItemStyle } from "./styles.css";
 
