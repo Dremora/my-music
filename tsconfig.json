@@ -31,7 +31,6 @@
 
     // Interop
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
     "verbatimModuleSyntax": true,
 
     // Language and Environment
