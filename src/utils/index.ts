@@ -45,8 +45,10 @@ export function formatFirstPlayed(value: FirstPlayed): string {
   }
 }
 
-export const formatInteger = (value: number | null) => value?.toString() ?? "";
-export const parseInteger = (value: string) =>
-  value ? Number.parseInt(value, 10) || null : null;
-export const parseOptionalString = (value: string): string | null =>
-  value === "" ? null : value;
+export function formatInteger(value: number | null) {
+  return value?.toString() ?? "";
+}
+
+export function parseInteger(value: string) {
+  return value ? Number.parseInt(value, 10) || null : null;
+}

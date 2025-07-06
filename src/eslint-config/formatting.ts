@@ -16,6 +16,7 @@ export const formatting = tseslint.config(
       "perfectionist/sort-imports": "off",
       "perfectionist/sort-objects": "off",
       "perfectionist/sort-union-types": "off",
+      "perfectionist/sort-modules": "off",
     },
   },
   {

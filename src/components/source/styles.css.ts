@@ -13,3 +13,8 @@ export const titleStyle = style({
   justifyContent: "space-between",
   alignItems: "baseline",
 });
+
+export const linkStyle = style({
+  color: "inherit",
+  textDecoration: "underline",
+});

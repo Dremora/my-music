@@ -187,10 +187,15 @@ export const typescript = tseslint.config(
       "functional/type-declaration-immutability": "off",
       "functional/immutable-data": "off",
 
-      // Already enabled in the shared config, but with adjusted options
+      // Already enabled in the shared config, but with adjusted options (to allow numbers)
       "@typescript-eslint/restrict-template-expressions": [
         "error",
-        { allowNumber: true },
+        {
+          allowAny: false,
+          allowBoolean: false,
+          allowNullish: false,
+          allowRegExp: false,
+        },
       ],
       // Doesn't work with Next.js
       "@typescript-eslint/dot-notation": "off",

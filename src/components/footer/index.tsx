@@ -2,8 +2,8 @@ import { type ChangeEvent, type FormEvent, useCallback, useState } from "react";
 import { graphql, useMutation } from "react-relay";
 
 import { Button } from "components/button";
-import { Input } from "components/input";
 import { Text } from "components/text";
+import { TextInput } from "components/text-input";
 import { useLogin } from "data/login";
 import type { footerLoginMutation } from "generated/footerLoginMutation.graphql";
 
@@ -31,13 +31,10 @@ export function Footer() {
     setWrongPassword(false);
   }, []);
 
-  const setPassword = useCallback(
-    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setWrongPassword(false);
-      setPasswordInput(e.target.value);
-    },
-    [],
-  );
+  const setPassword = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setWrongPassword(false);
+    setPasswordInput(e.target.value);
+  }, []);
 
   const login = useCallback(() => {
     loginRequest({
@@ -73,7 +70,7 @@ export function Footer() {
     <form className={rootStyle} onSubmit={submit}>
       {showingLogin ? (
         <>
-          <Input
+          <TextInput
             autoFocus
             disabled={isLoggingIn}
             onChange={setPassword}

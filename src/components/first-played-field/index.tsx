@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from "motion/react";
 import { type ChangeEvent, useCallback, useState } from "react";
 
-import { Input } from "components/input";
 import { Text } from "components/text";
+import { TextInput } from "components/text-input";
 import { useIsFirstRender } from "data/use-is-first-render";
 import { type FirstPlayed, formatInteger, parseInteger } from "utils";
 
@@ -33,7 +33,7 @@ export function FirstPlayedField({
   );
 
   const setMode = useCallback(
-    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
       const newMode = e.target.value;
       setFirstPlayedMode(newMode);
 
@@ -59,7 +59,7 @@ export function FirstPlayedField({
   const isFirstRender = useIsFirstRender();
 
   const onTimestampChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
       const timestamp = parseInteger(e.target.value);
 
       if (timestamp != null) {
@@ -70,7 +70,7 @@ export function FirstPlayedField({
   );
 
   const onYearChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
       const year = parseInteger(e.target.value);
       const month = value && "month" in value ? value.month : undefined;
       const day = value && "day" in value ? value.day : undefined;
@@ -81,7 +81,7 @@ export function FirstPlayedField({
   );
 
   const onMonthChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
       const month = parseInteger(e.target.value);
       const year = value && "year" in value ? value.year : undefined;
       const day = value && "day" in value ? value.day : undefined;
@@ -92,7 +92,7 @@ export function FirstPlayedField({
   );
 
   const onDayChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
       const day = parseInteger(e.target.value);
       const year = value && "year" in value ? value.year : undefined;
       const month = value && "month" in value ? value.month : undefined;
@@ -164,7 +164,7 @@ export function FirstPlayedField({
             >
               {firstPlayedMode === "timestamp" && (
                 <div className={dateInputContainerStyle}>
-                  <Input
+                  <TextInput
                     disabled={disabled}
                     onChange={onTimestampChange}
                     value={formatInteger(
@@ -179,7 +179,7 @@ export function FirstPlayedField({
               {firstPlayedMode === "date" && (
                 <div className={dateInputContainerStyle}>
                   <div className={yearInputFieldStyle}>
-                    <Input
+                    <TextInput
                       disabled={disabled}
                       inputmode="numeric"
                       onChange={onYearChange}
@@ -191,7 +191,7 @@ export function FirstPlayedField({
                     />
                   </div>
                   <div className={monthDayFieldStyle}>
-                    <Input
+                    <TextInput
                       disabled={disabled}
                       inputmode="numeric"
                       onChange={onMonthChange}
@@ -205,7 +205,7 @@ export function FirstPlayedField({
                     />
                   </div>
                   <div className={monthDayFieldStyle}>
-                    <Input
+                    <TextInput
                       disabled={disabled}
                       inputmode="numeric"
                       onChange={onDayChange}

@@ -6,6 +6,7 @@ type SelectProps<T extends string> = {
   readonly allowEmpty?: boolean;
   readonly children: ReactNode;
   readonly disabled?: boolean;
+  readonly hasError?: boolean;
   readonly onChange: (value: T) => void;
   readonly value: T | null;
 };
@@ -14,6 +15,7 @@ export function Select<T extends string>({
   allowEmpty = false,
   children,
   disabled,
+  hasError = false,
   onChange,
   value,
 }: SelectProps<T>) {
@@ -27,7 +29,7 @@ export function Select<T extends string>({
 
   return (
     <select
-      className={selectStyle}
+      className={selectStyle({ hasError })}
       disabled={disabled}
       onChange={onChangeHtmlEvent}
       value={value ?? ""}

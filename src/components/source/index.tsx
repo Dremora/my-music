@@ -1,35 +1,36 @@
-import { type ChangeEvent, memo, useCallback } from "react";
+import { AnimatePresence, motion } from "motion/react";
+import Link from "next/link";
+import { memo, useCallback, useMemo } from "react";
 
 import { Button } from "components/button";
-import { FormField } from "components/form-field";
-import { Input } from "components/input";
-import { Select } from "components/select";
+import {
+  identity,
+  SelectFormField,
+  TextInputFormField,
+} from "components/form-field";
 import { Text } from "components/text";
+import { useIsFirstRender } from "data/use-is-first-render";
 import {
   type Format,
   type Location,
 } from "generated/albumFormFragment.graphql";
-import { formatInteger, parseInteger, parseOptionalString } from "utils";
+import { formatInteger, parseInteger } from "utils";
+import {
+  accurateRipSchema,
+  cueIssuesSchema,
+  discsSchema,
+  downloadSchema,
+  editionSchema,
+  mbidSchema,
+  sourceCommentsSchema,
+  sourceFormats,
+  sourceFormatsSchema,
+  sourceLocations,
+  sourceLocationsSchema,
+  tagIssuesSchema,
+} from "utils/validation";
 
-import { hrStyle, titleStyle } from "./styles.css";
-import { parseMbid } from "./utils";
-
-const locations: { id: Location; label: string }[] = [
-  { id: "APPLE_MUSIC", label: "Apple Music" },
-  { id: "GOOGLE_MUSIC", label: "Google Music" },
-  { id: "SPOTIFY", label: "Spotify" },
-  { id: "FOOBAR2000", label: "foobar2000" },
-];
-
-const formats: { id: Format; label: string }[] = [
-  { id: "MP3", label: "Lossy (MP3)" },
-  { id: "MPC", label: "Lossy (MPC)" },
-  { id: "WMA", label: "Lossy (WMA)" },
-  { id: "TAK", label: "Lossless (TAK)" },
-  { id: "APE", label: "Lossless (APE)" },
-  { id: "FLAC", label: "Lossless (FLAC)" },
-  { id: "MIXED", label: "Mixed" },
-];
+import { hrStyle, linkStyle, titleStyle } from "./styles.css";
 
 export type SourceData = {
   readonly accurateRip: string | null;
@@ -79,84 +80,66 @@ export const Source = memo(function Source({
   );
 
   const onEditionChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      onUpdate(index, {
-        ...source,
-        edition: parseOptionalString(e.target.value),
-      });
+    (edition: string | null) => {
+      onUpdate(index, { ...source, edition });
     },
     [index, onUpdate, source],
   );
 
   const onCommentsChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      onUpdate(index, {
-        ...source,
-        comments: parseOptionalString(e.target.value),
-      });
+    (comments: string | null) => {
+      onUpdate(index, { ...source, comments });
     },
     [index, onUpdate, source],
   );
 
+  const parsedMbid = useMemo(() => {
+    return mbidSchema.safeParse(source.mbid);
+  }, [source.mbid]);
+
   const onMbidChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      onUpdate(index, {
-        ...source,
-        mbid: parseMbid(e.target.value),
-      });
+    (mbid: string | null) => {
+      onUpdate(index, { ...source, mbid });
     },
     [index, onUpdate, source],
   );
 
   const onTagIssuesChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      onUpdate(index, {
-        ...source,
-        tagIssues: parseOptionalString(e.target.value),
-      });
+    (tagIssues: string | null) => {
+      onUpdate(index, { ...source, tagIssues });
     },
     [index, onUpdate, source],
   );
 
   const onAccurateRipChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      onUpdate(index, {
-        ...source,
-        accurateRip: parseOptionalString(e.target.value),
-      });
+    (accurateRip: string | null) => {
+      onUpdate(index, { ...source, accurateRip });
     },
     [index, onUpdate, source],
   );
 
   const onCueIssuesChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      onUpdate(index, {
-        ...source,
-        cueIssues: parseOptionalString(e.target.value),
-      });
+    (cueIssues: string | null) => {
+      onUpdate(index, { ...source, cueIssues });
     },
     [index, onUpdate, source],
   );
 
   const onDownloadChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      onUpdate(index, {
-        ...source,
-        download: parseOptionalString(e.target.value),
-      });
+    (download: string | null) => {
+      onUpdate(index, { ...source, download });
     },
     [index, onUpdate, source],
   );
 
   const onDiscsChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      onUpdate(index, {
-        ...source,
-        discs: parseInteger(e.target.value),
-      });
+    (discs: number | null) => {
+      onUpdate(index, { ...source, discs });
     },
     [index, onUpdate, source],
   );
+
+  const isFirstRender = useIsFirstRender();
 
   return (
     <>
@@ -169,94 +152,158 @@ export const Source = memo(function Source({
           Delete source
         </Button>
       </div>
-      <FormField label="Location">
-        <Select<Location>
-          disabled={disabled}
-          onChange={onLocationChange}
-          value={source.location}
+      <SelectFormField
+        label="Location"
+        onChange={onLocationChange}
+        options={sourceLocations}
+        schema={sourceLocationsSchema}
+        value={source.location}
+      />
+
+      <TextInputFormField
+        format={(value) => value ?? ""}
+        label="MBID"
+        onChange={onMbidChange}
+        parse={identity}
+        schema={mbidSchema}
+        value={source.mbid}
+      >
+        <motion.div
+          animate={{
+            height: parsedMbid.success && parsedMbid.data !== null ? "auto" : 0,
+          }}
+          initial={{
+            height: parsedMbid.success && parsedMbid.data !== null ? "auto" : 0,
+          }}
+          transition={{ duration: 0.15 }}
         >
-          {locations.map((location) => (
-            <option key={location.id} value={location.id}>
-              {location.label}
-            </option>
-          ))}
-        </Select>
-      </FormField>
-      <FormField label="MBID">
-        <Input
-          disabled={disabled}
-          onChange={onMbidChange}
-          value={source.mbid ?? ""}
-        />
-      </FormField>
-      <FormField label="Comments">
-        <Input
-          disabled={disabled}
-          onChange={onCommentsChange}
-          value={source.comments ?? ""}
-        />
-      </FormField>
-      {source.location !== "SPOTIFY" && (
-        <FormField label="Tag issues">
-          <Input
-            disabled={disabled}
-            onChange={onTagIssuesChange}
-            value={source.tagIssues ?? ""}
-          />
-        </FormField>
-      )}
-      {source.location === "FOOBAR2000" && (
-        <>
-          <FormField label="Accurate rip">
-            <Input
-              disabled={disabled}
-              onChange={onAccurateRipChange}
-              value={source.accurateRip ?? ""}
-            />
-          </FormField>
-          <FormField label="Cue issues">
-            <Input
-              disabled={disabled}
-              onChange={onCueIssuesChange}
-              value={source.cueIssues ?? ""}
-            />
-          </FormField>
-          <FormField label="Discs">
-            <Input
-              disabled={disabled}
-              onChange={onDiscsChange}
-              value={formatInteger(source.discs ?? null)}
-            />
-          </FormField>
-          <FormField label="Download">
-            <Input
-              disabled={disabled}
-              onChange={onDownloadChange}
-              value={source.download ?? ""}
-            />
-          </FormField>
-          <FormField label="Edition">
-            <Input
-              disabled={disabled}
-              onChange={onEditionChange}
-              value={source.edition ?? ""}
-            />
-          </FormField>
-          <FormField label="Format">
-            <Select
-              disabled={disabled}
-              onChange={onFormatChange}
-              value={source.format ?? null}
+          <AnimatePresence mode="wait">
+            {parsedMbid.success && parsedMbid.data !== null && (
+              <motion.div
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                initial={{ opacity: isFirstRender ? 1 : 0 }}
+                transition={{ duration: 0.15 }}
+              >
+                <Text color="blue" size="small">
+                  <Link
+                    className={linkStyle}
+                    href={`https://musicbrainz.org/release/${parsedMbid.data}`}
+                    target="_blank"
+                  >
+                    View on MusicBrainz
+                  </Link>
+                </Text>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      </TextInputFormField>
+
+      <TextInputFormField
+        format={(value) => value ?? ""}
+        label="Comments"
+        onChange={onCommentsChange}
+        parse={identity}
+        schema={sourceCommentsSchema}
+        value={source.comments}
+      />
+
+      <motion.div
+        animate={{ height: source.location !== "SPOTIFY" ? "auto" : 0 }}
+        initial={{ height: source.location !== "SPOTIFY" ? "auto" : 0 }}
+        transition={{ duration: 0.15 }}
+      >
+        <AnimatePresence mode="wait">
+          {source.location !== "SPOTIFY" && (
+            <motion.div
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              initial={{ opacity: isFirstRender ? 1 : 0 }}
+              transition={{ duration: 0.15 }}
             >
-              {formats.map((format) => (
-                <option key={format.id} value={format.id}>
-                  {format.label}
-                </option>
-              ))}
-            </Select>
-          </FormField>
-        </>
-      )}
+              <TextInputFormField
+                format={(value) => value ?? ""}
+                label="Tag issues"
+                onChange={onTagIssuesChange}
+                parse={identity}
+                schema={tagIssuesSchema}
+                value={source.tagIssues}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+
+      <motion.div
+        animate={{ height: source.location === "FOOBAR2000" ? "auto" : 0 }}
+        initial={{ height: source.location === "FOOBAR2000" ? "auto" : 0 }}
+        transition={{ duration: 0.15 }}
+      >
+        <AnimatePresence mode="wait">
+          {source.location === "FOOBAR2000" && (
+            <motion.div
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              initial={{ opacity: isFirstRender ? 1 : 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <TextInputFormField
+                format={(value) => value ?? ""}
+                label="Accurate rip"
+                onChange={onAccurateRipChange}
+                parse={identity}
+                schema={accurateRipSchema}
+                value={source.accurateRip}
+              />
+
+              <TextInputFormField
+                format={(value) => value ?? ""}
+                label="Cue issues"
+                onChange={onCueIssuesChange}
+                parse={identity}
+                schema={cueIssuesSchema}
+                value={source.cueIssues}
+              />
+
+              <TextInputFormField
+                format={formatInteger}
+                label="Discs"
+                onChange={onDiscsChange}
+                parse={parseInteger}
+                schema={discsSchema}
+                value={source.discs}
+              />
+
+              <TextInputFormField
+                format={(value) => value ?? ""}
+                label="Download"
+                onChange={onDownloadChange}
+                parse={identity}
+                schema={downloadSchema}
+                value={source.download}
+              />
+
+              <TextInputFormField
+                format={(value) => value ?? ""}
+                label="Edition"
+                onChange={onEditionChange}
+                parse={identity}
+                schema={editionSchema}
+                value={source.edition}
+              />
+
+              <SelectFormField
+                label="Format"
+                onChange={onFormatChange}
+                options={sourceFormats}
+                schema={sourceFormatsSchema}
+                value={source.format}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
     </>
   );
 });

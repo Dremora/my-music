@@ -54,8 +54,6 @@ export default function AlbumPage({
       const type = values.type;
 
       if (!type) {
-        setSubmitError("Type is required");
-
         return;
       }
 

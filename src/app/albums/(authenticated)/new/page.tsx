@@ -18,7 +18,20 @@ const createEmptyAlbum = (): AlbumData => ({
   firstPlayed: { timestamp: Math.floor(Date.now() / 1000) },
   comments: null,
   year: null,
-  sources: [],
+  sources: [
+    {
+      location: "APPLE_MUSIC",
+      edition: null,
+      discs: null,
+      download: null,
+      comments: null,
+      accurateRip: null,
+      cueIssues: null,
+      format: null,
+      mbid: null,
+      tagIssues: null,
+    },
+  ],
 });
 
 const pageCreateAlbumMutation = graphql`
@@ -49,8 +62,6 @@ export default function NewAlbumPage() {
       const type = values.type;
 
       if (!type) {
-        setSubmitError("Type is required");
-
         return;
       }
 

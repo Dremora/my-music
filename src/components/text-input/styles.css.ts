@@ -9,7 +9,7 @@ import {
 } from "styles/colors.css";
 import { size } from "styles/typography.css";
 
-export const selectStyle = recipe({
+export const inputStyle = recipe({
   base: [
     size.base,
     {
@@ -18,14 +18,12 @@ export const selectStyle = recipe({
       lineHeight: 2,
       padding: "2px 10px",
       display: "block",
+      width: "100%",
       flexGrow: 1,
       flexShrink: 1,
       color: darkPlatinum,
       transition: "all 0.2s",
       background: white,
-      borderRadius: 0,
-      width: "auto",
-      appearance: "none",
 
       ":focus": {
         outline: "none",
@@ -37,7 +35,6 @@ export const selectStyle = recipe({
       },
     },
   ],
-
   variants: {
     hasError: {
       true: {
@@ -45,7 +42,6 @@ export const selectStyle = recipe({
       },
       false: {
         borderColor: platinum,
-
         ":focus": {
           borderColor: darkerPlatinum,
         },

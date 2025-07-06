@@ -1,49 +1,44 @@
-import type { ChangeEvent, HTMLAttributes } from "react";
+import { type ChangeEvent, type HTMLAttributes } from "react";
 
 import { inputStyle } from "./styles.css";
 
-type InputProps = {
+type TextInputProps = {
   readonly autoFocus?: boolean;
   readonly disabled?: boolean;
+  readonly hasError?: boolean;
   readonly inputmode?: HTMLAttributes<HTMLInputElement>["inputMode"];
-  readonly multiline?: boolean;
-  readonly onChange?: (
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => void;
+  readonly onBlur?: () => void;
+  readonly onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   readonly pattern?: string;
   readonly placeholder?: string;
   readonly type?: "text" | "password";
   readonly value: string;
 };
 
-export function Input({
+export function TextInput({
   autoFocus,
   disabled,
+  hasError = false,
   inputmode,
-  multiline = false,
+  onBlur,
   onChange,
   pattern,
   placeholder,
   type = "text",
   value,
-}: InputProps) {
-  return multiline ? (
-    <textarea
-      autoFocus={autoFocus}
-      className={inputStyle}
-      disabled={disabled}
-      inputMode={inputmode}
-      onChange={onChange}
-      placeholder={placeholder}
-      value={value || ""}
-    />
-  ) : (
+}: TextInputProps) {
+  return (
     <input
       autoFocus={autoFocus}
-      className={inputStyle}
+      className={inputStyle({ hasError })}
       disabled={disabled}
       inputMode={inputmode}
+      onBlur={onBlur}
       onChange={onChange}
+      onSubmit={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      }}
       pattern={pattern}
       placeholder={placeholder}
       type={type}
