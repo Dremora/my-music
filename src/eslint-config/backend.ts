@@ -1,15 +1,28 @@
 import eslintPluginNode from "eslint-plugin-n";
 import tseslint from "typescript-eslint";
 
-import { backendFiles, scriptsFiles } from "./config";
+import {
+  backendCommonJsFiles,
+  backendEsmFiles,
+  backendFiles,
+  scriptsFiles,
+} from "./config";
 
 export const backend = tseslint.config(
+  backendEsmFiles.length > 0
+    ? {
+        ...eslintPluginNode.configs["flat/recommended-module"],
+        files: [...backendEsmFiles],
+      }
+    : [],
+  backendCommonJsFiles.length > 0
+    ? {
+        ...eslintPluginNode.configs["flat/recommended-script"],
+        files: [...backendCommonJsFiles],
+      }
+    : [],
   {
-    ...eslintPluginNode.configs["flat/recommended-module"],
-    files: [...backendFiles, ...scriptsFiles],
-  },
-  {
-    files: [...backendFiles, ...scriptsFiles],
+    files: [...backendFiles],
     name: "my-music/backend",
     rules: {
       "n/no-missing-import": "off",
@@ -17,4 +30,15 @@ export const backend = tseslint.config(
       "no-console": "error",
     },
   },
+  scriptsFiles.length > 0
+    ? {
+        name: "my-music/scripts",
+        files: scriptsFiles,
+        rules: {
+          "no-console": "off",
+          "n/no-process-exit": "off",
+          "unicorn/no-process-exit": "off",
+        },
+      }
+    : [],
 );
