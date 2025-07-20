@@ -284,6 +284,7 @@ export const base = tseslint.config(
       // eslint-plugin-unicorn
       "unicorn/no-abusive-eslint-disable": "off",
       "unicorn/no-array-reduce": "off",
+      "unicorn/no-await-expression-member": "off",
       "unicorn/no-negated-condition": "off",
       "unicorn/no-null": "off",
       "unicorn/no-useless-undefined": ["error", { checkArguments: false }],
