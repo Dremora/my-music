@@ -3,9 +3,14 @@ export const scriptsFiles = [];
 export const frontendFiles = ["src/**"];
 export const backendCommonJsFiles = [];
 export const backendEsmFiles = [
-  "next.config.ts",
   "eslint.config.ts",
-  "src/eslint-config/**",
+  "next.config.ts",
   "src/api/**",
+  "src/eslint-config/**",
+];
+export const defaultExportFiles = [
+  "eslint.config.ts",
+  "next.config.ts",
+  "src/app/**",
 ];
 export const backendFiles = [...backendEsmFiles, ...backendCommonJsFiles];

@@ -11,28 +11,30 @@ import {
 } from "components/album-form";
 import type { pageCreateAlbumMutation } from "generated/pageCreateAlbumMutation.graphql";
 
-const createEmptyAlbum = (): AlbumData => ({
-  title: "",
-  artist: "",
-  type: null,
-  firstPlayed: { timestamp: Math.floor(Date.now() / 1000) },
-  comments: null,
-  year: null,
-  sources: [
-    {
-      location: "APPLE_MUSIC",
-      edition: null,
-      discs: null,
-      download: null,
-      comments: null,
-      accurateRip: null,
-      cueIssues: null,
-      format: null,
-      mbid: null,
-      tagIssues: null,
-    },
-  ],
-});
+function createEmptyAlbum(): AlbumData {
+  return {
+    title: "",
+    artist: "",
+    type: null,
+    firstPlayed: { timestamp: Math.floor(Date.now() / 1000) },
+    comments: null,
+    year: null,
+    sources: [
+      {
+        location: "APPLE_MUSIC",
+        edition: null,
+        discs: null,
+        download: null,
+        comments: null,
+        accurateRip: null,
+        cueIssues: null,
+        format: null,
+        mbid: null,
+        tagIssues: null,
+      },
+    ],
+  };
+}
 
 const pageCreateAlbumMutation = graphql`
   mutation pageCreateAlbumMutation($input: MutationCreateAlbumInput!) {

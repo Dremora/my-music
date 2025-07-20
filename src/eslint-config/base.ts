@@ -10,7 +10,7 @@ import sortDestructureKeys from "eslint-plugin-sort-destructure-keys";
 import unicorn from "eslint-plugin-unicorn";
 import tseslint from "typescript-eslint";
 
-import { ignoredFiles } from "./config";
+import { defaultExportFiles, ignoredFiles } from "./config";
 import { custom } from "./custom-rules";
 
 export const base = tseslint.config(
@@ -294,7 +294,7 @@ export const base = tseslint.config(
     },
   },
   {
-    ignores: ["src/app/**", "eslint.config.ts", "next.config.ts"],
+    ignores: defaultExportFiles,
     name: "my-music/ban-default-export",
     rules: {
       "import-x/no-default-export": "error",

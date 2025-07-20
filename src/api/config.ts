@@ -1,4 +1,4 @@
-export const getEnvVariable = (name: string): string => {
+export function getEnvVariable(name: string): string {
   const value = process.env[name];
 
   if (value === undefined) {
@@ -6,4 +6,4 @@ export const getEnvVariable = (name: string): string => {
   }
 
   return value;
-};
+}

@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
-export const useIsFirstRender = () => {
+export function useIsFirstRender() {
   const isFirstRender = useRef(true);
 
   useEffect(() => {
@@ -8,9 +8,9 @@ export const useIsFirstRender = () => {
   }, []);
 
   return isFirstRender.current;
-};
+}
 
-export const useIsFirstRenderForceRender = () => {
+export function useIsFirstRenderForceRender() {
   const [isFirstRender, setIsFirstRender] = useState(true);
 
   useLayoutEffect(() => {
@@ -18,4 +18,4 @@ export const useIsFirstRenderForceRender = () => {
   }, []);
 
   return isFirstRender;
-};
+}

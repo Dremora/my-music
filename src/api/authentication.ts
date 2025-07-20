@@ -1,12 +1,12 @@
 import { getEnvVariable } from "./config";
 
-export const verify = (token: string): boolean => {
+export function verify(token: string): boolean {
   return token === getEnvVariable("USER_PASSWORD");
-};
+}
 
-export const verifyAuthorizationHeader = (
+export function verifyAuthorizationHeader(
   authorizationHeader: string | undefined,
-): boolean => {
+): boolean {
   if (typeof authorizationHeader !== "string") {
     return false;
   }
@@ -18,4 +18,4 @@ export const verifyAuthorizationHeader = (
   }
 
   return verify(token);
-};
+}

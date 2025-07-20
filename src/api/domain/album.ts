@@ -7,7 +7,9 @@ import { prisma } from "api/prisma";
 
 import { albumTypes, formats, locations } from "../schema/enums";
 
-const trim = (str: string) => str.trim();
+function trim(str: string) {
+  return str.trim();
+}
 
 const newSourceSchema = z.object({
   accurateRip: z.nullable(z.optional(z.string().max(255).transform(trim))),

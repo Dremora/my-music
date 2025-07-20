@@ -49,12 +49,11 @@
     ]
   },
   "include": [
-    ".next/types",
+    ".next/types/**/*.ts",
     "eslint.config.ts",
     "next-env.d.ts",
     "next.config.ts",
-    "src",
-    ".next/types/**/*.ts"
+    "src"
   ],
   "exclude": ["node_modules"]
 }

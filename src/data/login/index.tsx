@@ -61,6 +61,6 @@ export function LoginProvider({ children }: LoginProviderProps) {
   );
 }
 
-export const useLogin = () => {
+export function useLogin() {
   return useContext(LoginContext);
-};
+}

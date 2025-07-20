@@ -3,13 +3,13 @@ node_modules
 
 # build
 .next
-*.tsbuildinfo
+/dist
 
 # misc
 .DS_Store
+*.pem
 
 # env
-.env.local
 .env*.local
 
 # generated
