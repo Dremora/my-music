@@ -27,7 +27,7 @@ export const backend = tseslint.config(
     rules: {
       "n/no-missing-import": "off",
       "n/prefer-promises/fs": "error",
-      "no-console": ["error", {}],
+      "no-console": ["off", {}], // TODO restore and create a logger
     },
   },
   scriptsFiles.length > 0

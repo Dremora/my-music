@@ -1,7 +1,8 @@
 import { useCSRFPrevention } from "@graphql-yoga/plugin-csrf-prevention";
+import { useDisableIntrospection } from "@graphql-yoga/plugin-disable-introspection";
 import { useCookies } from "@whatwg-node/server-plugin-cookies";
 import { GraphQLError } from "graphql";
-import { createYoga, maskError } from "graphql-yoga";
+import { createYoga, maskError, useReadinessCheck } from "graphql-yoga";
 import { ZodError } from "zod";
 
 import { type Context, getContext } from "./context";
@@ -12,15 +13,16 @@ import {
   UnauthorizedError,
   ValidationError,
 } from "./errors";
+import { checkReadiness } from "./prisma";
 import { schema } from "./schema";
 
 export const yoga = createYoga<Context>({
+  landingPage: false,
+  graphiql: process.env.NODE_ENV === "development",
   cors: false,
   schema,
-  context: ({ request }) =>
-    getContext({
-      authorizationHeader: request.headers.get("authorization") ?? "",
-    }),
+  context: getContext,
+  healthCheckEndpoint: "/health/live",
   maskedErrors: {
     maskError(error, message, isDevelopment) {
       if (
@@ -39,8 +41,15 @@ export const yoga = createYoga<Context>({
     },
   },
   plugins: [
-    ...(process.env["NODE_ENV"] === "development" ? [] : [useCSRFPrevention()]),
+    ...(process.env["NODE_ENV"] === "development"
+      ? []
+      : [useCSRFPrevention(), useDisableIntrospection()]),
+    useReadinessCheck({
+      endpoint: "/health/ready",
+      check: async () => {
+        return checkReadiness();
+      },
+    }),
     useCookies(),
   ],
-  fetchAPI: { Response },
 });

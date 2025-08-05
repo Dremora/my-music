@@ -7,7 +7,7 @@ import {
   useFloating,
   useInteractions,
 } from "@floating-ui/react";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 
 import { BurgerIcon } from "components/burger-icon";
 
@@ -34,9 +34,9 @@ export function Menu() {
     useClick(context),
   ]);
 
-  const closeMenu = useCallback(() => {
+  const closeMenu = () => {
     setIsOpen(false);
-  }, []);
+  };
 
   return (
     <>

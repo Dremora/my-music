@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "motion/react";
-import { type ChangeEvent, useCallback, useState } from "react";
+import { type ChangeEvent, useState } from "react";
 
 import { Text } from "components/text";
 import { TextInput } from "components/text-input";
@@ -32,75 +32,60 @@ export function FirstPlayedField({
     value == null ? "unknown" : "year" in value ? "date" : "timestamp",
   );
 
-  const setMode = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const newMode = e.target.value;
-      setFirstPlayedMode(newMode);
+  const setMode = (e: ChangeEvent<HTMLInputElement>) => {
+    const newMode = e.target.value;
+    setFirstPlayedMode(newMode);
 
-      if (newMode === "date") {
-        onChange(
-          value && (!("year" in value) || value.year === undefined)
-            ? { year: undefined, month: undefined, day: undefined }
-            : value,
-        );
-      } else if (newMode === "timestamp") {
-        onChange(
-          value && (!("timestamp" in value) || value.timestamp === undefined)
-            ? { timestamp: undefined }
-            : value,
-        );
-      } else {
-        onChange(null);
-      }
-    },
-    [onChange, value],
-  );
+    if (newMode === "date") {
+      onChange(
+        value && (!("year" in value) || value.year === undefined)
+          ? { year: undefined, month: undefined, day: undefined }
+          : value,
+      );
+    } else if (newMode === "timestamp") {
+      onChange(
+        value && (!("timestamp" in value) || value.timestamp === undefined)
+          ? { timestamp: undefined }
+          : value,
+      );
+    } else {
+      onChange(null);
+    }
+  };
 
   const isFirstRender = useIsFirstRender();
 
-  const onTimestampChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const timestamp = parseInteger(e.target.value);
+  const onTimestampChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const timestamp = parseInteger(e.target.value);
 
-      if (timestamp != null) {
-        onChange({ timestamp });
-      }
-    },
-    [onChange],
-  );
+    if (timestamp != null) {
+      onChange({ timestamp });
+    }
+  };
 
-  const onYearChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const year = parseInteger(e.target.value);
-      const month = value && "month" in value ? value.month : undefined;
-      const day = value && "day" in value ? value.day : undefined;
+  const onYearChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const year = parseInteger(e.target.value);
+    const month = value && "month" in value ? value.month : undefined;
+    const day = value && "day" in value ? value.day : undefined;
 
-      onChange({ year, month, day });
-    },
-    [onChange, value],
-  );
+    onChange({ year, month, day });
+  };
 
-  const onMonthChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const month = parseInteger(e.target.value);
-      const year = value && "year" in value ? value.year : undefined;
-      const day = value && "day" in value ? value.day : undefined;
+  const onMonthChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const month = parseInteger(e.target.value);
+    const year = value && "year" in value ? value.year : undefined;
+    const day = value && "day" in value ? value.day : undefined;
 
-      onChange({ year, month, day });
-    },
-    [onChange, value],
-  );
+    onChange({ year, month, day });
+  };
 
-  const onDayChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const day = parseInteger(e.target.value);
-      const year = value && "year" in value ? value.year : undefined;
-      const month = value && "month" in value ? value.month : undefined;
+  const onDayChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const day = parseInteger(e.target.value);
+    const year = value && "year" in value ? value.year : undefined;
+    const month = value && "month" in value ? value.month : undefined;
 
-      onChange({ year, month, day });
-    },
-    [onChange, value],
-  );
+    onChange({ year, month, day });
+  };
 
   return (
     <div className={containerStyle}>

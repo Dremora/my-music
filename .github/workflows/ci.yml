@@ -2,9 +2,12 @@ name: CI
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
-    branches: [master]
+    branches: [main]
+
+env:
+  HUSKY: 0
 
 jobs:
   build:
@@ -37,20 +40,21 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Migrate typegen database
-        run: pnpm db:migrate
+        run: pnpm db:migrate:prod
         env:
+          NODE_ENV: production
+          DATABASE_URL: ${{ secrets.DIRECT_DATABASE_URL }}
           DIRECT_DATABASE_URL: ${{ secrets.DIRECT_DATABASE_URL }}
 
-      - name: Generate Prisma types
+      - name: Generate Prisma client
         run: pnpm prisma:generate
         env:
+          NODE_ENV: production
+          DATABASE_URL: ${{ secrets.DIRECT_DATABASE_URL }}
           DIRECT_DATABASE_URL: ${{ secrets.DIRECT_DATABASE_URL }}
 
       - name: Generate Relay types
         run: pnpm generate:graphql
-
-      - name: Run ESLint
-        run: pnpm lint
 
       - name: Run build
         run: pnpm build

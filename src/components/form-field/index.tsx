@@ -2,9 +2,7 @@ import { AnimatePresence, motion } from "motion/react";
 import {
   type HTMLAttributes,
   type ReactNode,
-  useCallback,
   useEffect,
-  useMemo,
   useState,
 } from "react";
 import type { ZodMiniType } from "zod/v4-mini";
@@ -33,9 +31,9 @@ function FormField({ children, error, label }: FormFieldProps) {
 
   const [isTouched, setIsTouched] = useState(false);
 
-  const setTouched = useCallback(() => {
+  const setTouched = () => {
     setIsTouched(true);
-  }, []);
+  };
 
   const showError = error !== undefined && (isTouched || submitted);
 
@@ -107,11 +105,11 @@ export function TextInputFormField<T>({
   value,
 }: TextInputFormFieldProps<T>) {
   const { isSubmitting } = useForm();
-  const parsedValue = useMemo(() => schema.safeParse(value), [schema, value]);
+  const parsedValue = schema.safeParse(value);
 
-  const cleanValue = useCallback(() => {
+  const cleanValue = () => {
     onChange(parsedValue.success ? parsedValue.data : value);
-  }, [parsedValue, value, onChange]);
+  };
 
   return (
     <FormField
@@ -163,11 +161,11 @@ export function MultilineTextInputFormField<T>({
   value,
 }: MultilineTextInputFormFieldProps<T>) {
   const { isSubmitting } = useForm();
-  const parsedValue = useMemo(() => schema.safeParse(value), [schema, value]);
+  const parsedValue = schema.safeParse(value);
 
-  const cleanValue = useCallback(() => {
+  const cleanValue = () => {
     onChange(parsedValue.success ? parsedValue.data : value);
-  }, [parsedValue, value, onChange]);
+  };
 
   return (
     <FormField
@@ -217,7 +215,7 @@ export function SelectFormField<T extends string>({
   value,
 }: SelectFormFieldProps<T>) {
   const { isSubmitting } = useForm();
-  const parsedValue = useMemo(() => schema.safeParse(value), [schema, value]);
+  const parsedValue = schema.safeParse(value);
 
   return (
     <FormField

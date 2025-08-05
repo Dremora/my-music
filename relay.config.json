@@ -2,7 +2,7 @@
   "src": "./src",
   "language": "typescript",
   "schema": "schema.graphql",
-  "artifactDirectory": "./src/generated",
+  "artifactDirectory": "./src/generated/relay",
   "noFutureProofEnums": true,
   "typescriptExcludeUndefinedFromNullableUnion": true,
   "customScalarTypes": {

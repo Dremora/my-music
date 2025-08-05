@@ -1,5 +1,5 @@
 import { motion, transform } from "motion/react";
-import { memo, useCallback, useMemo } from "react";
+import { memo } from "react";
 
 import { grey, lighterGrey, lightGrey } from "styles/colors.css";
 
@@ -22,12 +22,8 @@ export const Year = memo(function Year({
   onHoverStart,
   year,
 }: YearProps) {
-  const onHoverStartMemoized = useMemo(
-    () => onHoverStart(year),
-    [onHoverStart, year],
-  );
-
-  const onClickWithYear = useCallback(() => onClick?.(year), [onClick, year]);
+  const onHoverStartMemoized = onHoverStart(year);
+  const onClickWithYear = () => onClick?.(year);
 
   return (
     <motion.div

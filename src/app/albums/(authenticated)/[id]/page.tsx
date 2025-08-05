@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useCallback, useState } from "react";
+import { use, useState } from "react";
 import {
   graphql,
   useFragment,
@@ -8,14 +8,14 @@ import {
   useMutation,
 } from "react-relay";
 
+import type { albumFormFragment$key } from "@/generated/relay/albumFormFragment.graphql";
+import type { pageGetAlbumQuery } from "@/generated/relay/pageGetAlbumQuery.graphql";
+import type { pageUpdateAlbumMutation } from "@/generated/relay/pageUpdateAlbumMutation.graphql";
 import {
   AlbumForm,
   albumFormFragment,
   type AlbumFormProps,
 } from "components/album-form";
-import type { albumFormFragment$key } from "generated/albumFormFragment.graphql";
-import type { pageGetAlbumQuery } from "generated/pageGetAlbumQuery.graphql";
-import type { pageUpdateAlbumMutation } from "generated/pageUpdateAlbumMutation.graphql";
 
 const updateAlbumMutation = graphql`
   mutation pageUpdateAlbumMutation($input: MutationUpdateAlbumInput!) {
@@ -47,31 +47,28 @@ export default function AlbumPage({
   const [commit, isPending] =
     useMutation<pageUpdateAlbumMutation>(updateAlbumMutation);
 
-  const handleSubmit = useCallback(
-    (values: Parameters<AlbumFormProps["onSubmit"]>[0]) => {
-      setSubmitError(null);
+  const handleSubmit = (values: Parameters<AlbumFormProps["onSubmit"]>[0]) => {
+    setSubmitError(null);
 
-      const type = values.type;
+    const type = values.type;
 
-      if (!type) {
-        return;
-      }
+    if (!type) {
+      return;
+    }
 
-      commit({
-        variables: {
-          input: {
-            id,
-            ...values,
-            type,
-          },
+    commit({
+      variables: {
+        input: {
+          id,
+          ...values,
+          type,
         },
-        onError: (error) => {
-          setSubmitError(error.message);
-        },
-      });
-    },
-    [commit, id],
-  );
+      },
+      onError: (error) => {
+        setSubmitError(error.message);
+      },
+    });
+  };
 
   const key: albumFormFragment$key = data.album;
   const fragment = useFragment(albumFormFragment, key);

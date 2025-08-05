@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { graphql, useFragment } from "react-relay";
 
+import type { AlbumType } from "@/generated/relay/albumFormFragment.graphql";
+import type { albumFragment$key } from "@/generated/relay/albumFragment.graphql";
 import { Text } from "components/text";
 import { useLogin } from "data/login";
-import type { AlbumType } from "generated/albumFormFragment.graphql";
-import type { albumFragment$key } from "generated/albumFragment.graphql";
 import { formatFirstPlayed } from "utils";
 
 import {

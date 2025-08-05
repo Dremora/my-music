@@ -1,4 +1,4 @@
-import { type ChangeEvent, type ReactNode, useCallback } from "react";
+import { type ChangeEvent, type ReactNode } from "react";
 
 import { selectStyle } from "./styles.css";
 
@@ -19,13 +19,10 @@ export function Select<T extends string>({
   onChange,
   value,
 }: SelectProps<T>) {
-  const onChangeHtmlEvent = useCallback(
-    (e: ChangeEvent<HTMLSelectElement>) => {
-      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, no-type-assertion/no-type-assertion
-      onChange(e.target.value as T);
-    },
-    [onChange],
-  );
+  const onChangeHtmlEvent = (e: ChangeEvent<HTMLSelectElement>) => {
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, no-type-assertion/no-type-assertion
+    onChange(e.target.value as T);
+  };
 
   return (
     <select

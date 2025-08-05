@@ -1,0 +1,20 @@
+model Source {
+  id          BigInt   @id @default(autoincrement())
+  accurateRip String?  @map("accurate_rip")
+  comments    String?
+  cueIssues   String?  @map("cue_issues")
+  discs       Int?
+  download    String?
+  edition     String?
+  format      Format?
+  location    Location
+  mbid        String?  @db.Uuid
+  tagIssues   String?  @map("tag_issues")
+  albumId     String   @map("album_id") @db.Uuid
+  createdAt   DateTime @default(now()) @map("inserted_at") @db.Timestamp(6)
+  updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamp(6)
+  album       Album    @relation(fields: [albumId], references: [id], onDelete: Cascade)
+
+  @@index([albumId], map: "album_sources_album_id_index")
+  @@map("album_sources")
+}

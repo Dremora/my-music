@@ -3,8 +3,8 @@
 import { use } from "react";
 import { graphql, useLazyLoadQuery } from "react-relay";
 
+import type { pageFindAlbumsByFirstPlayedYearQuery } from "@/generated/relay/pageFindAlbumsByFirstPlayedYearQuery.graphql";
 import { AlbumList } from "components/album-list";
-import type { pageFindAlbumsByFirstPlayedYearQuery } from "generated/pageFindAlbumsByFirstPlayedYearQuery.graphql";
 
 const pageFindAlbumsByFirstPlayedYearQuery = graphql`
   query pageFindAlbumsByFirstPlayedYearQuery($year: Int!) {

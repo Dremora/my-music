@@ -1,0 +1,31 @@
+enum AlbumType {
+  ALBUM       @map("album")
+  SINGLE      @map("single")
+  EP          @map("ep")
+  COMPILATION @map("compilation")
+  LIVE        @map("live")
+  SOUNDTRACK  @map("soundtrack")
+
+  @@map("album_type")
+}
+
+enum Location {
+  APPLE_MUSIC  @map("apple-music")
+  FOOBAR2000   @map("foobar2000")
+  GOOGLE_MUSIC @map("google-music")
+  SPOTIFY      @map("spotify")
+
+  @@map("location")
+}
+
+enum Format {
+  TAK
+  APE
+  MP3
+  FLAC
+  WMA
+  MIXED
+  MPC
+
+  @@map("format")
+}

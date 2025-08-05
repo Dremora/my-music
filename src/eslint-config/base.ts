@@ -288,6 +288,7 @@ export const base = tseslint.config(
       "unicorn/no-negated-condition": "off",
       "unicorn/no-null": "off",
       "unicorn/no-useless-undefined": ["error", { checkArguments: false }],
+      "unicorn/prefer-global-this": "off",
       "unicorn/prefer-top-level-await": "off",
       "unicorn/prevent-abbreviations": "off",
       "unicorn/text-encoding-identifier-case": "off", // very disputable, and probably should be utf-8 instead
@@ -298,6 +299,15 @@ export const base = tseslint.config(
     name: "my-music/ban-default-export",
     rules: {
       "import-x/no-default-export": "error",
+    },
+  },
+  {
+    files: ["**/*.{js,mjs}"],
+    name: "my-music/disable-type-checked-in-js",
+    // eslint-disable-next-line import-x/no-named-as-default-member
+    extends: [tseslint.configs.disableTypeChecked],
+    rules: {
+      "custom/ban-date-comparison": "off",
     },
   },
 );

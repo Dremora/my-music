@@ -1,11 +1,11 @@
-import { type ChangeEvent, type FormEvent, useCallback, useState } from "react";
+import { type ChangeEvent, type FormEvent, useState } from "react";
 import { graphql, useMutation } from "react-relay";
 
+import type { footerLoginMutation } from "@/generated/relay/footerLoginMutation.graphql";
 import { Button } from "components/button";
 import { Text } from "components/text";
 import { TextInput } from "components/text-input";
 import { useLogin } from "data/login";
-import type { footerLoginMutation } from "generated/footerLoginMutation.graphql";
 
 import { loginLinkStyle, rootStyle, spacerStyle } from "./styles.css";
 
@@ -25,18 +25,18 @@ export function Footer() {
   const [showingLogin, setShowingLogin] = useState(false);
   const [wrongPassword, setWrongPassword] = useState(false);
 
-  const cancelLogin = useCallback(() => {
+  const cancelLogin = () => {
     setPasswordInput("");
     setShowingLogin(false);
     setWrongPassword(false);
-  }, []);
+  };
 
-  const setPassword = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const setPassword = (e: ChangeEvent<HTMLInputElement>) => {
     setWrongPassword(false);
     setPasswordInput(e.target.value);
-  }, []);
+  };
 
-  const login = useCallback(() => {
+  const login = () => {
     loginRequest({
       variables: { password: passwordInput },
       onCompleted: (data) => {
@@ -51,20 +51,17 @@ export function Footer() {
         }
       },
     });
-  }, [loginRequest, onLoggedIn, passwordInput]);
+  };
 
-  const submit = useCallback(
-    (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
+  const submit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-      if (isLoggedIn) {
-        onLoggedOut();
-      } else {
-        setShowingLogin(true);
-      }
-    },
-    [isLoggedIn, onLoggedOut],
-  );
+    if (isLoggedIn) {
+      onLoggedOut();
+    } else {
+      setShowingLogin(true);
+    }
+  };
 
   return (
     <form className={rootStyle} onSubmit={submit}>

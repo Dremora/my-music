@@ -4,7 +4,7 @@ import type {
   AlbumType,
   Format,
   Location,
-} from "generated/albumFormFragment.graphql";
+} from "@/generated/relay/albumFormFragment.graphql";
 
 export const artistSchema = z.string().check(
   z.trim(),

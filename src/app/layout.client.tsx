@@ -19,7 +19,6 @@ export default function LayoutClient({
     return null;
   }
 
-  // eslint-disable-next-line unicorn/prefer-global-this
   if (typeof window === "undefined") {
     return null;
   }

@@ -16,11 +16,11 @@ import {
   usePreloadedQuery,
 } from "react-relay/hooks";
 
+import type { pageFindAlbumsBySearchQuery } from "@/generated/relay/pageFindAlbumsBySearchQuery.graphql";
 import { AlbumList } from "components/album-list";
 import { Search } from "components/search";
 import { Text } from "components/text";
 import { useIsFirstRender } from "data/use-is-first-render";
-import type { pageFindAlbumsBySearchQuery } from "generated/pageFindAlbumsBySearchQuery.graphql";
 import { environment } from "utils/relay";
 
 const pageFindAlbumsBySearchQuery = graphql`
@@ -115,14 +115,14 @@ export default function IndexPage() {
     handleSearch(searchText);
   }, [handleSearch, isInitialRender, searchText]);
 
-  const handleQueryLoad = useCallback(() => {
+  const handleQueryLoad = () => {
     if (queryRendering) {
       queryRendering.dispose();
     }
 
     setQueryRendering(queryLoading);
     setQueryLoading(null);
-  }, [queryLoading, queryRendering]);
+  };
 
   return (
     <>

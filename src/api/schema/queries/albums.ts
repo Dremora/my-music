@@ -1,7 +1,6 @@
-import type { Album } from "@prisma/client";
-import { getAlbumsByQuery } from "@prisma/client/sql";
-
-import { prisma } from "api/prisma";
+import type { AlbumModel } from "@/generated/prisma/models/Album";
+import { getAlbumsByQuery } from "@/generated/prisma/sql";
+import { getPrismaClient } from "api/prisma";
 
 import { builder } from "../builder";
 import { GraphQLAlbum } from "../types";
@@ -14,7 +13,9 @@ builder.queryField("albums", (t) =>
       query: t.input.string({ required: true }),
     },
     async resolve(_, { input: { query } }) {
-      const albums = await prisma.$queryRawTyped(getAlbumsByQuery(query));
+      const albums = await getPrismaClient().$queryRawTyped(
+        getAlbumsByQuery(query),
+      );
 
       return albums.map(
         ({
@@ -23,7 +24,7 @@ builder.queryField("albums", (t) =>
           inserted_at,
           updated_at,
           ...album
-        }): Album => ({
+        }): AlbumModel => ({
           firstPlayedDate: first_played_date ?? [],
           firstPlayedTimestamp: first_played_timestamp,
           createdAt: inserted_at,

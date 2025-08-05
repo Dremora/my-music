@@ -1,11 +1,4 @@
-import {
-  createContext,
-  type ReactNode,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from "react";
+import { createContext, type ReactNode, useContext, useState } from "react";
 
 type LoginContextType = {
   isLoggedIn: boolean;
@@ -34,25 +27,22 @@ export function LoginProvider({ children }: LoginProviderProps) {
     localStorage.getItem("token"),
   );
 
-  const onLoggedIn = useCallback((newToken: string) => {
+  const onLoggedIn = (newToken: string) => {
     localStorage.setItem("token", newToken);
     setToken(newToken);
-  }, []);
+  };
 
-  const onLoggedOut = useCallback(() => {
+  const onLoggedOut = () => {
     localStorage.removeItem("token");
     setToken(null);
-  }, []);
+  };
 
-  const contextValue = useMemo(
-    () => ({
-      onLoggedOut,
-      onLoggedIn,
-      isLoggedIn: Boolean(token),
-      token,
-    }),
-    [token, onLoggedIn, onLoggedOut],
-  );
+  const contextValue = {
+    onLoggedOut,
+    onLoggedIn,
+    isLoggedIn: Boolean(token),
+    token,
+  };
 
   return (
     <LoginContext.Provider value={contextValue}>

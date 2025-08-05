@@ -1,7 +1,7 @@
-import type { AlbumType } from "@prisma/client";
-import type { $DbEnums } from "@prisma/client/sql";
+import type { AlbumType } from "@/generated/prisma/enums";
+import type { $DbEnums } from "@/generated/prisma/sql";
 
-export function mapAlbumType(type: $DbEnums.album_type): AlbumType {
+export function mapAlbumType(type: $DbEnums["album_type"]): AlbumType {
   switch (type) {
     case "album": {
       return "ALBUM";

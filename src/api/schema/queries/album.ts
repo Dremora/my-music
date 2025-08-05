@@ -1,4 +1,4 @@
-import { prisma } from "api/prisma";
+import { getPrismaClient } from "api/prisma";
 
 import { builder } from "../builder";
 import { GraphQLAlbum } from "../types";
@@ -10,7 +10,7 @@ builder.queryField("album", (t) =>
       id: t.arg({ type: "UUID", required: true }),
     },
     resolve: async (_, { id }) => {
-      return prisma.album.findUniqueOrThrow({
+      return getPrismaClient().album.findUniqueOrThrow({
         where: {
           id,
         },

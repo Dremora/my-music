@@ -1,6 +1,6 @@
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
-import { prisma } from "api/prisma";
+import { getPrismaClient } from "api/prisma";
 
 import { builder } from "../builder";
 
@@ -16,7 +16,7 @@ builder.mutationField("deleteAlbum", (t) =>
       },
       async resolve(_, { id }) {
         try {
-          await prisma.album.delete({
+          await getPrismaClient().album.delete({
             where: { id },
           });
 

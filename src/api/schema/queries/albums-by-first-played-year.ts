@@ -1,7 +1,6 @@
-import type { Album } from "@prisma/client";
-import { getAlbumsByFirstPlayedYear } from "@prisma/client/sql";
-
-import { prisma } from "api/prisma";
+import type { AlbumModel } from "@/generated/prisma/models/Album";
+import { getAlbumsByFirstPlayedYear } from "@/generated/prisma/sql";
+import { getPrismaClient } from "api/prisma";
 
 import { builder } from "../builder";
 import { GraphQLAlbum } from "../types";
@@ -14,7 +13,7 @@ builder.queryField("albumsByFirstPlayedYear", (t) =>
       year: t.arg.int({ required: true }),
     },
     resolve: async (_, { year }) => {
-      const albums = await prisma.$queryRawTyped(
+      const albums = await getPrismaClient().$queryRawTyped(
         getAlbumsByFirstPlayedYear(year),
       );
 
@@ -25,7 +24,7 @@ builder.queryField("albumsByFirstPlayedYear", (t) =>
           inserted_at,
           updated_at,
           ...album
-        }): Album => ({
+        }): AlbumModel => ({
           firstPlayedDate: first_played_date ?? [],
           firstPlayedTimestamp: first_played_timestamp,
           createdAt: inserted_at,

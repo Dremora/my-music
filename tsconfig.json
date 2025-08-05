@@ -21,6 +21,9 @@
     "noUncheckedSideEffectImports": true,
     "resolveJsonModule": true,
     "types": ["@total-typescript/ts-reset"],
+    "paths": {
+      "@/*": ["*"]
+    },
 
     // Emit
     "noEmit": true, // Enforced by Next.js
@@ -53,6 +56,7 @@
     "eslint.config.ts",
     "next-env.d.ts",
     "next.config.ts",
+    "prisma.config.ts",
     "src"
   ],
   "exclude": ["node_modules"]

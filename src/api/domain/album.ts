@@ -1,9 +1,9 @@
-import type { AlbumType } from "@prisma/client";
 import { fromUnixTime } from "date-fns";
 import { z } from "zod";
 
+import type { AlbumType } from "@/generated/prisma/enums";
 import { ValidationError } from "api/errors";
-import { prisma } from "api/prisma";
+import { getPrismaClient } from "api/prisma";
 
 import { albumTypes, formats, locations } from "../schema/enums";
 
@@ -150,7 +150,7 @@ type UpdateAlbum = Readonly<{
 export const createAlbum = async (album: NewAlbum) => {
   const { firstPlayed, sources, ...parsedAlbum } = newAlbumSchema.parse(album);
 
-  return prisma.album.create({
+  return getPrismaClient().album.create({
     data: { ...parsedAlbum, ...firstPlayed, sources: { create: sources } },
   });
 };
@@ -158,7 +158,7 @@ export const createAlbum = async (album: NewAlbum) => {
 export const updateAlbum = async (album: UpdateAlbum) => {
   const { firstPlayed, sources, ...parsedAlbum } = albumSchema.parse(album);
 
-  const sourceIds = await prisma.source.findMany({
+  const sourceIds = await getPrismaClient().source.findMany({
     select: {
       id: true,
     },
@@ -190,7 +190,7 @@ export const updateAlbum = async (album: UpdateAlbum) => {
     );
   }
 
-  return prisma.album.update({
+  return getPrismaClient().album.update({
     where: {
       id: parsedAlbum.id,
     },

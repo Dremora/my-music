@@ -1,8 +1,9 @@
 /* eslint-disable relay/unused-fields */
 import { AnimatePresence, motion } from "motion/react";
-import { type FormEvent, useCallback, useMemo, useState } from "react";
+import { type FormEvent, useState } from "react";
 import { graphql } from "relay-runtime";
 
+import type { AlbumType } from "@/generated/relay/albumFormFragment.graphql";
 import { Button } from "components/button";
 import { FirstPlayedField } from "components/first-played-field";
 import {
@@ -14,7 +15,6 @@ import {
 import { Source, type SourceData } from "components/source";
 import { Text } from "components/text";
 import { useIsFirstRender } from "data/use-is-first-render";
-import type { AlbumType } from "generated/albumFormFragment.graphql";
 import { type FirstPlayed, formatInteger, parseInteger } from "utils";
 import { FormContext } from "utils/form";
 import {
@@ -94,58 +94,39 @@ export function AlbumForm({
   const [album, setAlbum] = useState<AlbumData>(initialValues);
   const [submitted, setSubmitted] = useState(false);
 
-  const submitForm = useCallback(
-    (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
+  const submitForm = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-      setSubmitted(true);
+    setSubmitted(true);
 
-      if (invalidFieldCount !== 0) {
-        return;
-      }
+    if (invalidFieldCount !== 0) {
+      return;
+    }
 
-      onSubmit({
-        title: album.title,
-        artist: album.artist,
-        comments: album.comments,
-        year: album.year,
-        type: album.type,
-        sources: album.sources,
-        firstPlayed: album.firstPlayed,
-      });
-    },
-    [
-      album.artist,
-      album.comments,
-      album.firstPlayed,
-      album.sources,
-      album.title,
-      album.type,
-      album.year,
-      onSubmit,
-      invalidFieldCount,
-    ],
-  );
+    onSubmit({
+      title: album.title,
+      artist: album.artist,
+      comments: album.comments,
+      year: album.year,
+      type: album.type,
+      sources: album.sources,
+      firstPlayed: album.firstPlayed,
+    });
+  };
 
-  const onSourceUpdate = useCallback(
-    (index: number, source: SourceData) => {
-      const sources = [...album.sources];
-      sources[index] = source;
-      setAlbum((value) => ({ ...value, sources }));
-    },
-    [album],
-  );
+  const onSourceUpdate = (index: number, source: SourceData) => {
+    const sources = [...album.sources];
+    sources[index] = source;
+    setAlbum((value) => ({ ...value, sources }));
+  };
 
-  const onSourceRemove = useCallback(
-    (index: number) => {
-      const sources = [...album.sources];
-      sources.splice(index, 1);
-      setAlbum((value) => ({ ...value, sources }));
-    },
-    [album],
-  );
+  const onSourceRemove = (index: number) => {
+    const sources = [...album.sources];
+    sources.splice(index, 1);
+    setAlbum((value) => ({ ...value, sources }));
+  };
 
-  const onSourceAdd = useCallback(() => {
+  const onSourceAdd = () => {
     setAlbum((value) => ({
       ...value,
       sources: [
@@ -164,22 +145,19 @@ export function AlbumForm({
         },
       ],
     }));
-  }, []);
+  };
 
-  const setFieldError = useCallback(() => {
+  const setFieldError = () => {
     setInvalidFieldCount((value) => value + 1);
-  }, []);
+  };
 
-  const unsetFieldError = useCallback(() => {
+  const unsetFieldError = () => {
     setInvalidFieldCount((value) => value - 1);
-  }, []);
+  };
 
   return (
     <FormContext.Provider
-      value={useMemo(
-        () => ({ submitted, setFieldError, unsetFieldError, isSubmitting }),
-        [submitted, setFieldError, unsetFieldError, isSubmitting],
-      )}
+      value={{ submitted, setFieldError, unsetFieldError, isSubmitting }}
     >
       <form className={formStyle} onSubmit={submitForm}>
         <Text color="grey" size="large" weight="bold">

@@ -13,8 +13,9 @@ node_modules
 .env*.local
 
 # generated
-src/generated/**
-!src/generated/.gitkeep
+src/generated/prisma
+src/generated/relay/*
+!src/generated/relay/.gitkeep
 
 # database dumps
 *.dump

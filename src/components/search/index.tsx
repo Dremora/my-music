@@ -1,4 +1,4 @@
-import { type ChangeEvent, useCallback } from "react";
+import { type ChangeEvent } from "react";
 
 import { imageStyle, inputStyle, rootStyle } from "./styles.css";
 
@@ -8,12 +8,9 @@ type SearchProps = {
 };
 
 export function Search({ onChange, value }: SearchProps) {
-  const updateValue = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      onChange(e.target.value);
-    },
-    [onChange],
-  );
+  const updateValue = (e: ChangeEvent<HTMLInputElement>) => {
+    onChange(e.target.value);
+  };
 
   return (
     <div className={rootStyle}>

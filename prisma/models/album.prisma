@@ -1,0 +1,15 @@
+model Album {
+  id                   String     @id @default(uuid()) @db.Uuid
+  artist               String
+  comments             String?
+  firstPlayedTimestamp DateTime?  @map("first_played_timestamp") @db.Timestamp(6)
+  firstPlayedDate      Int[]      @map("first_played_date")
+  title                String
+  year                 Int?
+  type                 AlbumType?
+  createdAt            DateTime   @default(now()) @map("inserted_at") @db.Timestamp(6)
+  updatedAt            DateTime   @updatedAt @map("updated_at") @db.Timestamp(6)
+  sources              Source[]
+
+  @@map("albums")
+}

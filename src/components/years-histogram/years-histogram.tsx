@@ -1,11 +1,11 @@
 import { FloatingPortal, useFloating } from "@floating-ui/react";
 import { AnimatePresence, motion } from "motion/react";
-import { useCallback, useMemo, useState } from "react";
+import { useState } from "react";
 import { useFragment } from "react-relay";
 import { graphql } from "relay-runtime";
 
+import type { yearsHistogramFragment$key } from "@/generated/relay/yearsHistogramFragment.graphql";
 import { Text } from "components/text";
-import type { yearsHistogramFragment$key } from "generated/yearsHistogramFragment.graphql";
 
 import { rootStyle } from "./styles.css";
 import { Year } from "./year";
@@ -56,54 +56,37 @@ export function YearsHistogram({
     placement: "bottom",
   });
 
-  const dataWithYear = useMemo(
-    () => data.filter(({ year }) => year !== 0),
-    [data],
-  );
+  const dataWithYear = data.filter(({ year }) => year !== 0);
+  const counts = dataWithYear.map(({ count }) => count);
 
-  const counts = useMemo<number[]>(
-    () => dataWithYear.map(({ count }) => count),
-    [dataWithYear],
-  );
+  const maxCount = getMaxValue(counts);
 
-  const maxCount = useMemo(() => getMaxValue(counts), [counts]);
-
-  const yearMap = useMemo(() => {
-    const map: Record<number, number> = {};
-    for (const { count, year } of dataWithYear) map[year] = count;
-
-    return map;
-  }, [dataWithYear]);
+  const yearMap: Record<number, number> = {};
+  for (const { count, year } of dataWithYear) yearMap[year] = count;
 
   const years = dataWithYear.map(({ year }) => year);
 
-  const yearsWithoutGaps = useMemo(
-    () => range(getMinValue(years), getMaxValue(years)),
-    [years],
-  );
+  const yearsWithoutGaps = range(getMinValue(years), getMaxValue(years));
 
-  const showYear = useCallback(
-    (year: number) => (e: MouseEvent) => {
-      setSelectedYear(year);
+  const showYear = (year: number) => (e: MouseEvent) => {
+    setSelectedYear(year);
 
-      if (e.target instanceof HTMLElement) {
-        refs.setReference(e.target);
+    if (e.target instanceof HTMLElement) {
+      refs.setReference(e.target);
 
-        requestAnimationFrame(() => {
-          setIsOpen(true);
-        });
-      }
-    },
-    [refs],
-  );
+      requestAnimationFrame(() => {
+        setIsOpen(true);
+      });
+    }
+  };
 
-  const hideYear = useCallback(() => {
+  const hideYear = () => {
     refs.setReference(null);
 
     requestAnimationFrame(() => {
       setIsOpen(false);
     });
-  }, [refs]);
+  };
 
   return (
     <>

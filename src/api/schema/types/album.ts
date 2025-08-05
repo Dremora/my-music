@@ -1,7 +1,7 @@
-import type { Album } from "@prisma/client";
 import { getUnixTime } from "date-fns";
 
-import { prisma } from "api/prisma";
+import type { AlbumModel } from "@/generated/prisma/models/Album";
+import { getPrismaClient } from "api/prisma";
 
 import { builder } from "../builder";
 import { GraphQLAlbumType } from "../enums";
@@ -9,7 +9,7 @@ import { GraphQLAlbumType } from "../enums";
 import { GraphQLFirstPlayed } from "./first-played";
 import { GraphQLSource } from "./source";
 
-export const GraphQLAlbum = builder.objectRef<Album>("Album").implement({
+export const GraphQLAlbum = builder.objectRef<AlbumModel>("Album").implement({
   fields: (t) => ({
     id: t.exposeID("id"),
     title: t.exposeString("title"),
@@ -44,7 +44,7 @@ export const GraphQLAlbum = builder.objectRef<Album>("Album").implement({
     sources: t.field({
       type: [GraphQLSource],
       resolve: async (parent) => {
-        return prisma.source.findMany({
+        return getPrismaClient().source.findMany({
           where: {
             album: {
               id: parent.id,

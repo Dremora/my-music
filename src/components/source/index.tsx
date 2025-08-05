@@ -1,7 +1,11 @@
 import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
-import { memo, useCallback, useMemo } from "react";
+import { memo } from "react";
 
+import {
+  type Format,
+  type Location,
+} from "@/generated/relay/albumFormFragment.graphql";
 import { Button } from "components/button";
 import {
   identity,
@@ -10,10 +14,6 @@ import {
 } from "components/form-field";
 import { Text } from "components/text";
 import { useIsFirstRender } from "data/use-is-first-render";
-import {
-  type Format,
-  type Location,
-} from "generated/albumFormFragment.graphql";
 import { formatInteger, parseInteger } from "utils";
 import {
   accurateRipSchema,
@@ -61,83 +61,51 @@ export const Source = memo(function Source({
   onUpdate,
   source,
 }: SourceProps) {
-  const remove = useCallback(() => {
+  const remove = () => {
     onRemove(index);
-  }, [index, onRemove]);
+  };
 
-  const onLocationChange = useCallback(
-    (value: Location) => {
-      onUpdate(index, { ...source, location: value });
-    },
-    [index, onUpdate, source],
-  );
+  const onLocationChange = (value: Location) => {
+    onUpdate(index, { ...source, location: value });
+  };
 
-  const onFormatChange = useCallback(
-    (value: Format) => {
-      onUpdate(index, { ...source, format: value });
-    },
-    [index, onUpdate, source],
-  );
+  const onFormatChange = (value: Format) => {
+    onUpdate(index, { ...source, format: value });
+  };
 
-  const onEditionChange = useCallback(
-    (edition: string | null) => {
-      onUpdate(index, { ...source, edition });
-    },
-    [index, onUpdate, source],
-  );
+  const onEditionChange = (edition: string | null) => {
+    onUpdate(index, { ...source, edition });
+  };
 
-  const onCommentsChange = useCallback(
-    (comments: string | null) => {
-      onUpdate(index, { ...source, comments });
-    },
-    [index, onUpdate, source],
-  );
+  const onCommentsChange = (comments: string | null) => {
+    onUpdate(index, { ...source, comments });
+  };
 
-  const parsedMbid = useMemo(() => {
-    return mbidSchema.safeParse(source.mbid);
-  }, [source.mbid]);
+  const parsedMbid = mbidSchema.safeParse(source.mbid);
 
-  const onMbidChange = useCallback(
-    (mbid: string | null) => {
-      onUpdate(index, { ...source, mbid });
-    },
-    [index, onUpdate, source],
-  );
+  const onMbidChange = (mbid: string | null) => {
+    onUpdate(index, { ...source, mbid });
+  };
 
-  const onTagIssuesChange = useCallback(
-    (tagIssues: string | null) => {
-      onUpdate(index, { ...source, tagIssues });
-    },
-    [index, onUpdate, source],
-  );
+  const onTagIssuesChange = (tagIssues: string | null) => {
+    onUpdate(index, { ...source, tagIssues });
+  };
 
-  const onAccurateRipChange = useCallback(
-    (accurateRip: string | null) => {
-      onUpdate(index, { ...source, accurateRip });
-    },
-    [index, onUpdate, source],
-  );
+  const onAccurateRipChange = (accurateRip: string | null) => {
+    onUpdate(index, { ...source, accurateRip });
+  };
 
-  const onCueIssuesChange = useCallback(
-    (cueIssues: string | null) => {
-      onUpdate(index, { ...source, cueIssues });
-    },
-    [index, onUpdate, source],
-  );
+  const onCueIssuesChange = (cueIssues: string | null) => {
+    onUpdate(index, { ...source, cueIssues });
+  };
 
-  const onDownloadChange = useCallback(
-    (download: string | null) => {
-      onUpdate(index, { ...source, download });
-    },
-    [index, onUpdate, source],
-  );
+  const onDownloadChange = (download: string | null) => {
+    onUpdate(index, { ...source, download });
+  };
 
-  const onDiscsChange = useCallback(
-    (discs: number | null) => {
-      onUpdate(index, { ...source, discs });
-    },
-    [index, onUpdate, source],
-  );
+  const onDiscsChange = (discs: number | null) => {
+    onUpdate(index, { ...source, discs });
+  };
 
   const isFirstRender = useIsFirstRender();
 

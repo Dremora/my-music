@@ -1,4 +1,4 @@
-import { prisma } from "api/prisma";
+import { getPrismaClient } from "api/prisma";
 
 import { builder } from "../builder";
 import { GraphQLAlbum } from "../types";
@@ -10,7 +10,7 @@ builder.queryField("albumsByYear", (t) =>
       year: t.arg.int({ required: true }),
     },
     async resolve(_, { year }) {
-      return prisma.album.findMany({
+      return getPrismaClient().album.findMany({
         where: {
           year,
         },

@@ -1,8 +1,8 @@
 import { graphql, useFragment } from "react-relay";
 
+import type { albumListFragment$key } from "@/generated/relay/albumListFragment.graphql";
 import { Album } from "components/album";
 import { Text } from "components/text";
-import type { albumListFragment$key } from "generated/albumListFragment.graphql";
 
 const albumListFragment = graphql`
   fragment albumListFragment on Album @relay(plural: true) {

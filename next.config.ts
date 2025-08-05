@@ -7,7 +7,10 @@ export default withVanillaExtract({
     relay: {
       src: "./src",
       language: "typescript",
-      artifactDirectory: "./src/generated",
+      artifactDirectory: "./src/generated/relay",
     },
+  },
+  experimental: {
+    reactCompiler: true,
   },
 });

@@ -1,10 +1,8 @@
-// @ts-expect-error: missing types
 import { flatConfig } from "@next/eslint-plugin-next";
 import restrictedGlobals from "confusing-browser-globals";
 import jsxA11y from "eslint-plugin-jsx-a11y";
 import reactPlugin from "eslint-plugin-react";
-// eslint-disable-next-line import-x/default
-import eslintPluginReactHooks from "eslint-plugin-react-hooks";
+import * as eslintPluginReactHooks from "eslint-plugin-react-hooks";
 // @ts-expect-error: missing types
 import relayPlugin from "eslint-plugin-relay";
 import globals from "globals";
@@ -42,11 +40,9 @@ export const frontend = tseslint.config(
     files: frontendFiles,
     ignores: backendFiles,
   },
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  // @ts-expect-error: incorrect types
   {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     ...flatConfig.coreWebVitals,
-    name: "next/flat.coreWebVitals",
     files: frontendFiles,
     ignores: backendFiles,
   },
@@ -71,6 +67,13 @@ export const frontend = tseslint.config(
       "no-restricted-globals": ["error", ...restrictedGlobals],
       "react-hooks/exhaustive-deps": "error",
       "react-hooks/rules-of-hooks": "error",
+      "react-hooks/react-compiler": [
+        "error",
+        {
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          __unstable_donotuse_reportAllBailouts: true,
+        },
+      ],
       "react/forbid-component-props": ["error", { forbid: [] }],
       "react/jsx-filename-extension": [
         "error",
@@ -78,12 +81,14 @@ export const frontend = tseslint.config(
       ],
       "react/jsx-max-depth": "off",
       "react/jsx-no-bind": "off", // annoying for now
+      "react/jsx-no-constructed-context-values": "off", // handled by react-compiler
       "react/jsx-no-leaked-render": "off",
       "react/jsx-no-literals": "off",
       "react/jsx-sort-props": "off",
       "react/no-multi-comp": "off",
       "react/require-default-props": "off",
       "react/style-prop-object": "off", // we use style property for Text
+      "unicorn/consistent-function-scoping": "off", // not needed for React as it's handled by react-compiler
     },
   },
 );

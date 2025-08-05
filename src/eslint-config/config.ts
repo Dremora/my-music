@@ -11,6 +11,7 @@ export const backendEsmFiles = [
 export const defaultExportFiles = [
   "eslint.config.ts",
   "next.config.ts",
+  "prisma.config.ts",
   "src/app/**",
 ];
 export const backendFiles = [...backendEsmFiles, ...backendCommonJsFiles];

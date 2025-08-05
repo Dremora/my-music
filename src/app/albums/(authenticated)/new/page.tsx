@@ -1,15 +1,15 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useCallback, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { graphql, useMutation } from "react-relay";
 
+import type { pageCreateAlbumMutation } from "@/generated/relay/pageCreateAlbumMutation.graphql";
 import {
   type AlbumData,
   AlbumForm,
   type AlbumFormProps,
 } from "components/album-form";
-import type { pageCreateAlbumMutation } from "generated/pageCreateAlbumMutation.graphql";
 
 function createEmptyAlbum(): AlbumData {
   return {
@@ -57,34 +57,31 @@ export default function NewAlbumPage() {
     pageCreateAlbumMutation,
   );
 
-  const handleSubmit = useCallback(
-    (values: Parameters<AlbumFormProps["onSubmit"]>[0]) => {
-      setSubmitError(null);
+  const handleSubmit = (values: Parameters<AlbumFormProps["onSubmit"]>[0]) => {
+    setSubmitError(null);
 
-      const type = values.type;
+    const type = values.type;
 
-      if (!type) {
-        return;
-      }
+    if (!type) {
+      return;
+    }
 
-      commit({
-        variables: {
-          input: {
-            ...values,
-            type,
-          },
+    commit({
+      variables: {
+        input: {
+          ...values,
+          type,
         },
-        onError: (error) => {
-          setSubmitError(error.message);
-        },
-        onCompleted: ({ createAlbum }) => {
-          setIsSaved(true);
-          router.replace(`/albums/${createAlbum.id}`);
-        },
-      });
-    },
-    [commit, router],
-  );
+      },
+      onError: (error) => {
+        setSubmitError(error.message);
+      },
+      onCompleted: ({ createAlbum }) => {
+        setIsSaved(true);
+        router.replace(`/albums/${createAlbum.id}`);
+      },
+    });
+  };
 
   return (
     <AlbumForm
