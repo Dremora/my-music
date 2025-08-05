@@ -21,7 +21,10 @@ export const yoga = createYoga<Context>({
   graphiql: process.env.NODE_ENV === "development",
   cors: false,
   schema,
-  context: getContext,
+  context: ({ request }) =>
+    getContext({
+      authorizationHeader: request.headers.get("authorization") ?? "",
+    }),
   healthCheckEndpoint: "/health/live",
   maskedErrors: {
     maskError(error, message, isDevelopment) {
