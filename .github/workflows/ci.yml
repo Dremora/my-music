@@ -7,6 +7,8 @@ on:
     branches: [main]
 
 env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
   HUSKY: 0
 
 jobs:
@@ -43,18 +45,31 @@ jobs:
         run: pnpm db:migrate:prod
         env:
           NODE_ENV: production
-          DATABASE_URL: ${{ secrets.DIRECT_DATABASE_URL }}
-          DIRECT_DATABASE_URL: ${{ secrets.DIRECT_DATABASE_URL }}
+          DATABASE_URL: ${{ secrets.TYPEGEN_DATABASE_URL }}
+          DIRECT_DATABASE_URL: ${{ secrets.TYPEGEN_DATABASE_URL }}
 
       - name: Generate Prisma client
         run: pnpm prisma:generate
         env:
           NODE_ENV: production
-          DATABASE_URL: ${{ secrets.DIRECT_DATABASE_URL }}
-          DIRECT_DATABASE_URL: ${{ secrets.DIRECT_DATABASE_URL }}
+          DATABASE_URL: ${{ secrets.TYPEGEN_DATABASE_URL }}
+          DIRECT_DATABASE_URL: ${{ secrets.TYPEGEN_DATABASE_URL }}
 
       - name: Generate Relay types
         run: pnpm generate:graphql
 
-      - name: Run build
-        run: pnpm build
+      - name: Pull Vercel Environment Information
+        run: pnpm vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build Project Artifacts
+        run: pnpm vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Migrate production database
+        run: pnpm db:migrate:prod
+        env:
+          NODE_ENV: production
+          DATABASE_URL: ${{ secrets.DIRECT_DATABASE_URL }}
+          DIRECT_DATABASE_URL: ${{ secrets.DIRECT_DATABASE_URL }}
+
+      - name: Deploy Project Artifacts to Vercel
+        run: pnpm vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}

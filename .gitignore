@@ -5,11 +5,14 @@ node_modules
 .next
 /dist
 
+# Deployment
+.vercel
+
 # misc
 .DS_Store
 *.pem
 
-# env
+# env files
 .env*.local
 
 # generated
