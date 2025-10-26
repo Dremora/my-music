@@ -12,12 +12,12 @@ function trim(str: string) {
 }
 
 const newSourceSchema = z.object({
-  accurateRip: z.nullable(z.optional(z.string().max(255).transform(trim))),
-  comments: z.nullable(z.optional(z.string().max(255).transform(trim))),
-  cueIssues: z.nullable(z.optional(z.string().max(255).transform(trim))),
+  accurateRip: z.nullable(z.optional(z.string().max(1000).transform(trim))),
+  comments: z.nullable(z.optional(z.string().max(1000).transform(trim))),
+  cueIssues: z.nullable(z.optional(z.string().max(1000).transform(trim))),
   discs: z.nullable(z.optional(z.number().int().min(1).max(100))),
-  download: z.nullable(z.optional(z.string().max(255).transform(trim))),
-  edition: z.nullable(z.optional(z.string().max(255).transform(trim))),
+  download: z.nullable(z.optional(z.string().max(1000).transform(trim))),
+  edition: z.nullable(z.optional(z.string().max(1000).transform(trim))),
   format: z.nullable(z.optional(z.enum(formats))),
   location: z.enum(locations),
   mbid: z.nullable(
@@ -30,7 +30,7 @@ const newSourceSchema = z.object({
         ),
     ),
   ),
-  tagIssues: z.nullable(z.optional(z.string().max(255).transform(trim))),
+  tagIssues: z.nullable(z.optional(z.string().max(1000).transform(trim))),
 });
 
 const sourceSchema = newSourceSchema.extend({
@@ -85,9 +85,9 @@ const firstPlayedSchema = z.union([
 ]);
 
 const newAlbumSchema = z.object({
-  artist: z.string().min(1).max(255).transform(trim),
-  title: z.string().min(1).max(255).transform(trim),
-  comments: z.nullable(z.optional(z.string().max(255).transform(trim))),
+  artist: z.string().min(1).max(1000).transform(trim),
+  title: z.string().min(1).max(1000).transform(trim),
+  comments: z.nullable(z.optional(z.string().max(1000).transform(trim))),
   year: z.nullable(z.optional(z.number().int().min(1900).max(2100))),
   type: z.enum(albumTypes),
   sources: z.array(newSourceSchema),
