@@ -1,4 +1,5 @@
-select id,
+SELECT
+  id,
   artist,
   comments,
   first_played_timestamp,
@@ -8,34 +9,35 @@ select id,
   type,
   inserted_at,
   updated_at
-from albums
-where coalesce(
+FROM albums
+WHERE
+  coalesce(
     extract(
-      year
-      from first_played_timestamp
+      YEAR
+      FROM first_played_timestamp
     ),
-    first_played_date [1]
+    first_played_date[1]
   ) = $1
-order by coalesce(
-    extract(
-      year
-      from first_played_timestamp
-    ),
-    first_played_date [1]
+ORDER BY coalesce(
+  extract(
+    YEAR
+    FROM first_played_timestamp
   ),
-  coalesce(
-    extract(
-      month
-      from first_played_timestamp
-    ),
-    first_played_date [2],
-    1
+  first_played_date[1]
+),
+coalesce(
+  extract(
+    MONTH
+    FROM first_played_timestamp
   ),
-  coalesce(
-    extract(
-      day
-      from first_played_timestamp
-    ),
-    first_played_date [3],
-    1
-  )
+  first_played_date[2],
+  1
+),
+coalesce(
+  extract(
+    DAY
+    FROM first_played_timestamp
+  ),
+  first_played_date[3],
+  1
+)

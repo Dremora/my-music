@@ -1,5 +1,9 @@
 [settings]
 experimental = true
 
+[tools]
+"pipx:sqlfluff" = "3.4.2"
+uv = "0.8.11"
+
 [env]
 _.path = ["{{config_root}}/node_modules/.bin"]

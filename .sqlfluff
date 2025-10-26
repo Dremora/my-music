@@ -1,0 +1,19 @@
+[sqlfluff]
+dialect = postgres
+templater = placeholder
+
+[sqlfluff:indentation]
+tab_space_size = 2
+
+[sqlfluff:templater:placeholder]
+param_style = numeric_dollar
+
+[sqlfluff:rules:capitalisation.keywords]
+capitalisation_policy = upper
+
+[sqlfluff:rules:capitalisation.functions]
+ignore_words = COALESCE
+ignore_words_regex = ^ST_.*$
+
+[sqlfluff:rules:references.keywords]
+ignore_words = location
