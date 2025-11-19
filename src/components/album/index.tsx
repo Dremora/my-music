@@ -7,10 +7,13 @@ import { Text } from "components/text";
 import { useLogin } from "data/login";
 import { formatFirstPlayed } from "utils";
 
+import { AppleLogo } from "./apple-logo";
 import {
+  addedStyle,
   albumTitleStyle,
   albumTypeStyle,
   anchorStyle,
+  appleLogoWrapperStyle,
   column1Style,
   column2Style,
   column3Style,
@@ -25,6 +28,9 @@ const albumFragment = graphql`
     title
     year
     type
+    sources {
+      location
+    }
     firstPlayed {
       ... on FirstPlayedTimestamp {
         # eslint-disable-next-line relay/unused-fields
@@ -51,6 +57,10 @@ export function Album({ albumRef }: AlbumProps) {
   const { isLoggedIn } = useLogin();
   const firstPlayedFormatted = formatFirstPlayed(album.firstPlayed);
 
+  const hasAppleMusic = album.sources.some(
+    (source) => source.location === "APPLE_MUSIC",
+  );
+
   const contents = (
     <>
       <div className={column1Style}>
@@ -71,10 +81,18 @@ export function Album({ albumRef }: AlbumProps) {
         <div className={firstPlayedStyle}>
           <Text color="lighterGrey" size="small">
             {firstPlayedFormatted ? (
-              <span>ADDED: {firstPlayedFormatted}</span>
+              <span>
+                <span className={addedStyle}>ADDED:</span>{" "}
+                {firstPlayedFormatted}
+              </span>
             ) : null}
           </Text>
         </div>
+        {hasAppleMusic && (
+          <div className={appleLogoWrapperStyle}>
+            <AppleLogo />
+          </div>
+        )}
       </div>
     </>
   );

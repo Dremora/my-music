@@ -102,14 +102,15 @@ input NewSourceInput {
 
 type Query {
   album(id: UUID!): Album!
-  albumPerFirstPlayedYearCount: [AlbumPerYearCount!]!
-  albumPerYearCount: [AlbumPerYearCount!]!
+  albumPerFirstPlayedYearCount(appleMusicFilter: Boolean): [AlbumPerYearCount!]!
+  albumPerYearCount(appleMusicFilter: Boolean): [AlbumPerYearCount!]!
   albums(input: QueryAlbumsInput!): [Album!]!
-  albumsByFirstPlayedYear(year: Int!): [Album!]!
-  albumsByYear(year: Int!): [Album!]!
+  albumsByFirstPlayedYear(appleMusicFilter: Boolean, year: Int!): [Album!]!
+  albumsByYear(appleMusicFilter: Boolean, year: Int!): [Album!]!
 }
 
 input QueryAlbumsInput {
+  appleMusicFilter: Boolean
   query: String!
 }
 

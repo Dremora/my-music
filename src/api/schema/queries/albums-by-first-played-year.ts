@@ -11,10 +11,11 @@ builder.queryField("albumsByFirstPlayedYear", (t) =>
     type: [GraphQLAlbum],
     args: {
       year: t.arg.int({ required: true }),
+      appleMusicFilter: t.arg.boolean({ required: false }),
     },
-    resolve: async (_, { year }) => {
+    resolve: async (_, { appleMusicFilter, year }) => {
       const albums = await getPrismaClient().$queryRawTyped(
-        getAlbumsByFirstPlayedYear(year),
+        getAlbumsByFirstPlayedYear(year, appleMusicFilter ?? null),
       );
 
       return albums.map(

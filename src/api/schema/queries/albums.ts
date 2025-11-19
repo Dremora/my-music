@@ -11,10 +11,11 @@ builder.queryField("albums", (t) =>
     type: [GraphQLAlbum],
     input: {
       query: t.input.string({ required: true }),
+      appleMusicFilter: t.input.boolean({ required: false }),
     },
-    async resolve(_, { input: { query } }) {
+    async resolve(_, { input: { appleMusicFilter, query } }) {
       const albums = await getPrismaClient().$queryRawTyped(
-        getAlbumsByQuery(query),
+        getAlbumsByQuery(query, appleMusicFilter ?? null),
       );
 
       return albums.map(

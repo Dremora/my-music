@@ -18,6 +18,7 @@ import {
 
 import type { pageFindAlbumsBySearchQuery } from "@/generated/relay/pageFindAlbumsBySearchQuery.graphql";
 import { AlbumList } from "components/album-list";
+import { AppleMusicFilter } from "components/apple-music-filter";
 import { Search } from "components/search";
 import { Text } from "components/text";
 import { useIsFirstRender } from "data/use-is-first-render";
@@ -40,10 +41,23 @@ type LoadingQueryProps = {
 
 export default function IndexPage() {
   const searchParams = useSearchParams();
-  // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { push, replace } = useRouter();
+  const router = useRouter();
   const currentSearchQuery = decodeURIComponent(searchParams.get("q") ?? "");
+  const appleMusicParam = searchParams.get("appleMusic");
+
+  const currentAppleMusicFilter =
+    appleMusicParam === "true"
+      ? true
+      : appleMusicParam === "false"
+        ? false
+        : null;
+
   const [searchText, setSearchText] = useState(currentSearchQuery);
+
+  const [appleMusicFilter, setAppleMusicFilter] = useState<boolean | null>(
+    currentAppleMusicFilter,
+  );
+
   const isInitialRender = useIsFirstRender();
 
   const [queryLoading, setQueryLoading] =
@@ -54,47 +68,75 @@ export default function IndexPage() {
 
   const isTypingTimeout = useRef<NodeJS.Timeout | null>(null);
 
+  const queryLoadingRef =
+    useRef<PreloadedQuery<pageFindAlbumsBySearchQuery> | null>(null);
+
+  const queryRenderingRef =
+    useRef<PreloadedQuery<pageFindAlbumsBySearchQuery> | null>(null);
+
+  // Keep refs in sync with state
+  useEffect(() => {
+    queryLoadingRef.current = queryLoading;
+  }, [queryLoading]);
+
+  useEffect(() => {
+    queryRenderingRef.current = queryRendering;
+  }, [queryRendering]);
+
   const runQuery = useCallback(
-    (newSearchText: string) => {
+    (newSearchText: string, filter: boolean | null) => {
       const query = newSearchText
         ? loadQuery<pageFindAlbumsBySearchQuery>(
             environment,
             pageFindAlbumsBySearchQuery,
-            { input: { query: newSearchText } },
+            {
+              input: {
+                query: newSearchText,
+                appleMusicFilter: filter ?? undefined,
+              },
+            },
             { fetchPolicy: "network-only" },
           )
         : null;
 
-      if (queryLoading) {
-        queryLoading.dispose();
+      if (queryLoadingRef.current) {
+        queryLoadingRef.current.dispose();
       }
 
       setQueryLoading(query);
 
-      if (queryRendering && !query) {
-        queryRendering.dispose();
+      if (queryRenderingRef.current && !query) {
+        queryRenderingRef.current.dispose();
         setQueryRendering(null);
       }
     },
-    [queryLoading, queryRendering],
+    [],
   );
 
   const handleSearch = useCallback(
     (newSearchText: string) => {
       setSearchText(newSearchText);
 
-      if (currentSearchQuery !== newSearchText) {
-        const newUrl = newSearchText
-          ? `/?q=${encodeURIComponent(newSearchText)}`
-          : "/";
+      const params = new URLSearchParams();
 
+      if (newSearchText) {
+        params.set("q", newSearchText);
+      }
+
+      if (appleMusicFilter !== null) {
+        params.set("appleMusic", appleMusicFilter ? "true" : "false");
+      }
+
+      const newUrl = params.toString() ? `/?${params.toString()}` : "/";
+
+      if (currentSearchQuery !== newSearchText) {
         if (isTypingTimeout.current) {
-          replace(newUrl);
+          router.replace(newUrl);
 
           clearTimeout(isTypingTimeout.current);
           isTypingTimeout.current = null;
         } else {
-          push(newUrl);
+          router.push(newUrl);
         }
 
         isTypingTimeout.current = setTimeout(() => {
@@ -102,9 +144,31 @@ export default function IndexPage() {
         }, 1000);
       }
 
-      runQuery(newSearchText);
+      runQuery(newSearchText, appleMusicFilter);
     },
-    [currentSearchQuery, push, replace, runQuery],
+    [appleMusicFilter, currentSearchQuery, router, runQuery],
+  );
+
+  const handleAppleMusicFilterChange = useCallback(
+    (filter: boolean | null) => {
+      setAppleMusicFilter(filter);
+
+      const params = new URLSearchParams();
+
+      if (searchText) {
+        params.set("q", searchText);
+      }
+
+      if (filter !== null) {
+        params.set("appleMusic", filter ? "true" : "false");
+      }
+
+      const newUrl = params.toString() ? `/?${params.toString()}` : "/";
+      router.push(newUrl);
+
+      runQuery(searchText, filter);
+    },
+    [router, runQuery, searchText],
   );
 
   useLayoutEffect(() => {
@@ -112,8 +176,27 @@ export default function IndexPage() {
       return;
     }
 
-    handleSearch(searchText);
-  }, [handleSearch, isInitialRender, searchText]);
+    // On initial render, set up the URL and run the query
+    const params = new URLSearchParams();
+
+    if (searchText) {
+      params.set("q", searchText);
+    }
+
+    if (appleMusicFilter !== null) {
+      params.set("appleMusic", appleMusicFilter ? "true" : "false");
+    }
+
+    const newUrl = params.toString() ? `/?${params.toString()}` : "/";
+
+    if (newUrl !== window.location.pathname + window.location.search) {
+      router.replace(newUrl);
+    }
+
+    if (searchText) {
+      runQuery(searchText, appleMusicFilter);
+    }
+  }, [appleMusicFilter, isInitialRender, router, runQuery, searchText]);
 
   const handleQueryLoad = () => {
     if (queryRendering) {
@@ -127,6 +210,10 @@ export default function IndexPage() {
   return (
     <>
       <Search onChange={handleSearch} value={searchText} />
+      <AppleMusicFilter
+        onChange={handleAppleMusicFilterChange}
+        value={appleMusicFilter}
+      />
       {!queryRendering && queryLoading && (
         <div>
           <Text color="grey" weight="bold">

@@ -75,20 +75,28 @@ export const column3Style = style({
   flexShrink: 0,
   width: "100%",
   paddingLeft: "52px",
-  paddingTop: "4px",
 
   "@media": {
     "(min-width: 600px)": {
       width: "auto",
-      padding: "9px 0 0 10px",
+      paddingBottom: 10,
+      alignItems: "flex-end",
     },
   },
 });
 
 export const firstPlayedStyle = style({
+  paddingTop: "4px",
   whiteSpace: "nowrap",
   textOverflow: "ellipsis",
   overflow: "hidden",
+
+  "@media": {
+    "(min-width: 600px)": {
+      width: "auto",
+      paddingTop: 9,
+    },
+  },
 });
 
 export const albumTypeStyle = style({
@@ -96,4 +104,34 @@ export const albumTypeStyle = style({
   borderRadius: "4px",
   padding: "2px 4px",
   display: "flex",
+});
+
+export const appleLogoWrapperStyle = style({
+  display: "flex",
+
+  "@media": {
+    "(min-width: 600px)": {
+      alignItems: "center",
+      justifyContent: "center",
+      marginTop: "auto",
+      marginBottom: "auto",
+    },
+  },
+});
+
+export const appleLogoSpacerStyle = style({
+  flex: 1,
+  minHeight: 0,
+});
+
+export const appleLogoStyle = style({
+  color: grey,
+  display: "block",
+  flexShrink: 0,
+});
+
+export const addedStyle = style({
+  fontVariant: "small-caps",
+  fontSize: "10px",
+  fontWeight: "bold",
 });

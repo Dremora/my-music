@@ -7,9 +7,12 @@ import { GraphQLAlbumPerYearCount } from "../types";
 builder.queryField("albumPerFirstPlayedYearCount", (t) =>
   t.field({
     type: [GraphQLAlbumPerYearCount],
-    resolve: async (_, _args) => {
+    args: {
+      appleMusicFilter: t.arg.boolean({ required: false }),
+    },
+    resolve: async (_, { appleMusicFilter }) => {
       const data = await getPrismaClient().$queryRawTyped(
-        getAlbumPerFirstPlayedYearCount(),
+        getAlbumPerFirstPlayedYearCount(appleMusicFilter ?? null),
       );
 
       return data.map((row) => ({

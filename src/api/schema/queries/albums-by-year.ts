@@ -1,3 +1,4 @@
+import { Location } from "@/generated/prisma/enums";
 import { getPrismaClient } from "api/prisma";
 
 import { builder } from "../builder";
@@ -8,12 +9,35 @@ builder.queryField("albumsByYear", (t) =>
     type: [GraphQLAlbum],
     args: {
       year: t.arg.int({ required: true }),
+      appleMusicFilter: t.arg.boolean({ required: false }),
     },
-    async resolve(_, { year }) {
+    async resolve(_, { appleMusicFilter, year }) {
+      const where: {
+        sources?: {
+          none?: { location: Location };
+          some?: { location: Location };
+        };
+        year: number;
+      } = {
+        year,
+      };
+
+      if (appleMusicFilter === true) {
+        where.sources = {
+          some: {
+            location: Location.APPLE_MUSIC,
+          },
+        };
+      } else if (appleMusicFilter === false) {
+        where.sources = {
+          none: {
+            location: Location.APPLE_MUSIC,
+          },
+        };
+      }
+
       return getPrismaClient().album.findMany({
-        where: {
-          year,
-        },
+        where,
         orderBy: [
           {
             artist: "asc",

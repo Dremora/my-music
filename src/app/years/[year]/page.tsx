@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { use } from "react";
 import { graphql, useLazyLoadQuery } from "react-relay";
 
@@ -7,8 +8,8 @@ import type { pageFindAlbumsByYearQuery } from "@/generated/relay/pageFindAlbums
 import { AlbumList } from "components/album-list";
 
 const pageFindAlbumsByYearQuery = graphql`
-  query pageFindAlbumsByYearQuery($year: Int!) {
-    albumsByYear(year: $year) {
+  query pageFindAlbumsByYearQuery($year: Int!, $appleMusicFilter: Boolean) {
+    albumsByYear(year: $year, appleMusicFilter: $appleMusicFilter) {
       ...albumListFragment
     }
   }
@@ -19,7 +20,16 @@ export default function YearPage({
 }: {
   readonly params: Promise<{ readonly year: string }>;
 }) {
+  const searchParams = useSearchParams();
   const year = Number.parseInt(use(params).year);
+  const appleMusicParam = searchParams.get("appleMusic");
+
+  const appleMusicFilter =
+    appleMusicParam === "true"
+      ? true
+      : appleMusicParam === "false"
+        ? false
+        : undefined;
 
   if (Number.isNaN(year)) {
     throw new TypeError("Invalid year");
@@ -29,6 +39,7 @@ export default function YearPage({
     pageFindAlbumsByYearQuery,
     {
       year,
+      appleMusicFilter,
     },
   );
 
