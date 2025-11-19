@@ -18,7 +18,8 @@ WHERE
       YEAR
       FROM first_played_timestamp
     ),
-    first_played_date[1]
+    first_played_date[1],
+    2005
   ) = $1
   AND (
     $2::boolean IS NULL
