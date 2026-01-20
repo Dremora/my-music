@@ -3,6 +3,9 @@ import { createVanillaExtractPlugin } from "@vanilla-extract/next-plugin";
 const withVanillaExtract = createVanillaExtractPlugin();
 
 export default withVanillaExtract({
+  outputFileTracingExcludes: {
+    "*": ["**/*.css.ts.vanilla.css"],
+  },
   compiler: {
     relay: {
       src: "./src",
@@ -10,7 +13,5 @@ export default withVanillaExtract({
       artifactDirectory: "./src/generated/relay",
     },
   },
-  experimental: {
-    reactCompiler: true,
-  },
+  reactCompiler: true,
 });

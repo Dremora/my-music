@@ -37,7 +37,7 @@
     "verbatimModuleSyntax": true,
 
     // Language and Environment
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "lib": ["dom", "dom.iterable", "esnext"],
     "target": "es6",
 
@@ -57,7 +57,8 @@
     "next-env.d.ts",
     "next.config.ts",
     "prisma.config.ts",
-    "src"
+    "src",
+    ".next/dev/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }

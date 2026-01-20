@@ -5,9 +5,9 @@
   "author": "Kirill Korolyov <kirill.korolyov@gmail.com>",
   "repository": "https://github.com/Dremora/my-music",
   "scripts": {
-    "build": "next build",
+    "build": "next build --webpack",
     "db:migrate:prod": "prisma migrate deploy",
-    "dev": "next dev",
+    "dev": "next dev --webpack",
     "format": "prettier --write . && prettier-package-json --write",
     "generate:graphql": "relay-compiler",
     "lint": "eslint",
@@ -32,8 +32,8 @@
     "@prisma/adapter-pg": "6.13.0",
     "@prisma/client": "6.14.0-integration-feat-client-wasm-base64-on-nodejs.6",
     "@types/node": "22.9.0",
-    "@vanilla-extract/css": "1.17.4",
-    "@vanilla-extract/next-plugin": "2.4.14",
+    "@vanilla-extract/css": "1.18.0",
+    "@vanilla-extract/next-plugin": "2.4.17",
     "@vanilla-extract/recipes": "0.5.7",
     "@whatwg-node/server-plugin-cookies": "1.0.5",
     "date-fns": "4.1.0",
@@ -41,10 +41,10 @@
     "graphql-scalars": "1.24.2",
     "graphql-yoga": "5.14.0",
     "motion": "12.23.0",
-    "next": "15.4.5",
+    "next": "16.1.4",
     "polished": "4.3.1",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
     "react-relay": "20.0.0",
     "relay-runtime": "20.0.0",
     "zod": "3.25.74"
@@ -57,8 +57,8 @@
     "@types/confusing-browser-globals": "1.0.3",
     "@types/eslint-plugin-jsx-a11y": "6.10.0",
     "@types/node": "22.9.0",
-    "@types/react": "19.1.8",
-    "@types/react-dom": "19.1.6",
+    "@types/react": "19.2.8",
+    "@types/react-dom": "19.2.3",
     "@types/react-relay": "18.2.1",
     "@types/relay-runtime": "19.0.2",
     "@typescript-eslint/parser": "8.35.1",
@@ -95,7 +95,7 @@
     "tsutils": "3.21.0",
     "typescript": "5.8.3",
     "typescript-eslint": "8.35.1",
-    "vercel": "44.7.2"
+    "vercel": "50.4.10"
   },
   "engines": {
     "node": "22.x"
