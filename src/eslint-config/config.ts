@@ -7,6 +7,7 @@ export const backendEsmFiles = [
   "next.config.ts",
   "src/api/**",
   "src/eslint-config/**",
+  "src/scripts/**",
 ];
 export const defaultExportFiles = [
   "eslint.config.ts",
