@@ -1,14 +1,21 @@
-import path from "node:path";
+import { config as loadEnv } from "dotenv";
+import { defineConfig, env } from "prisma/config";
 
-import * as dotenv from "dotenv";
-import { expand } from "dotenv-expand";
-import type { PrismaConfig } from "prisma";
+loadEnv({ path: ".env.local", quiet: true });
+loadEnv({ quiet: true });
 
-// Load environment variables in development
-if (process.env.NODE_ENV !== "production") {
-  expand(dotenv.config({ path: ".env.development" }));
-}
+const shadowDatabaseUrl = process.env.SHADOW_DATABASE_URL;
 
-export default {
-  schema: path.join("prisma"),
-} satisfies PrismaConfig;
+const hasShadowDatabaseUrl =
+  shadowDatabaseUrl !== undefined && shadowDatabaseUrl.length > 0;
+
+export default defineConfig({
+  schema: "prisma",
+  migrations: {
+    path: "prisma/migrations",
+  },
+  datasource: {
+    url: env("DATABASE_URL"),
+    ...(hasShadowDatabaseUrl ? { shadowDatabaseUrl } : {}),
+  },
+});

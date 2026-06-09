@@ -4,12 +4,12 @@ import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { graphql, useMutation } from "react-relay";
 
-import type { pageCreateAlbumMutation } from "@/generated/relay/pageCreateAlbumMutation.graphql";
 import {
   type AlbumData,
   AlbumForm,
   type AlbumFormProps,
-} from "components/album-form";
+} from "@/components/album-form";
+import type { pageCreateAlbumMutation } from "@/generated/relay/pageCreateAlbumMutation.graphql";
 
 function createEmptyAlbum(): AlbumData {
   return {

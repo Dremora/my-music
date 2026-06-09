@@ -2,10 +2,10 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useState } from "react";
 import { graphql, useLazyLoadQuery } from "react-relay";
 
+import { AppleMusicFilter } from "@/components/apple-music-filter";
+import { Spacer } from "@/components/spacer";
+import { YearsHistogram } from "@/components/years-histogram/years-histogram";
 import type { albumsByYearSelectorQuery } from "@/generated/relay/albumsByYearSelectorQuery.graphql";
-import { AppleMusicFilter } from "components/apple-music-filter";
-import { Spacer } from "components/spacer";
-import { YearsHistogram } from "components/years-histogram/years-histogram";
 
 const albumsByYearSelectorQuery = graphql`
   query albumsByYearSelectorQuery($appleMusicFilter: Boolean) {

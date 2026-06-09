@@ -1,10 +1,10 @@
 import { AnimatePresence, motion } from "motion/react";
 import { type ChangeEvent, useState } from "react";
 
-import { Text } from "components/text";
-import { TextInput } from "components/text-input";
-import { useIsFirstRender } from "data/use-is-first-render";
-import { type FirstPlayed, formatInteger, parseInteger } from "utils";
+import { Text } from "@/components/text";
+import { TextInput } from "@/components/text-input";
+import { useIsFirstRender } from "@/data/use-is-first-render";
+import { type FirstPlayed, formatInteger, parseInteger } from "@/utils";
 
 import {
   containerStyle,

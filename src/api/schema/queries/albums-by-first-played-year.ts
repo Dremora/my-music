@@ -1,6 +1,6 @@
+import { getPrismaClient } from "@/api/prisma";
 import type { AlbumModel } from "@/generated/prisma/models/Album";
 import { getAlbumsByFirstPlayedYear } from "@/generated/prisma/sql";
-import { getPrismaClient } from "api/prisma";
 
 import { builder } from "../builder";
 import { GraphQLAlbum } from "../types";

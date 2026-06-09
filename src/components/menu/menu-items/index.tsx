@@ -1,4 +1,4 @@
-import { useLogin } from "data/login";
+import { useLogin } from "@/data/login";
 
 import { Item } from "../item";
 

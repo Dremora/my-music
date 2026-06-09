@@ -4,8 +4,8 @@ import { useSearchParams } from "next/navigation";
 import { use } from "react";
 import { graphql, useLazyLoadQuery } from "react-relay";
 
+import { AlbumList } from "@/components/album-list";
 import type { pageFindAlbumsByFirstPlayedYearQuery } from "@/generated/relay/pageFindAlbumsByFirstPlayedYearQuery.graphql";
-import { AlbumList } from "components/album-list";
 
 const pageFindAlbumsByFirstPlayedYearQuery = graphql`
   query pageFindAlbumsByFirstPlayedYearQuery(

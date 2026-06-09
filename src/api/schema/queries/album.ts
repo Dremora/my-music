@@ -1,4 +1,4 @@
-import { getPrismaClient } from "api/prisma";
+import { getPrismaClient } from "@/api/prisma";
 
 import { builder } from "../builder";
 import { GraphQLAlbum } from "../types";

@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { type ReactNode, useEffect } from "react";
 
-import { useLogin } from "data/login";
+import { useLogin } from "@/data/login";
 
 export default function AlbumLayout({
   children,

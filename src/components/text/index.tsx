@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import * as colors from "styles/colors.css";
+import * as colors from "@/styles/colors.css";
 
 import { textStyle } from "./styles.css";
 

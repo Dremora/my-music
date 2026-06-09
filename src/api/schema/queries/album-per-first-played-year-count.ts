@@ -1,5 +1,5 @@
+import { getPrismaClient } from "@/api/prisma";
 import { getAlbumPerFirstPlayedYearCount } from "@/generated/prisma/sql";
-import { getPrismaClient } from "api/prisma";
 
 import { builder } from "../builder";
 import { GraphQLAlbumPerYearCount } from "../types";

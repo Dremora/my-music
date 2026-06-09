@@ -5,71 +5,201 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: Deploy to personal
+        required: false
+        default: true
+        type: boolean
 
 env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
   HUSKY: 0
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  checks:
+    runs-on: ubuntu-24.04
+
+    services:
+      postgres:
+        image: postgres:18.4
+        env:
+          POSTGRES_USER: my_music
+          POSTGRES_PASSWORD: my_music
+          POSTGRES_DB: my_music
+        ports:
+          - 56432:5432
+        options: >-
+          --health-cmd="pg_isready -U my_music"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: .tool-versions
-
-      - uses: pnpm/action-setup@v4
+      - uses: jdx/mise-action@v3
 
       - name: Get pnpm store directory
         id: pnpm-cache
         shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
 
       - uses: actions/cache@v4
         with:
-          path: |
-            ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            pnpm-store-
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-store-
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Migrate typegen database
+      - name: Apply migrations to CI database
         run: pnpm db:migrate:prod
         env:
-          NODE_ENV: production
-          DATABASE_URL: ${{ secrets.TYPEGEN_DATABASE_URL }}
-          DIRECT_DATABASE_URL: ${{ secrets.TYPEGEN_DATABASE_URL }}
+          DATABASE_URL: postgresql://my_music:my_music@localhost:56432/my_music
+          DIRECT_DATABASE_URL: postgresql://my_music:my_music@localhost:56432/my_music
+
+      - name: Create CI shadow database
+        run: |
+          echo "CREATE DATABASE my_music_shadow;" |
+            pnpm prisma db execute --stdin
+        env:
+          DATABASE_URL: postgresql://my_music:my_music@localhost:56432/my_music
+          DIRECT_DATABASE_URL: postgresql://my_music:my_music@localhost:56432/my_music
+
+      - name: Validate Prisma migrations
+        run: pnpm prisma:migrate:validate
+        env:
+          DATABASE_URL: postgresql://my_music:my_music@localhost:56432/my_music
+          DIRECT_DATABASE_URL: postgresql://my_music:my_music@localhost:56432/my_music
+          SHADOW_DATABASE_URL: postgresql://my_music:my_music@localhost:56432/my_music_shadow
+
+      - name: Lint SQL
+        run: pnpm sql:lint
 
       - name: Generate Prisma client
         run: pnpm prisma:generate
         env:
-          NODE_ENV: production
-          DATABASE_URL: ${{ secrets.TYPEGEN_DATABASE_URL }}
-          DIRECT_DATABASE_URL: ${{ secrets.TYPEGEN_DATABASE_URL }}
+          DATABASE_URL: postgresql://my_music:my_music@localhost:56432/my_music
+          DIRECT_DATABASE_URL: postgresql://my_music:my_music@localhost:56432/my_music
 
       - name: Generate Relay types
         run: pnpm generate:graphql
 
-      - name: Pull Vercel Environment Information
-        run: pnpm vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Generate Next types
+        run: pnpm generate:next-types
 
-      - name: Build Project Artifacts
-        run: pnpm vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Typecheck
+        run: pnpm typecheck
 
-      - name: Migrate production database
+      - name: Lint
+        run: pnpm lint
+
+      - name: Check for unused code
+        run: pnpm lint:unused
+
+      - name: Check formatting
+        run: pnpm format:check
+
+      - name: Build
+        run: pnpm build
+        env:
+          DATABASE_URL: postgresql://my_music:my_music@localhost:56432/my_music
+          DIRECT_DATABASE_URL: postgresql://my_music:my_music@localhost:56432/my_music
+          USER_PASSWORD: ci
+
+  deploy:
+    needs: checks
+    if: >-
+      github.event_name == 'push' && github.ref == 'refs/heads/main' ||
+      github.event_name == 'workflow_dispatch' && inputs.deploy
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+
+    services:
+      postgres:
+        image: postgres:18.4
+        env:
+          POSTGRES_USER: my_music
+          POSTGRES_PASSWORD: my_music
+          POSTGRES_DB: my_music
+        ports:
+          - 56432:5432
+        options: >-
+          --health-cmd="pg_isready -U my_music"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: jdx/mise-action@v3
+
+      - name: Redact fnox secrets
+        env:
+          FNOX_AGE_KEY: ${{ secrets.FNOX_AGE_KEY }}
+        run: MISE_ENV=production mise exec -- fnox ci-redact -c fnox.production.toml
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Apply migrations to build database
         run: pnpm db:migrate:prod
         env:
-          NODE_ENV: production
-          DATABASE_URL: ${{ secrets.DIRECT_DATABASE_URL }}
-          DIRECT_DATABASE_URL: ${{ secrets.DIRECT_DATABASE_URL }}
+          DATABASE_URL: postgresql://my_music:my_music@localhost:56432/my_music
+          DIRECT_DATABASE_URL: postgresql://my_music:my_music@localhost:56432/my_music
 
-      - name: Deploy Project Artifacts to Vercel
-        run: pnpm vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Generate Prisma client
+        run: pnpm prisma:generate
+        env:
+          DATABASE_URL: postgresql://my_music:my_music@localhost:56432/my_music
+          DIRECT_DATABASE_URL: postgresql://my_music:my_music@localhost:56432/my_music
+
+      - name: Generate Relay types
+        run: pnpm generate:graphql
+
+      - name: Generate Next types
+        run: pnpm generate:next-types
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Set up SSH
+        env:
+          FNOX_AGE_KEY: ${{ secrets.FNOX_AGE_KEY }}
+        run: |
+          MISE_ENV=production mise exec -- fnox exec -c fnox.production.toml -- bash -c '
+            set -euo pipefail
+            mkdir -p ~/.ssh
+            printf "%s\n" "$KAMAL_SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+            chmod 600 ~/.ssh/id_ed25519
+            printf "%s\n" "$KAMAL_SSH_HOST_KEY" >> ~/.ssh/known_hosts
+          '
+
+      - name: Deploy with Kamal
+        timeout-minutes: 15
+        env:
+          FNOX_AGE_KEY: ${{ secrets.FNOX_AGE_KEY }}
+          KAMAL_REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+          TYPEGEN_DATABASE_URL: postgresql://my_music:my_music@172.17.0.1:56432/my_music
+        run: |
+          MISE_ENV=production mise exec -- fnox exec -c fnox.production.toml -- \
+            kamal deploy --version="${GITHUB_SHA}"

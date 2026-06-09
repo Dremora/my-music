@@ -1,6 +1,5 @@
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-
-import { getPrismaClient } from "api/prisma";
+import { getPrismaClient } from "@/api/prisma";
+import { Prisma } from "@/generated/prisma/client";
 
 import { builder } from "../builder";
 
@@ -23,7 +22,7 @@ builder.mutationField("deleteAlbum", (t) =>
           return true;
         } catch (error) {
           if (
-            error instanceof PrismaClientKnownRequestError &&
+            error instanceof Prisma.PrismaClientKnownRequestError &&
             error.code === "P2025"
           ) {
             return false;

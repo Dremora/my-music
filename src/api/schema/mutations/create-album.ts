@@ -1,4 +1,4 @@
-import { createAlbum } from "api/domain/album";
+import { createAlbum } from "@/api/domain/album";
 
 import { builder } from "../builder";
 import { GraphQLAlbumType, GraphQLFormat, GraphQLLocation } from "../enums";

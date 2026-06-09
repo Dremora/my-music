@@ -25,7 +25,7 @@ type ValidationError = {
   path: string;
 };
 
-export type ParseResult = {
+type ParseResult = {
   data: AlbumsAppBackup;
   errors: ValidationError[];
 };

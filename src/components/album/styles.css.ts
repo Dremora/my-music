@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { grey, platinum } from "styles/colors.css";
+import { grey, platinum } from "@/styles/colors.css";
 
 export const anchorStyle = style({
   textDecoration: "none",
@@ -117,11 +117,6 @@ export const appleLogoWrapperStyle = style({
       marginBottom: "auto",
     },
   },
-});
-
-export const appleLogoSpacerStyle = style({
-  flex: 1,
-  minHeight: 0,
 });
 
 export const appleLogoStyle = style({

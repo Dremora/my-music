@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 
-import { vermilion } from "styles/colors.css";
-import { size } from "styles/typography.css";
+import { vermilion } from "@/styles/colors.css";
+import { size } from "@/styles/typography.css";
 
 export const pageStyle = style({
   minHeight: "100vh",

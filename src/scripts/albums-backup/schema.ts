@@ -12,7 +12,7 @@ export const artistSchema = z.strictObject({
   sortName: z.string().optional(),
 });
 
-export type Artist = z.infer<typeof artistSchema>;
+type Artist = z.infer<typeof artistSchema>;
 
 // --- Albums ---
 
@@ -71,7 +71,7 @@ export const albumSchema = z.strictObject({
   lightModeTintColor: z.string().optional(),
 });
 
-export type Album = z.infer<typeof albumSchema>;
+type Album = z.infer<typeof albumSchema>;
 
 // --- Play History ---
 
@@ -106,7 +106,7 @@ export const playHistoryItemSchema = z.strictObject({
   workoutActivityType: z.number(),
 });
 
-export type PlayHistoryItem = z.infer<typeof playHistoryItemSchema>;
+type PlayHistoryItem = z.infer<typeof playHistoryItemSchema>;
 
 // --- Credits: People ---
 
@@ -121,7 +121,7 @@ export const creditPersonSchema = z.strictObject({
   musicBrainzID: z.string().optional(),
 });
 
-export type CreditPerson = z.infer<typeof creditPersonSchema>;
+type CreditPerson = z.infer<typeof creditPersonSchema>;
 
 // --- Credits: Labels ---
 
@@ -137,7 +137,7 @@ export const creditLabelSchema = z.strictObject({
   appleMusicID: z.string().optional(),
 });
 
-export type CreditLabel = z.infer<typeof creditLabelSchema>;
+type CreditLabel = z.infer<typeof creditLabelSchema>;
 
 // --- Credits: Entries ---
 
@@ -156,11 +156,11 @@ export const creditEntrySchema = z.strictObject({
   displayTitle: z.string().optional(),
 });
 
-export type CreditEntry = z.infer<typeof creditEntrySchema>;
+type CreditEntry = z.infer<typeof creditEntrySchema>;
 
 // --- Misc: Release Feed Objects ---
 
-export const releaseFeedObjectSchema = z.strictObject({
+const releaseFeedObjectSchema = z.strictObject({
   albumName: z.string(),
   albumUUID: z.string(),
   artistName: z.string(),
@@ -174,8 +174,6 @@ export const releaseFeedObjectSchema = z.strictObject({
   releaseFeedTypeString: z.string(),
 });
 
-export type ReleaseFeedObject = z.infer<typeof releaseFeedObjectSchema>;
-
 // --- Misc: Tags ---
 
 const tagAlbumIdSchema = z.strictObject({
@@ -183,15 +181,13 @@ const tagAlbumIdSchema = z.strictObject({
   uuid: z.string(),
 });
 
-export const tagSchema = z.strictObject({
+const tagSchema = z.strictObject({
   name: z.string(),
   hex: z.string(),
   lastModified: z.number(),
   albumsAndIDs: z.array(tagAlbumIdSchema),
   sessionIDs: z.array(z.unknown()),
 });
-
-export type Tag = z.infer<typeof tagSchema>;
 
 // --- Misc: Quick Actions ---
 
@@ -203,7 +199,7 @@ const quickActionFilterItemSchema = z.strictObject({
   comparisonValue: z.string(),
 });
 
-export const quickActionSchema = z.strictObject({
+const quickActionSchema = z.strictObject({
   name: z.string(),
   uuid: z.string(),
   charmType: z.string(),
@@ -218,18 +214,14 @@ export const quickActionSchema = z.strictObject({
   preferredCollectionDisplayInt: z.number().optional(),
 });
 
-export type QuickAction = z.infer<typeof quickActionSchema>;
-
 // --- Misc: Previous Searches ---
 
-export const previousSearchSchema = z.strictObject({
+const previousSearchSchema = z.strictObject({
   dateSearched: z.number(),
   persistentID: z.string(),
   title: z.string(),
   type: z.string(),
 });
-
-export type PreviousSearch = z.infer<typeof previousSearchSchema>;
 
 // --- App Settings (misc section) ---
 

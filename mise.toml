@@ -2,8 +2,15 @@
 experimental = true
 
 [tools]
+age = "latest"
+fnox = "latest"
+"gem:kamal" = "latest"
+node = "22.17.1"
+pnpm = "10.13.1"
+ruby = "latest"
 "pipx:sqlfluff" = "3.4.2"
 uv = "0.8.11"
 
 [env]
+MISE_ENV = "{{ get_env(name='MISE_ENV', default='development') }}"
 _.path = ["{{config_root}}/node_modules/.bin"]

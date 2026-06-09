@@ -3,20 +3,20 @@ import { AnimatePresence, motion } from "motion/react";
 import { type FormEvent, useState } from "react";
 import { graphql } from "relay-runtime";
 
-import type { AlbumType } from "@/generated/relay/albumFormFragment.graphql";
-import { Button } from "components/button";
-import { FirstPlayedField } from "components/first-played-field";
+import { Button } from "@/components/button";
+import { FirstPlayedField } from "@/components/first-played-field";
 import {
   identity,
   MultilineTextInputFormField,
   SelectFormField,
   TextInputFormField,
-} from "components/form-field";
-import { Source, type SourceData } from "components/source";
-import { Text } from "components/text";
-import { useIsFirstRender } from "data/use-is-first-render";
-import { type FirstPlayed, formatInteger, parseInteger } from "utils";
-import { FormContext } from "utils/form";
+} from "@/components/form-field";
+import { Source, type SourceData } from "@/components/source";
+import { Text } from "@/components/text";
+import { useIsFirstRender } from "@/data/use-is-first-render";
+import type { AlbumType } from "@/generated/relay/albumFormFragment.graphql";
+import { type FirstPlayed, formatInteger, parseInteger } from "@/utils";
+import { FormContext } from "@/utils/form";
 import {
   albumCommentsSchema,
   albumTypes,
@@ -24,7 +24,7 @@ import {
   artistSchema,
   titleSchema,
   yearSchema,
-} from "utils/validation";
+} from "@/utils/validation";
 
 import { buttonsStyle, formStyle } from "./styles.css";
 

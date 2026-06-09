@@ -7,6 +7,9 @@ node_modules
 
 # Deployment
 .vercel
+.kamal/env
+.kamal/apps
+.kamal/kamal-proxy
 
 # misc
 .DS_Store

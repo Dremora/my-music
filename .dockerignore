@@ -1,0 +1,11 @@
+node_modules
+.next
+.fallow
+.git
+.jj
+.env
+.env.*
+*.dump
+*.log
+*.tsbuildinfo
+.DS_Store

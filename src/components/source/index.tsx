@@ -2,19 +2,19 @@ import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 import { memo } from "react";
 
-import {
-  type Format,
-  type Location,
-} from "@/generated/relay/albumFormFragment.graphql";
-import { Button } from "components/button";
+import { Button } from "@/components/button";
 import {
   identity,
   SelectFormField,
   TextInputFormField,
-} from "components/form-field";
-import { Text } from "components/text";
-import { useIsFirstRender } from "data/use-is-first-render";
-import { formatInteger, parseInteger } from "utils";
+} from "@/components/form-field";
+import { Text } from "@/components/text";
+import { useIsFirstRender } from "@/data/use-is-first-render";
+import {
+  type Format,
+  type Location,
+} from "@/generated/relay/albumFormFragment.graphql";
+import { formatInteger, parseInteger } from "@/utils";
 import {
   accurateRipSchema,
   cueIssuesSchema,
@@ -28,7 +28,7 @@ import {
   sourceLocations,
   sourceLocationsSchema,
   tagIssuesSchema,
-} from "utils/validation";
+} from "@/utils/validation";
 
 import { hrStyle, linkStyle, titleStyle } from "./styles.css";
 

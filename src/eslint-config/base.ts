@@ -259,21 +259,7 @@ export const base = tseslint.config(
 
       // eslint-plugin-import-x
       "import-x/no-anonymous-default-export": "error",
-      "import-x/order": [
-        "error",
-        {
-          alphabetize: { caseInsensitive: true, order: "asc" },
-          groups: [
-            "builtin",
-            "external",
-            "internal",
-            "parent",
-            "sibling",
-            "index",
-          ],
-          "newlines-between": "always",
-        },
-      ],
+      "import-x/order": "off",
 
       // eslint-plugin-perfectionist
       "perfectionist/sort-imports": "off",

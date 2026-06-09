@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 
-import { grey, lightGrey, white } from "styles/colors.css";
-import { size } from "styles/typography.css";
+import { grey, lightGrey, white } from "@/styles/colors.css";
+import { size } from "@/styles/typography.css";
 
 export const rootStyle = style({
   border: `2px solid ${lightGrey}`,

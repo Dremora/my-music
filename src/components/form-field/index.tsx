@@ -7,12 +7,12 @@ import {
 } from "react";
 import type { ZodMiniType } from "zod/v4-mini";
 
-import { MultilineTextInput } from "components/multiline-text-input";
-import { Select } from "components/select";
-import { Text } from "components/text";
-import { TextInput } from "components/text-input";
-import { useIsFirstRender } from "data/use-is-first-render";
-import { useForm } from "utils/form";
+import { MultilineTextInput } from "@/components/multiline-text-input";
+import { Select } from "@/components/select";
+import { Text } from "@/components/text";
+import { TextInput } from "@/components/text-input";
+import { useIsFirstRender } from "@/data/use-is-first-render";
+import { useForm } from "@/utils/form";
 
 import { containerStyle, contentsStyle, labelStyle } from "./styles.css";
 

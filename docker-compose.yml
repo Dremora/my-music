@@ -1,14 +1,16 @@
+name: my-music
+
 services:
   postgres:
-    image: postgres:17.5
+    image: postgres:18.4
     ports:
-      - 5432:5432
+      - 56432:5432
     environment:
-      - POSTGRES_USER=my_music
-      - POSTGRES_PASSWORD=my_music
-      - POSTGRES_DB=my_music
+      POSTGRES_USER: my_music
+      POSTGRES_PASSWORD: my_music
+      POSTGRES_DB: my_music
     volumes:
-      - my_music_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
 
 volumes:
-  my_music_data:
+  postgres_data:

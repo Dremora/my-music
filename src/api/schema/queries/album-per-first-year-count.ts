@@ -1,5 +1,5 @@
+import { getPrismaClient } from "@/api/prisma";
 import { Location } from "@/generated/prisma/enums";
-import { getPrismaClient } from "api/prisma";
 
 import { builder } from "../builder";
 import { GraphQLAlbumPerYearCount } from "../types";

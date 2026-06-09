@@ -4,10 +4,10 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { type ReactNode, useCallback, useState } from "react";
 import { graphql, useLazyLoadQuery } from "react-relay";
 
+import { AppleMusicFilter } from "@/components/apple-music-filter";
+import { Spacer } from "@/components/spacer";
+import { YearsHistogram } from "@/components/years-histogram/years-histogram";
 import type { layoutFirstPlayedYearsQuery } from "@/generated/relay/layoutFirstPlayedYearsQuery.graphql";
-import { AppleMusicFilter } from "components/apple-music-filter";
-import { Spacer } from "components/spacer";
-import { YearsHistogram } from "components/years-histogram/years-histogram";
 
 const layoutFirstPlayedYearsQuery = graphql`
   query layoutFirstPlayedYearsQuery($appleMusicFilter: Boolean) {

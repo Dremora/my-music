@@ -15,14 +15,13 @@
     "skipLibCheck": true,
 
     // Modules
-    "baseUrl": "src",
     "module": "esnext",
     "moduleResolution": "bundler",
     "noUncheckedSideEffectImports": true,
     "resolveJsonModule": true,
     "types": ["@total-typescript/ts-reset"],
     "paths": {
-      "@/*": ["*"]
+      "@/*": ["./src/*"]
     },
 
     // Emit

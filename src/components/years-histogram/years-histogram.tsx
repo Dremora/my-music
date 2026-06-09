@@ -4,8 +4,8 @@ import { useState } from "react";
 import { useFragment } from "react-relay";
 import { graphql } from "relay-runtime";
 
+import { Text } from "@/components/text";
 import type { yearsHistogramFragment$key } from "@/generated/relay/yearsHistogramFragment.graphql";
-import { Text } from "components/text";
 
 import { rootStyle } from "./styles.css";
 import { Year } from "./year";

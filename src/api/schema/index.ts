@@ -5,7 +5,6 @@ import { fileURLToPath } from "node:url";
 import { lexicographicSortSchema, printSchema } from "graphql";
 
 import { builder } from "./builder";
-
 import "./enums";
 import "./mutations";
 import "./queries";

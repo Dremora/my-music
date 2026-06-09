@@ -16,13 +16,13 @@ import {
   usePreloadedQuery,
 } from "react-relay/hooks";
 
+import { AlbumList } from "@/components/album-list";
+import { AppleMusicFilter } from "@/components/apple-music-filter";
+import { Search } from "@/components/search";
+import { Text } from "@/components/text";
+import { useIsFirstRender } from "@/data/use-is-first-render";
 import type { pageFindAlbumsBySearchQuery } from "@/generated/relay/pageFindAlbumsBySearchQuery.graphql";
-import { AlbumList } from "components/album-list";
-import { AppleMusicFilter } from "components/apple-music-filter";
-import { Search } from "components/search";
-import { Text } from "components/text";
-import { useIsFirstRender } from "data/use-is-first-render";
-import { environment } from "utils/relay";
+import { environment } from "@/utils/relay";
 
 const pageFindAlbumsBySearchQuery = graphql`
   query pageFindAlbumsBySearchQuery($input: QueryAlbumsInput!) {

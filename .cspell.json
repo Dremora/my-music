@@ -1,12 +1,4 @@
 {
   "useGitignore": true,
-  "words": [
-    "FLAC",
-    "Lato",
-    "mbid",
-    "nums",
-    "unaccent",
-    "Vercel",
-    "whatwg"
-  ]
+  "words": ["FLAC", "Lato", "mbid", "nums", "unaccent", "Vercel", "whatwg"]
 }

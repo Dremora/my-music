@@ -1,9 +1,9 @@
 import { fromUnixTime } from "date-fns";
 import { z } from "zod";
 
+import { ValidationError } from "@/api/errors";
+import { getPrismaClient } from "@/api/prisma";
 import type { AlbumType } from "@/generated/prisma/enums";
-import { ValidationError } from "api/errors";
-import { getPrismaClient } from "api/prisma";
 
 import { albumTypes, formats, locations } from "../schema/enums";
 

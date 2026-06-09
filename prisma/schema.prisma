@@ -1,11 +1,9 @@
 generator client {
   provider        = "prisma-client"
   output          = "../src/generated/prisma"
-  previewFeatures = ["postgresqlExtensions", "strictUndefinedChecks", "typedSql", "queryCompiler", "driverAdapters"]
+  previewFeatures = ["strictUndefinedChecks", "typedSql"]
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_DATABASE_URL")
+  provider = "postgresql"
 }

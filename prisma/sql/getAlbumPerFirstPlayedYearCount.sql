@@ -4,7 +4,7 @@ SELECT
     extract(
       YEAR
       FROM first_played_timestamp
-    ),
+    )::int,
     first_played_date[1],
     2005
   ) AS first_played_year,

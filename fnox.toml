@@ -1,0 +1,10 @@
+[providers.developer]
+recipients = [
+  "age12h7acd0uwzgfp09r7yx23ev3e4v6c2epmwy8ncdea63thx3rvf9qf5fq4r", # Kirill
+]
+type = "age"
+
+[secrets]
+DATABASE_URL = { default = "postgresql://my_music:my_music@localhost:56432/my_music?schema=public&connection_limit=15&pool_timeout=0" }
+DIRECT_DATABASE_URL = { default = "postgresql://my_music:my_music@localhost:56432/my_music?schema=public&connection_limit=15&pool_timeout=0" }
+USER_PASSWORD = { provider = "developer", value = "YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBCQm9OTk1XclpkVnlWSzczTDdRQWd6YW9uSDIrYlJZRi96QlZjMjhLVVU4CmtlUmo5aEZESmU3c3J1Z0RQRG1pUGdjZm0xbkthOXl3SnpZZ1k0eUY4bk0KLT4gfHZBKjstZ3JlYXNlICYvJCBWCnVyQlg0NkNxSjFOT3JvelNrZ3ErWDQ2bS9qUE1ram5LeC82cThsSTBXT3AzUlY0WEhKd1RZdHdlVG1oOHg1MVEKM2JQcTExeUxSNythUjVMNkVFTWdZSEZyN0JVTCt3bjN2MmcKLS0tIHNGRElBSjB0RXAxdnVsVmQ2Vk14bkplVDVXNEVvZWZTcmVPSS9Hd1E4WmcK9UOodQvDNdA8Rzqhnq104Va4OK5R2ESgok91tq1YEUw1DarpDS5CobynpscDKvx7MQmjAvO/ZkTOAsHmvIQBOJxlxwA3iXuN" }

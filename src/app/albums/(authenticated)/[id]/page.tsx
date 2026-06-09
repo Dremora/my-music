@@ -8,14 +8,14 @@ import {
   useMutation,
 } from "react-relay";
 
-import type { albumFormFragment$key } from "@/generated/relay/albumFormFragment.graphql";
-import type { pageGetAlbumQuery } from "@/generated/relay/pageGetAlbumQuery.graphql";
-import type { pageUpdateAlbumMutation } from "@/generated/relay/pageUpdateAlbumMutation.graphql";
 import {
   AlbumForm,
   albumFormFragment,
   type AlbumFormProps,
-} from "components/album-form";
+} from "@/components/album-form";
+import type { albumFormFragment$key } from "@/generated/relay/albumFormFragment.graphql";
+import type { pageGetAlbumQuery } from "@/generated/relay/pageGetAlbumQuery.graphql";
+import type { pageUpdateAlbumMutation } from "@/generated/relay/pageUpdateAlbumMutation.graphql";
 
 const updateAlbumMutation = graphql`
   mutation pageUpdateAlbumMutation($input: MutationUpdateAlbumInput!) {

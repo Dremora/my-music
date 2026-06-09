@@ -1,7 +1,7 @@
 import { recipe } from "@vanilla-extract/recipes";
 
-import { colorVariant } from "styles/colors.css";
-import { size } from "styles/typography.css";
+import { colorVariant } from "@/styles/colors.css";
+import { size } from "@/styles/typography.css";
 
 export const textStyle = recipe({
   base: {},

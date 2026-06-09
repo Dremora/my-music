@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { lighterGrey } from "styles/colors.css";
+import { lighterGrey } from "@/styles/colors.css";
 
 export const containerStyle = style({
   display: "flex",

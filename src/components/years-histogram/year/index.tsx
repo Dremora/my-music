@@ -1,7 +1,7 @@
 import { motion, transform } from "motion/react";
 import { memo } from "react";
 
-import { grey, lighterGrey, lightGrey } from "styles/colors.css";
+import { grey, lighterGrey, lightGrey } from "@/styles/colors.css";
 
 import { barStyle, rootStyle } from "./styles.css";
 

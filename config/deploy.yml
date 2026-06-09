@@ -1,0 +1,57 @@
+service: my-music
+image: dremora/my-music/my-music
+
+servers:
+  web:
+    hosts:
+      - 37.27.241.78
+
+ssh:
+  user: root
+
+proxy:
+  host: my-music.dremora.com
+  app_port: 3000
+  ssl: true
+  forward_headers: true
+  run:
+    version: v0.9.2
+  healthcheck:
+    path: /health/ready
+
+registry:
+  server: ghcr.io
+  username: dremora
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+builder:
+  arch: amd64
+  remote: ssh://root@37.27.241.78
+  args:
+    TYPEGEN_DATABASE_URL: <%= ENV.fetch("TYPEGEN_DATABASE_URL") %>
+  cache:
+    type: registry
+    options: mode=max
+
+env:
+  secret:
+    - DATABASE_URL
+    - DIRECT_DATABASE_URL
+    - USER_PASSWORD
+
+accessories:
+  postgres:
+    image: postgres:18.4
+    host: 37.27.241.78
+    env:
+      clear:
+        POSTGRES_DB: my_music
+        POSTGRES_USER: my_music
+      secret:
+        - POSTGRES_PASSWORD
+    volumes:
+      - my_music_postgres_data:/var/lib/postgresql
+
+aliases:
+  psql: accessory exec postgres --interactive "psql -U my_music my_music"

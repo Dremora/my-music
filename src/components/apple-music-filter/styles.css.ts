@@ -7,8 +7,8 @@ import {
   lightGrey,
   platinum,
   white,
-} from "styles/colors.css";
-import { size } from "styles/typography.css";
+} from "@/styles/colors.css";
+import { size } from "@/styles/typography.css";
 
 export const containerStyle = style({
   display: "flex",

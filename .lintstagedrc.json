@@ -1,4 +1,3 @@
 {
-  "*.{js,jsx,ts,tsx,md,html,css}": "prettier --write",
-  "**/package.json": ["prettier-package-json --write"]
+  "*.{js,jsx,ts,tsx,md,html,css,json,yml,yaml}": "oxfmt"
 }

@@ -1,11 +1,11 @@
 import { type ChangeEvent, type FormEvent, useState } from "react";
 import { graphql, useMutation } from "react-relay";
 
+import { Button } from "@/components/button";
+import { Text } from "@/components/text";
+import { TextInput } from "@/components/text-input";
+import { useLogin } from "@/data/login";
 import type { footerLoginMutation } from "@/generated/relay/footerLoginMutation.graphql";
-import { Button } from "components/button";
-import { Text } from "components/text";
-import { TextInput } from "components/text-input";
-import { useLogin } from "data/login";
 
 import { loginLinkStyle, rootStyle, spacerStyle } from "./styles.css";
 

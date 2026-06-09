@@ -17,7 +17,7 @@ WHERE
     extract(
       YEAR
       FROM first_played_timestamp
-    ),
+    )::int,
     first_played_date[1],
     2005
   ) = $1
@@ -46,14 +46,14 @@ ORDER BY coalesce(
   extract(
     YEAR
     FROM first_played_timestamp
-  ),
+  )::int,
   first_played_date[1]
 ),
 coalesce(
   extract(
     MONTH
     FROM first_played_timestamp
-  ),
+  )::int,
   first_played_date[2],
   1
 ),
@@ -61,7 +61,7 @@ coalesce(
   extract(
     DAY
     FROM first_played_timestamp
-  ),
+  )::int,
   first_played_date[3],
   1
 )

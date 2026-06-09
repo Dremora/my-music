@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { graphql, useFragment } from "react-relay";
 
+import { Text } from "@/components/text";
+import { useLogin } from "@/data/login";
 import type { AlbumType } from "@/generated/relay/albumFormFragment.graphql";
 import type { albumFragment$key } from "@/generated/relay/albumFragment.graphql";
-import { Text } from "components/text";
-import { useLogin } from "data/login";
-import { formatFirstPlayed } from "utils";
+import { formatFirstPlayed } from "@/utils";
 
 import { AppleLogo } from "./apple-logo";
 import {

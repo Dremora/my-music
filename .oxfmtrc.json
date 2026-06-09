@@ -1,0 +1,18 @@
+{
+  "printWidth": 80,
+  "ignorePatterns": ["pnpm-lock.yaml", "schema.graphql"],
+  "sortImports": {
+    "groups": [
+      "builtin",
+      "external",
+      "internal",
+      "parent",
+      "sibling",
+      "index",
+      "unknown"
+    ],
+    "newlinesBetween": true,
+    "ignoreCase": true,
+    "order": "asc"
+  }
+}

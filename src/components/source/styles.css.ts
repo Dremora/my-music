@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { whiteSmoke } from "styles/colors.css";
+import { whiteSmoke } from "@/styles/colors.css";
 
 export const hrStyle = style({
   margin: "20px 0",

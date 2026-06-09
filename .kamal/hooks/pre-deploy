@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+case "${KAMAL_COMMAND:-}" in
+  rollback)
+    echo "Skipping migrations during rollback."
+    exit 0
+    ;;
+  setup)
+    echo "Skipping pre-deploy migrations during initial setup."
+    echo "Run migrations after setup, once Kamal has created app env files and accessories."
+    exit 0
+    ;;
+esac
+
+if [ -z "${KAMAL_VERSION:-}" ]; then
+  echo "KAMAL_VERSION is required for pre-deploy migrations." >&2
+  exit 1
+fi
+
+kamal app exec \
+  --primary \
+  --version="$KAMAL_VERSION" \
+  "pnpm db:migrate:prod"

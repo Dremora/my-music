@@ -7,8 +7,8 @@ import {
   grey,
   vermilion,
   white,
-} from "styles/colors.css";
-import { size } from "styles/typography.css";
+} from "@/styles/colors.css";
+import { size } from "@/styles/typography.css";
 
 export const buttonStyle = recipe({
   base: {

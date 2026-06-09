@@ -1,5 +1,4 @@
-import "styles/global.css";
-
+import "@/styles/global.css";
 import type { Metadata } from "next";
 import { Lato } from "next/font/google";
 import type { ReactNode } from "react";

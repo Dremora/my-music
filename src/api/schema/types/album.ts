@@ -1,7 +1,7 @@
 import { getUnixTime } from "date-fns";
 
+import { getPrismaClient } from "@/api/prisma";
 import type { AlbumModel } from "@/generated/prisma/models/Album";
-import { getPrismaClient } from "api/prisma";
 
 import { builder } from "../builder";
 import { GraphQLAlbumType } from "../enums";

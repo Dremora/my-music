@@ -6,8 +6,8 @@ import {
   platinum,
   vermilion,
   white,
-} from "styles/colors.css";
-import { size } from "styles/typography.css";
+} from "@/styles/colors.css";
+import { size } from "@/styles/typography.css";
 
 export const inputStyle = recipe({
   base: [

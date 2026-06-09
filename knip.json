@@ -1,3 +1,16 @@
 {
-  "$schema": "https://unpkg.com/knip@5/schema.json"
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "entry": ["src/scripts/albums-backup/index.ts"],
+  "ignoreDependencies": [
+    "@prisma/client",
+    "@swc-node/register",
+    "@types/node",
+    "@typescript-eslint/parser"
+  ],
+  "ignoreBinaries": [
+    "scripts/check-prisma-format.sh",
+    "scripts/check-sql-format.sh",
+    "scripts/prisma-migrate-validate.sh",
+    "sqlfluff"
+  ]
 }

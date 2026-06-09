@@ -9,7 +9,7 @@ import {
 } from "@floating-ui/react";
 import { useState } from "react";
 
-import { BurgerIcon } from "components/burger-icon";
+import { BurgerIcon } from "@/components/burger-icon";
 
 import { MenuItems } from "./menu-items";
 import {

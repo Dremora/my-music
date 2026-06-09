@@ -1,6 +1,6 @@
 import { globalStyle, style } from "@vanilla-extract/css";
 
-import { grey, lighterGrey } from "styles/colors.css";
+import { grey, lighterGrey } from "@/styles/colors.css";
 
 export const listItemStyle = style({
   display: "block",

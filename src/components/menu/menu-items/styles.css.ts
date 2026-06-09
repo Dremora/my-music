@@ -1,6 +1,6 @@
 import { style } from "@vanilla-extract/css";
 
-import { white } from "styles/colors.css";
+import { white } from "@/styles/colors.css";
 
 export const itemsStyle = style({
   margin: 0,
