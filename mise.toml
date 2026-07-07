@@ -12,5 +12,5 @@ ruby = "latest"
 uv = "0.8.11"
 
 [env]
-MISE_ENV = "{{ get_env(name='MISE_ENV', default='development') }}"
+MISE_ENV = { default = "development" }
 _.path = ["{{config_root}}/node_modules/.bin"]
